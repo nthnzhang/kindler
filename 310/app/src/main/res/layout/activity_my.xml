@@ -18,15 +18,5 @@
         app:rotation_degrees="15.5"
         tools:context=".MyActivity" />
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/item"
-        android:layout_width="301dp"
-        android:layout_height="426dp"
-        android:layout_marginStart="52dp"
-        android:layout_marginLeft="52dp"
-        android:layout_marginTop="88dp"
-        app:layout_constraintStart_toStartOf="@+id/frame"
-        app:layout_constraintTop_toTopOf="@+id/frame" />
 
 </android.support.constraint.ConstraintLayout>
