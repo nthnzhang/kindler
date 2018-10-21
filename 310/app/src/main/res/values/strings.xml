@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">310</string>
+    <string name="app_name">Kindler</string>
+    <string name="dummy_title">Title of Book</string>
 </resources>

@@ -8,15 +8,25 @@
 
     <com.lorentzos.flingswipe.SwipeFlingAdapterView
         android:id="@+id/frame"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="#ffeee9e2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:rotation_degrees="15.5"
         tools:context=".MyActivity" />
 
     <include
+        android:id="@+id/include"
         layout="@layout/item"
-        tools:layout_editor_absoluteX="67dp"
-        tools:layout_editor_absoluteY="170dp" />
+        android:layout_width="301dp"
+        android:layout_height="426dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginLeft="52dp"
+        android:layout_marginTop="88dp"
+        app:layout_constraintStart_toStartOf="@+id/frame"
+        app:layout_constraintTop_toTopOf="@+id/frame" />
 
 </android.support.constraint.ConstraintLayout>

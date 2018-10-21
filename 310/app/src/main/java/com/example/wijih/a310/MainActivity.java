@@ -1,10 +1,8 @@
 package com.example.wijih.a310;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
@@ -13,8 +11,6 @@ import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
-import butterknife.BindView;
-import butterknife.OnClick;
 
 public class MainActivity extends Activity {
     private ArrayList<String> al;
@@ -24,7 +20,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_my);
         ButterKnife.bind(this);
 
 
