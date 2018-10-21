@@ -15,7 +15,11 @@ import java.util.ArrayList;
 import butterknife.ButterKnife;
 import butterknife.BindView;
 
-public class MainActivity extends Activity {
+public class SwipingActivity extends Activity {
+    // private User currentUser;
+    // private ArrayList<Book> al;
+    // private ArrayAdapter<Book> arrayAdapter;
+
     private ArrayList<String> al; // NEEDS TO BE REPLACED WITH ACTUAL ARRAY OF BOOKS HOOKED UP TO DATABASE
     private ArrayAdapter<String> arrayAdapter;
     private int i;
@@ -29,6 +33,7 @@ public class MainActivity extends Activity {
         ButterKnife.bind(this);
 
 
+        // al = UNIVERSAL BOOK LIST FROM DATABASE
         al = new ArrayList<>();
         al.add("Harry Potter and the Sorcerer's Stone");
         al.add("Harry Potter and the Chamber of Secrets");
@@ -54,12 +59,13 @@ public class MainActivity extends Activity {
 
             @Override
             public void onLeftCardExit(Object dataObject) {
-                Toast.makeText(MainActivity.this, "Disliked!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SwipingActivity.this, "Disliked!", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onRightCardExit(Object dataObject) {
-                Toast.makeText(MainActivity.this, "Liked!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SwipingActivity.this, "Liked!", Toast.LENGTH_SHORT).show();
+                // currentUser.addLike(al[i]);
             }
 
             @Override
@@ -79,7 +85,7 @@ public class MainActivity extends Activity {
                 view.findViewById(R.id.item_swipe_right_indicator).setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
                 view.findViewById(R.id.item_swipe_left_indicator).setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
             }
-        });g
+        });
 
         // A user can tap on a book profile to view additional details on the book
         flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
@@ -87,9 +93,9 @@ public class MainActivity extends Activity {
             public void onItemClicked(int itemPosition, Object dataObject) {
                 // CHANGE FUNCTION TO QUERY BOOK INFORMATION FROM DATABASE AND DISPLAY IT
 
-                startActivity(new Intent(MainActivity.this, BookInfoWindow.class));
+                startActivity(new Intent(SwipingActivity.this, BookInfoWindow.class));
 
-                Toast.makeText(MainActivity.this, "Additional book info will go here...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SwipingActivity.this, "Additional book info will go here...", Toast.LENGTH_SHORT).show();
             }
         });
 
