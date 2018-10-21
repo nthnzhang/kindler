@@ -16,7 +16,7 @@
         android:gravity="center"
         android:textColor="@android:color/white"
         android:textSize="30sp"
-        android:text="@string/dummy_title" />
+        tools:text="@string/dummy_title" />
 
     <View
         android:id="@+id/item_swipe_left_indicator"
