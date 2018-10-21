@@ -79,7 +79,7 @@ public class MainActivity extends Activity {
                 view.findViewById(R.id.item_swipe_right_indicator).setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
                 view.findViewById(R.id.item_swipe_left_indicator).setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
             }
-        });g
+        });
 
         // A user can tap on a book profile to view additional details on the book
         flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
