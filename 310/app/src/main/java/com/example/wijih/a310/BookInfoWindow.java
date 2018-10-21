@@ -20,10 +20,6 @@ public class BookInfoWindow extends Activity {
 
         getWindow().setLayout((int)(width*.7), (int)(height*.6));
 
-
-
-
-
     }
 
 }
