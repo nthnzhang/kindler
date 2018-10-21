@@ -8,6 +8,7 @@ public class Book {
     private String ownerID;
     private boolean forSale;
     private List<String> tags;
+    private String bookId;
 
     public Book(String title, String description, String ownerID, boolean forSale, List<String> tags) {
         this.title = title;
@@ -17,12 +18,20 @@ public class Book {
         this.tags = tags;
     }
 
+    public void setBookId(String id) {
+        this.bookId = id;
+    }
+
     public String getTitle() {
         return title;
     }
 
     public String getDescription() {
         return description;
+    }
+
+    public String getBookId() {
+        return bookId;
     }
 
     public String getOwnerID() {

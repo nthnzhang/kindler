@@ -5,7 +5,6 @@ import android.widget.ArrayAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.awt.print.Book;
 import java.util.List;
 import java.util.Map;
 
@@ -35,26 +34,47 @@ public class User {
 
         this.userID = mDatabase.push().getKey();
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(userID);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 //        mDatabase.addChildEventListener();
 
     }
 
+    // input: new instance of User class
+    // adds the new user to the db
+    // uses userId as key
     public void addNewUser(User user) {
-        mDatabase.child(this.userID).setValue(this);
+        mDatabase.child("users").child(this.userID).setValue(this);
 
-        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, matchIDs);
+//        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, matchIDs);
     }
 
-
+    // input: book
+    // adds book id to list of uploaded book ids
+    // add book to database
     public void addBook(Book book) {
+
+        // add to entire db of books
+        String bookId = mDatabase.child("books").push().getKey();
+        book.setBookId(bookId);
+        mDatabase.child("books").child(bookId).setValue(book);
+
+        // add to own list of uploaded books
+        uploadedBookIDs.add(bookId);
+        mDatabase.child("users").child("uploadedBooksIDs").push().setValue(bookId);
+
+
     }
 
-    public void addLike(Book book) {
-
+    // input: bookID of liked book
+    // finds book in db with bookID
+    // finds ownerID for found book
+    // adds this ownerID and bookID to own list of liked books
+    public void addLike(String bookID) {
+        
     }
 
-    public Map<User, List<String>> getLikedBooks() {
+    // returns map of ownerIDs to books that you like from that owner
+    public Map<String, List<String>> getLikedBooks() {
         return likedBooks;
     }
 
