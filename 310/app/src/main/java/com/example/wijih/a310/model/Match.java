@@ -1,7 +1,10 @@
 package com.example.wijih.a310.model;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Match {
     private String matchId;
@@ -60,8 +63,40 @@ public class Match {
         // this should automatically update the lists
     }
 
-    public void rateUser(String userId, int rating) {
+    // this will be called from the current User
+    // input: your user ID, and the rating
+    public void rateUser(String userId, final int rating) {
+        // determine which user is submitting the rating, and which user is getting rated
+        // set the database reference to the user which is getting rated
+        if(userId == userId1) {
+            mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(userId2);
+        }
+        else {
+            mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(userId1);
+        }
+        // update the rating
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            // add rating to the total rating score, and then increment the rating count
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // get the current values from the db
+                double totalScore = dataSnapshot.child("totalScore").getValue(Double.class);
+                double totalReviews = dataSnapshot.child("totalReviews").getValue(Double.class);
 
+                // update
+                totalScore += Double.valueOf(rating);
+                totalReviews++;
+
+                // add in the updated values to the db
+                mDatabase.child("totalScore").setValue(totalScore);
+                mDatabase.child("totalReviews").setValue(totalReviews);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public String getMatchId() {

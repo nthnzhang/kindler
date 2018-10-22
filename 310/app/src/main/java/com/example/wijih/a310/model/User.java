@@ -271,6 +271,27 @@ public class User {
         });
     }
 
+    // this function will take in the matchId containing the user you are rating, and the rating
+    // this will be called from the match activity
+    public void rateUser(String matchId, final int rating) {
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("matches").child(matchId);
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            // create a match object with the match details
+            // call the rate function
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Match match = dataSnapshot.getValue(Match.class);
+                // pass in your own id and given rating
+                match.rateUser(userID, rating);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     public String getUsername() {
         return username;
     }
