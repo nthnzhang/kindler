@@ -17,6 +17,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".BookInfoWindow"
+            android:theme="@style/AppTheme.CustomBookWindowTheme">
+        </activity>
     </application>
 
 </manifest>
