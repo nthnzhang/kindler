@@ -82,7 +82,7 @@ public class User {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Book book = dataSnapshot.getValue(Book.class);
 
-                
+
 //                likedBooks.put(ownerId, likedBooks.get(ownerId).add(bookID));
             }
 
