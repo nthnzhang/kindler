@@ -1,5 +1,8 @@
 package com.example.wijih.a310.model;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class Match {
     private String matchId;
     private String userId1;
@@ -9,6 +12,9 @@ public class Match {
     // true - accepted match
     private boolean user1Choice;
     private boolean user2Choice;
+
+    private DatabaseReference mDatabase;
+
 
     public Match(String userId1, String userId2) {
         this.userId1 = userId1;
@@ -28,29 +34,30 @@ public class Match {
     // input: user id of the user that is accepting the match
     public void acceptMatch(String userId) {
         // user1 is accepting the match
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("matches").child(matchId);
         if(userId == userId1) {
             // user2 has accepted the match already
             if(user2Choice) {
+                // show contact info
+            }
+            mDatabase.child("user1Choice").setValue(true);
 
-            }
-            else {
-                user1Choice = true;
-            }
         }
+        // user2 is accepting the match
         else {
             // user1 has accepted the match already
             if(user1Choice) {
-
+                // show contact info
             }
-            else {
-                user2Choice = true;
-            }
+            mDatabase.child("user2Choice").setValue(true);
         }
     }
 
     // remove match from both users list of matches
     public void denyMatch() {
-
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("matches");
+        mDatabase.child(matchId).removeValue();
+        // this should automatically update the lists
     }
 
     public void rateUser(String userId, int rating) {

@@ -42,10 +42,11 @@ public class User {
 
         this.userID = mDatabase.push().getKey();
 
-        mDatabase.child("users").child(this.userID).setValue(this);
+        mDatabase.child(this.userID).setValue(this);
     }
 
     // used when logging in
+    // get a snapshot of the user class from the db and store it
     public User() {
         // empty constructor for firebase purposes
     }
@@ -104,12 +105,6 @@ public class User {
 
                 // check other book owner to see if there is a match
                 mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(ownerId).child("likedBooks");
-                // test
-                Map<String, List<String>> testMap = new HashMap<>();
-                List<String> t = new ArrayList<>();
-                t.add("asdlkfj");
-                testMap.put(userID, t);
-                mDatabase.setValue(testMap);
 
                 mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -139,23 +134,24 @@ public class User {
             }
         });
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+//        mDatabase = FirebaseDatabase.getInstance().getReference();
+//        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
 
     }
 
     // basic book getting functionality - doesn't account for seen / own books
-    public void getBooks() {
+    // should only need to be called once
+    public void startUpdatingBookList() {
         mDatabase = FirebaseDatabase.getInstance().getReference().child("books");
         mDatabase.addChildEventListener(new ChildEventListener() {
             // new book has been added
@@ -190,9 +186,89 @@ public class User {
     }
 
     // returns map of ownerIDs to books that you like from that owner
+    // possibly an obsolete function, depending on the future implementation
     public Map<String, List<String>> getLikedBooks() {
-
         return likedBooks;
+    }
+
+
+    // this function should only be called once (in the intialization of the matches page, perhaps)
+    // will automatically update the array of matches
+    public void startUpdatingMatchList() {
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("matches");
+        mDatabase.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                // new match added - update list of matches
+                String matchId = dataSnapshot.child("matchId").getValue(String.class);
+                matchIDs.add(matchId);
+//                Log.d("matches size", String.valueOf(matchIDs.size()));
+            }
+
+            // check if both users have accepted the match
+            // show contact information if they have?
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//                Log.d("change", "child changed");
+
+            }
+
+            // match has been denied by one party
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                String matchId = dataSnapshot.child("matchId").getValue(String.class);
+                matchIDs.remove(matchId);
+//                Log.d("matches size", String.valueOf(matchIDs.size()));
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    // input: the matchId that the current user wants to accept
+    // will find the respective match object from the db
+    // and then call the acceptMatch function in the match object
+    public void acceptMatch(String matchId) {
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("matches").child(matchId);
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Match match = dataSnapshot.getValue(Match.class);
+                match.acceptMatch(userID);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    // input: the matchId that the current user wants to reject
+    // will find the respective match object from the db
+    // and then call the denyMatch function in the match object
+    public void denyMatch(String matchId) {
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("matches").child(matchId);
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Match match = dataSnapshot.getValue(Match.class);
+                match.denyMatch();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public String getUsername() {
