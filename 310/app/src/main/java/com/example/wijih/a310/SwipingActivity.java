@@ -5,22 +5,25 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View;
 
+import com.example.wijih.a310.model.User;
+import com.example.wijih.a310.model.Book;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.BindView;
 
 public class SwipingActivity extends Activity {
-    // private User currentUser;
-    // private ArrayList<Book> al;
-    // private ArrayAdapter<Book> arrayAdapter;
+    private User currentUser;
+    private ArrayList<Book> alBooks;
 
-    private ArrayList<String> al; // NEEDS TO BE REPLACED WITH ACTUAL ARRAY OF BOOKS HOOKED UP TO DATABASE
+    private ArrayList<String> al;
     private ArrayAdapter<String> arrayAdapter;
     private int i;
 
@@ -29,22 +32,37 @@ public class SwipingActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my);
+        setContentView(R.layout.swiping_activity);
         ButterKnife.bind(this);
+
+        // getting current user form login activity
+        Intent currUserIntent = getIntent();
+        currentUser = currUserIntent.getParcelableExtra("current_user");
 
 
         // al = UNIVERSAL BOOK LIST FROM DATABASE
+        alBooks = new ArrayList<>();
         al = new ArrayList<>();
+
+        // FAKE BOOK LISTS HERE
+        List<String> tags = new ArrayList<>();
+        alBooks.add(new Book("Harry Potter and the Sorcerer's Stone", "blah blah blah description", "ownerID?!?!?!", false, tags));
+        alBooks.add(new Book("Harry Potter and the Chamber of Secrets", "blah blah blah description", "ownerID?!?!?!", false, tags));
+        alBooks.add(new Book("Harry Potter and the Prisoner of Azkaban", "blah blah blah description", "ownerID?!?!?!", false, tags));
+        alBooks.add(new Book("Harry Potter and the Goblet of Fire", "blah blah blah description", "ownerID?!?!?!", false, tags));
+        alBooks.add(new Book("Harry Potter and the Order of the Phoenix", "blah blah blah description", "ownerID?!?!?!", false, tags));
+        alBooks.add(new Book("Harry Potter and the Half Blood Prince", "blah blah blah description", "ownerID?!?!?!", false, tags));
+        alBooks.add(new Book("Harry Potter and the Deathly Hallows", "blah blah blah description", "ownerID?!?!?!", false, tags));
+
         al.add("Harry Potter and the Sorcerer's Stone");
         al.add("Harry Potter and the Chamber of Secrets");
         al.add("Harry Potter and the Prisoner of Azkaban");
         al.add("Harry Potter and the Goblet of Fire");
-        al.add("The Hobbit");
-        al.add("Life of Pi");
-        al.add("The Lord of the Rings");
-        al.add("Cat in a Hat");
+        al.add("Harry Potter and the Order of the Phoenix");
+        al.add("Harry Potter and the Half Blood Prince");
+        al.add("Harry Potter and the Deathly Hallows");
 
-        arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.helloText, al );
+        arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.bookTitleText, al );
 
 
         flingContainer.setAdapter(arrayAdapter);
@@ -65,15 +83,12 @@ public class SwipingActivity extends Activity {
             @Override
             public void onRightCardExit(Object dataObject) {
                 Toast.makeText(SwipingActivity.this, "Liked!", Toast.LENGTH_SHORT).show();
-                // currentUser.addLike(al[i]);
+                // currentUser.addLike(alBooks.get(i).getBookId());
             }
 
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
                 // HAVE TO CHANGE THIS STATEMENT ENTIRELY TO QUERY DATABASE FOR MORE DATA
-                al.add("BOOK ".concat(String.valueOf(i)));
-
-
                 arrayAdapter.notifyDataSetChanged();
                 Log.d("LIST", "notified");
                 i++;
@@ -91,10 +106,9 @@ public class SwipingActivity extends Activity {
         flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
             @Override
             public void onItemClicked(int itemPosition, Object dataObject) {
-                // CHANGE FUNCTION TO QUERY BOOK INFORMATION FROM DATABASE AND DISPLAY IT
-
-                startActivity(new Intent(SwipingActivity.this, BookInfoWindow.class));
-
+                Intent intent = new Intent(SwipingActivity.this, BookInfoWindow.class);
+                intent.putExtra("book_info", alBooks.get(i));
+                startActivity(intent);
                 Toast.makeText(SwipingActivity.this, "Additional book info will go here...", Toast.LENGTH_SHORT).show();
             }
         });

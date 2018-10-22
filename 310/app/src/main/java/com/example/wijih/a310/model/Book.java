@@ -1,8 +1,11 @@
 package com.example.wijih.a310.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
-public class Book {
+public class Book implements Parcelable {
     private String title;
     private String description;
     private String ownerID;
@@ -21,6 +24,27 @@ public class Book {
     public Book() {
         // empty constructor for firebase purposes
     }
+
+    protected Book(Parcel in) {
+        title = in.readString();
+        description = in.readString();
+        ownerID = in.readString();
+        forSale = in.readByte() != 0;
+        tags = in.createStringArrayList();
+        bookId = in.readString();
+    }
+
+    public static final Creator<Book> CREATOR = new Creator<Book>() {
+        @Override
+        public Book createFromParcel(Parcel in) {
+            return new Book(in);
+        }
+
+        @Override
+        public Book[] newArray(int size) {
+            return new Book[size];
+        }
+    };
 
     public void setBookId(String id) {
         this.bookId = id;
@@ -50,4 +74,18 @@ public class Book {
         return tags;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(title);
+        dest.writeString(description);
+        dest.writeString(ownerID);
+        dest.writeByte((byte) (forSale ? 1 : 0));
+        dest.writeStringList(tags);
+        dest.writeString(bookId);
+    }
 }

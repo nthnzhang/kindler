@@ -1,6 +1,7 @@
 package com.example.wijih.a310.model;
 
-import android.widget.ArrayAdapter;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -10,11 +11,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class User {
+public class User implements Parcelable {
     private String username;
     private String userID;
     private String email;
@@ -50,6 +50,64 @@ public class User {
     public User() {
         // empty constructor for firebase purposes
     }
+
+    protected User(Parcel in) {
+        username = in.readString();
+        userID = in.readString();
+        email = in.readString();
+        matchIDs = in.createStringArrayList();
+        uploadedBookIDs = in.createStringArrayList();
+        if (in.readByte() == 0) {
+            totalScore = null;
+        } else {
+            totalScore = in.readDouble();
+        }
+        if (in.readByte() == 0) {
+            totalReviews = null;
+        } else {
+            totalReviews = in.readDouble();
+        }
+        swipableBookIds = in.createStringArrayList();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(username);
+        dest.writeString(userID);
+        dest.writeString(email);
+        dest.writeStringList(matchIDs);
+        dest.writeStringList(uploadedBookIDs);
+        if (totalScore == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeDouble(totalScore);
+        }
+        if (totalReviews == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeDouble(totalReviews);
+        }
+        dest.writeStringList(swipableBookIds);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 
     // input: new instance of User class
     // should be called when a new account is created
