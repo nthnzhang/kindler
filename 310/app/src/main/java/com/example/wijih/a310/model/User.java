@@ -377,4 +377,6 @@ public class User implements Parcelable {
     public String getUserID() {
         return userID;
     }
+
+    public List<String> getSwipableBookIds() {return swipableBookIds;}
 }

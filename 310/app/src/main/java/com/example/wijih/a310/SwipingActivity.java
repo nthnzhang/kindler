@@ -39,12 +39,15 @@ public class SwipingActivity extends Activity {
         Intent currUserIntent = getIntent();
         currentUser = currUserIntent.getParcelableExtra("current_user");
 
+        // getting list of books from database
+        List<String> swipableBooksIDs = currentUser.getSwipableBookIds();
+        alBooks = getBookObjs(swipableBooksIDs);
+        al = getBookTitles(alBooks);
 
-        // al = UNIVERSAL BOOK LIST FROM DATABASE
+        // FAKE FAKE FAKE FAKE FAKE FAKE FAKE
         alBooks = new ArrayList<>();
         al = new ArrayList<>();
 
-        // FAKE BOOK LISTS HERE
         List<String> tags = new ArrayList<>();
         alBooks.add(new Book("Harry Potter and the Sorcerer's Stone", "blah blah blah description", "ownerID?!?!?!", false, tags));
         alBooks.add(new Book("Harry Potter and the Chamber of Secrets", "blah blah blah description", "ownerID?!?!?!", false, tags));
@@ -89,6 +92,8 @@ public class SwipingActivity extends Activity {
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
                 // HAVE TO CHANGE THIS STATEMENT ENTIRELY TO QUERY DATABASE FOR MORE DATA
+                // CALL GET BOOKS AGAIN
+
                 arrayAdapter.notifyDataSetChanged();
                 Log.d("LIST", "notified");
                 i++;
@@ -113,5 +118,19 @@ public class SwipingActivity extends Activity {
             }
         });
 
+    }
+
+    private ArrayList<String> getBookTitles(ArrayList<Book> alBooks) {
+        ArrayList<String> al = new ArrayList<>();
+        for(Book b: alBooks) {
+            al.add(b.getTitle());
+        }
+        return al;
+    }
+
+    private ArrayList<Book> getBookObjs(List<String> swipableBooksIDs) {
+        ArrayList<Book> alBooks = new ArrayList<>();
+
+        return alBooks;
     }
 }
