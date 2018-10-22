@@ -2,8 +2,11 @@ package com.example.wijih.a310.model;
 
 import android.widget.ArrayAdapter;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 import java.util.Map;
@@ -19,7 +22,7 @@ public class User {
     private Map<String, List<String>> likedBooks;
 
     private DatabaseReference mDatabase;
-    private ArrayAdapter<String> arrayAdapter;
+//    private ArrayAdapter<String> arrayAdapter;
 
     public User(String username, String email, List<String> matches, List<String> booksUploaded, Double totalScore, Double totalReviews, Map<String, List<String>> likedBooks) {
         mDatabase = FirebaseDatabase.getInstance().getReference().child("users");
@@ -36,6 +39,7 @@ public class User {
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 //        mDatabase.addChildEventListener();
+
 
     }
 
@@ -70,11 +74,28 @@ public class User {
     // finds ownerID for found book
     // adds this ownerID and bookID to own list of liked books
     public void addLike(String bookID) {
-        
+        String ownerId = mDatabase.child("books").child(bookID);
+
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("books").child(bookID);
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Book book = dataSnapshot.getValue(Book.class);
+
+//                likedBooks.put(ownerId, likedBooks.get(ownerId).add(bookID));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     // returns map of ownerIDs to books that you like from that owner
     public Map<String, List<String>> getLikedBooks() {
+
         return likedBooks;
     }
 
