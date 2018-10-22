@@ -8,6 +8,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -74,16 +76,62 @@ public class User {
     // finds ownerID for found book
     // adds this ownerID and bookID to own list of liked books
     public void addLike(String bookID) {
-        String ownerId = mDatabase.child("books").child(bookID);
-
         mDatabase = FirebaseDatabase.getInstance().getReference().child("books").child(bookID);
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                final String ownerId = dataSnapshot.child("ownerID").getValue(String.class);
                 Book book = dataSnapshot.getValue(Book.class);
 
+                // add liked book to map
+                if(likedBooks.containsKey(ownerId)) {
+                    likedBooks.get(ownerId).add(book.getBookId());
+                }
+                else {
+                    List<String> newList = new ArrayList<>();
+                    newList.add(book.getBookId());
+                    likedBooks.put(ownerId, newList);
+                }
 
-//                likedBooks.put(ownerId, likedBooks.get(ownerId).add(bookID));
+                // update list in currentUser in dB
+                mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(userID);
+                mDatabase.child("likedBooks").setValue(likedBooks);
+
+                // check other book owner to see if there is a match
+                mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(ownerId).child("likedBooks");
+                mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // other book owner has liked one of currentUsers books
+                        if(dataSnapshot.child(userID).exists()) {
+                            // create Match and add to db
+                            Match match = new Match(userID, ownerId);
+                            mDatabase = FirebaseDatabase.getInstance().getReference().child("matches");
+
+                            String matchId = mDatabase.push().getKey();
+                            match.setMatchId(matchId);
+                            mDatabase.child(matchId).setValue(match);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
             }
 
             @Override
