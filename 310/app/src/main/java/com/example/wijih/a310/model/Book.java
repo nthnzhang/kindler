@@ -18,6 +18,10 @@ public class Book {
         this.tags = tags;
     }
 
+    public Book() {
+        // empty constructor for firebase purposes
+    }
+
     public void setBookId(String id) {
         this.bookId = id;
     }

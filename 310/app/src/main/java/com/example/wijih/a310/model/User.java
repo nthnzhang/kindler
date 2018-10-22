@@ -2,6 +2,7 @@ package com.example.wijih.a310.model;
 
 import android.widget.ArrayAdapter;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,8 +25,9 @@ public class User {
     private Map<String, List<String>> likedBooks;
 
     private DatabaseReference mDatabase;
-//    private ArrayAdapter<String> arrayAdapter;
+    private List<String> swipableBookIds;
 
+    // used when creating a new account
     public User(String username, String email, List<String> matches, List<String> booksUploaded, Double totalScore, Double totalReviews, Map<String, List<String>> likedBooks) {
         mDatabase = FirebaseDatabase.getInstance().getReference().child("users");
 
@@ -36,29 +38,32 @@ public class User {
         this.totalScore = totalScore;
         this.totalReviews = totalReviews;
         this.likedBooks = likedBooks;
+        this.swipableBookIds = new ArrayList<String>();
 
         this.userID = mDatabase.push().getKey();
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-//        mDatabase.addChildEventListener();
+        mDatabase.child("users").child(this.userID).setValue(this);
+    }
 
-
+    // used when logging in
+    public User() {
+        // empty constructor for firebase purposes
     }
 
     // input: new instance of User class
+    // should be called when a new account is created
     // adds the new user to the db
     // uses userId as key
     public void addNewUser(User user) {
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("users").child(this.userID).setValue(this);
-
-//        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, matchIDs);
     }
 
     // input: book
     // adds book id to list of uploaded book ids
     // add book to database
     public void addBook(Book book) {
-
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         // add to entire db of books
         String bookId = mDatabase.child("books").push().getKey();
         book.setBookId(bookId);
@@ -99,6 +104,13 @@ public class User {
 
                 // check other book owner to see if there is a match
                 mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(ownerId).child("likedBooks");
+                // test
+                Map<String, List<String>> testMap = new HashMap<>();
+                List<String> t = new ArrayList<>();
+                t.add("asdlkfj");
+                testMap.put(userID, t);
+                mDatabase.setValue(testMap);
+
                 mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -140,6 +152,41 @@ public class User {
             }
         });
 
+    }
+
+    // basic book getting functionality - doesn't account for seen / own books
+    public void getBooks() {
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("books");
+        mDatabase.addChildEventListener(new ChildEventListener() {
+            // new book has been added
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                // update the list and the array adapter
+                String newBookId = dataSnapshot.child("bookId").getValue(String.class);
+                swipableBookIds.add(newBookId);
+//                Log.d("testAddBook", "size: " + String.valueOf(swipableBookIds.size()));
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     // returns map of ownerIDs to books that you like from that owner
