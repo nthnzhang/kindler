@@ -18,5 +18,13 @@
         app:rotation_degrees="15.5"
         tools:context=".SwipingActivity" />
 
+    <Button
+        android:id="@+id/toMatches"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Matches"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
+
 
 </android.support.constraint.ConstraintLayout>

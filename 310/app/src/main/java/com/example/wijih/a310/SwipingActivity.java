@@ -28,6 +28,7 @@ import butterknife.ButterKnife;
 public class SwipingActivity extends Activity {
     private User currentUser;
     private ArrayList<Book> alBooks;
+    private Button button;
 
     private ArrayList<String> al;
     private ArrayAdapter<String> arrayAdapter;
@@ -42,6 +43,15 @@ public class SwipingActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.swiping_activity);
         ButterKnife.bind(this);
+
+        //button to go to matches
+//        button = (Button)findViewById(R.id.toMatches);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                openMatchesActivity();
+//            }
+//        });
 
         // getting current user form login activity
         final Intent currUserIntent = getIntent();
@@ -156,4 +166,10 @@ public class SwipingActivity extends Activity {
             }
         });
     }
+
+    //open matches
+//    public void openMatchesActivity(){
+//        Intent intent = new Intent(this, MatchesActivity.class);
+//        startActivity(intent);
+//    }
 }
