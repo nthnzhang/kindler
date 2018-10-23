@@ -54,30 +54,12 @@ public class SwipingActivity extends Activity {
 
         // getting current user form login activity
         final Intent currUserIntent = getIntent();
-//        currentUser = currUserIntent.getParcelableExtra("current_user");
+        currentUser = currUserIntent.getParcelableExtra("current_user");
 
         alBooks = new ArrayList<Book>();
         al = new ArrayList<String>();
-
-        // for testing purposes, as there is no user being passed in
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child("-LPPnx7w9EA44RcPSdzQ");
-        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                currentUser = user;
-                startUpdatingBookList(currentUser.getUserID());
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        // currently commented out, but will be added back in when user intent is functional
-//        startUpdatingBookList(currentUser.getUserID());
+        
+        startUpdatingBookList(currentUser.getUserID());
 
         arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.bookTitleText, al);
 
