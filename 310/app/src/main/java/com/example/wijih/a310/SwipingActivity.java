@@ -58,7 +58,7 @@ public class SwipingActivity extends Activity {
 
         alBooks = new ArrayList<Book>();
         al = new ArrayList<String>();
-        
+
         startUpdatingBookList(currentUser.getUserID());
 
         arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.bookTitleText, al);
