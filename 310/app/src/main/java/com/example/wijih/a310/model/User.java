@@ -218,7 +218,7 @@ public class User implements Parcelable {
     }
 
     // returns map of ownerIDs to books that you like from that owner
-    // possibly an obsolete function, depending on the future implementation
+    // needed for firebase functionality
     public Map<String, List<String>> getLikedBooks() {
         return likedBooks;
     }
