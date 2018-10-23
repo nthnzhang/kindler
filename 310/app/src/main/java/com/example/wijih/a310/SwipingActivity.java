@@ -4,11 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
+import android.view.View;
 
 import com.example.wijih.a310.model.Book;
 import com.example.wijih.a310.model.User;
@@ -17,6 +16,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.util.ArrayList;
@@ -53,13 +53,13 @@ public class SwipingActivity extends Activity {
 //        });
 
         // getting current user form login activity
-        Intent currUserIntent = getIntent();
+        final Intent currUserIntent = getIntent();
         currentUser = currUserIntent.getParcelableExtra("current_user");
 
-        // getting list of books from database
         alBooks = new ArrayList<Book>();
         al = new ArrayList<String>();
-        startUpdatingBookList();
+
+        startUpdatingBookList(currentUser.getUserID());
 
         arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.bookTitleText, al);
 
@@ -81,14 +81,11 @@ public class SwipingActivity extends Activity {
             @Override
             public void onRightCardExit(Object dataObject) {
                 Toast.makeText(SwipingActivity.this, "Liked!", Toast.LENGTH_SHORT).show();
-                // currentUser.addLike(alBooks.get(i).getBookId());
+                 currentUser.addLike(alBooks.get(i).getBookId());
             }
 
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
-                // HAVE TO CHANGE THIS STATEMENT ENTIRELY TO QUERY DATABASE FOR MORE DATA
-                // CALL GET BOOKS AGAIN
-
                 arrayAdapter.notifyDataSetChanged();
                 Log.d("LIST", "notified");
                 i++;
@@ -114,7 +111,7 @@ public class SwipingActivity extends Activity {
         });
     }
 
-    public void startUpdatingBookList() {
+    public void startUpdatingBookList(final String userId) {
         mDatabase = FirebaseDatabase.getInstance().getReference().child("books");
         mDatabase.addChildEventListener(new ChildEventListener() {
             // new book has been added
@@ -122,9 +119,11 @@ public class SwipingActivity extends Activity {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 // update the list and the array adapter
                 Book book = dataSnapshot.getValue(Book.class);
-                alBooks.add(book);
-                al.add(book.getTitle());
-                arrayAdapter.notifyDataSetChanged();
+                if(book.getOwnerID() != userId) {
+                    alBooks.add(book);
+                    al.add(book.getTitle());
+                    arrayAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override
@@ -149,9 +148,11 @@ public class SwipingActivity extends Activity {
         });
     }
 
-    //open matches
-//    public void openMatchesActivity(){
-//        Intent intent = new Intent(this, MatchesActivity.class);
-//        startActivity(intent);
+
+//    public void goToMatches(View view) {
+//        Intent goToMatchesIntent = new Intent(SwipingActivity.this, MatchesActivity.class);
+//        goToMatchesIntent.putExtra("current_user", currentUser);
+//        startActivity(goToMatchesIntent);
+//        return;
 //    }
 }

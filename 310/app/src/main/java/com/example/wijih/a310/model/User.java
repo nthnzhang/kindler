@@ -2,6 +2,7 @@ package com.example.wijih.a310.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -11,6 +12,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +20,8 @@ public class User implements Parcelable {
     private String username;
     private String userID;
     private String email;
+    private String password;
+    private String phone;
     private List<String> matchIDs;
     private List<String> uploadedBookIDs;
     private Double totalScore;
@@ -28,12 +32,15 @@ public class User implements Parcelable {
     private List<String> swipableBookIds;
 
     // used when creating a new account
-    public User(String username, String email, List<String> matches, List<String> booksUploaded, Double totalScore, Double totalReviews, Map<String, List<String>> likedBooks) {
+    public User(String username, String email, String password, String phone, List<String> matches,
+                List<String> booksUploaded, Double totalScore, Double totalReviews, Map<String, List<String>> likedBooks) {
         mDatabase = FirebaseDatabase.getInstance().getReference().child("users");
 
         this.username = username;
         this.email = email;
         this.matchIDs = matches;
+        this.phone = phone;
+        this.password = password;
         this.uploadedBookIDs = booksUploaded;
         this.totalScore = totalScore;
         this.totalReviews = totalReviews;
@@ -148,6 +155,9 @@ public class User implements Parcelable {
                 Book book = dataSnapshot.getValue(Book.class);
 
                 // add liked book to map
+                if(likedBooks == null) {
+                    likedBooks = new HashMap<>();
+                }
                 if(likedBooks.containsKey(ownerId)) {
                     likedBooks.get(ownerId).add(book.getBookId());
                 }
@@ -207,44 +217,8 @@ public class User implements Parcelable {
 
     }
 
-    // basic book getting functionality - doesn't account for seen / own books
-    // should only need to be called once
-//    public void startUpdatingBookList() {
-//        mDatabase = FirebaseDatabase.getInstance().getReference().child("books");
-//        mDatabase.addChildEventListener(new ChildEventListener() {
-//            // new book has been added
-//            @Override
-//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                // update the list and the array adapter
-//                String newBookId = dataSnapshot.child("bookId").getValue(String.class);
-//                swipableBookIds.add(newBookId);
-////                Log.d("testAddBook", "size: " + String.valueOf(swipableBookIds.size()));
-//            }
-//
-//            @Override
-//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//
-//            }
-//
-//            @Override
-//            public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
-//            }
-//
-//            @Override
-//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//    }
-
     // returns map of ownerIDs to books that you like from that owner
-    // possibly an obsolete function, depending on the future implementation
+    // needed for firebase functionality
     public Map<String, List<String>> getLikedBooks() {
         return likedBooks;
     }
@@ -376,6 +350,14 @@ public class User implements Parcelable {
 
     public String getUserID() {
         return userID;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getPhone() {
+        return phone;
     }
 
     public List<String> getSwipableBookIds() {return swipableBookIds;}
