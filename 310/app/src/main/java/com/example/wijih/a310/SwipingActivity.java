@@ -7,9 +7,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.wijih.a310.matches.MatchesActivity;
 import com.example.wijih.a310.model.Book;
 import com.example.wijih.a310.model.User;
 import com.google.firebase.database.ChildEventListener;
@@ -149,9 +149,11 @@ public class SwipingActivity extends Activity {
         });
     }
 
-    //open matches
-//    public void openMatchesActivity(){
-//        Intent intent = new Intent(this, MatchesActivity.class);
-//        startActivity(intent);
-//    }
+
+    public void goToMatches(View view) {
+        Intent goToMatchesIntent = new Intent(SwipingActivity.this, MatchesActivity.class);
+        goToMatchesIntent.putExtra("current_user", currentUser);
+        startActivity(goToMatchesIntent);
+        return;
+    }
 }
