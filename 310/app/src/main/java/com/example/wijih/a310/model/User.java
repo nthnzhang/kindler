@@ -2,6 +2,7 @@ package com.example.wijih.a310.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -11,6 +12,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -153,6 +155,9 @@ public class User implements Parcelable {
                 Book book = dataSnapshot.getValue(Book.class);
 
                 // add liked book to map
+                if(likedBooks == null) {
+                    likedBooks = new HashMap<>();
+                }
                 if(likedBooks.containsKey(ownerId)) {
                     likedBooks.get(ownerId).add(book.getBookId());
                 }

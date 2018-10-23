@@ -9,7 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.wijih.a310.matches.MatchesActivity;
 import com.example.wijih.a310.model.Book;
 import com.example.wijih.a310.model.User;
 import com.google.firebase.database.ChildEventListener;
@@ -81,7 +80,7 @@ public class SwipingActivity extends Activity {
             @Override
             public void onRightCardExit(Object dataObject) {
                 Toast.makeText(SwipingActivity.this, "Liked!", Toast.LENGTH_SHORT).show();
-                // currentUser.addLike(alBooks.get(i).getBookId());
+                 currentUser.addLike(alBooks.get(i).getBookId());
             }
 
             @Override
@@ -150,10 +149,10 @@ public class SwipingActivity extends Activity {
     }
 
 
-    public void goToMatches(View view) {
-        Intent goToMatchesIntent = new Intent(SwipingActivity.this, MatchesActivity.class);
-        goToMatchesIntent.putExtra("current_user", currentUser);
-        startActivity(goToMatchesIntent);
-        return;
-    }
+//    public void goToMatches(View view) {
+//        Intent goToMatchesIntent = new Intent(SwipingActivity.this, MatchesActivity.class);
+//        goToMatchesIntent.putExtra("current_user", currentUser);
+//        startActivity(goToMatchesIntent);
+//        return;
+//    }
 }

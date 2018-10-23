@@ -16,7 +16,6 @@
         <activity
             android:name=".BookInfoWindow"
             android:theme="@style/AppTheme.CustomBookWindowTheme"></activity>
-        <activity android:name=".matches.MatchesActivity"></activity>
         <activity android:name=".ChooseLoginRegistrationActivity" android:label="Kindler">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
