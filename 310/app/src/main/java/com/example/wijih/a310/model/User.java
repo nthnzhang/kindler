@@ -18,6 +18,8 @@ public class User implements Parcelable {
     private String username;
     private String userID;
     private String email;
+    private String password;
+    private String phone;
     private List<String> matchIDs;
     private List<String> uploadedBookIDs;
     private Double totalScore;
@@ -28,12 +30,15 @@ public class User implements Parcelable {
     private List<String> swipableBookIds;
 
     // used when creating a new account
-    public User(String username, String email, List<String> matches, List<String> booksUploaded, Double totalScore, Double totalReviews, Map<String, List<String>> likedBooks) {
+    public User(String username, String email, String password, String phone, List<String> matches,
+                List<String> booksUploaded, Double totalScore, Double totalReviews, Map<String, List<String>> likedBooks) {
         mDatabase = FirebaseDatabase.getInstance().getReference().child("users");
 
         this.username = username;
         this.email = email;
         this.matchIDs = matches;
+        this.phone = phone;
+        this.password = password;
         this.uploadedBookIDs = booksUploaded;
         this.totalScore = totalScore;
         this.totalReviews = totalReviews;
@@ -340,6 +345,14 @@ public class User implements Parcelable {
 
     public String getUserID() {
         return userID;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getPhone() {
+        return phone;
     }
 
     public List<String> getSwipableBookIds() {return swipableBookIds;}
