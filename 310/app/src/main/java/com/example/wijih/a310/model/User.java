@@ -209,39 +209,39 @@ public class User implements Parcelable {
 
     // basic book getting functionality - doesn't account for seen / own books
     // should only need to be called once
-    public void startUpdatingBookList() {
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("books");
-        mDatabase.addChildEventListener(new ChildEventListener() {
-            // new book has been added
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                // update the list and the array adapter
-                String newBookId = dataSnapshot.child("bookId").getValue(String.class);
-                swipableBookIds.add(newBookId);
-//                Log.d("testAddBook", "size: " + String.valueOf(swipableBookIds.size()));
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
+//    public void startUpdatingBookList() {
+//        mDatabase = FirebaseDatabase.getInstance().getReference().child("books");
+//        mDatabase.addChildEventListener(new ChildEventListener() {
+//            // new book has been added
+//            @Override
+//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                // update the list and the array adapter
+//                String newBookId = dataSnapshot.child("bookId").getValue(String.class);
+//                swipableBookIds.add(newBookId);
+////                Log.d("testAddBook", "size: " + String.valueOf(swipableBookIds.size()));
+//            }
+//
+//            @Override
+//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+//    }
 
     // returns map of ownerIDs to books that you like from that owner
     // possibly an obsolete function, depending on the future implementation

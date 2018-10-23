@@ -11,6 +11,12 @@ import android.view.View;
 
 import com.example.wijih.a310.model.User;
 import com.example.wijih.a310.model.Book;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.util.ArrayList;
@@ -27,6 +33,8 @@ public class SwipingActivity extends Activity {
     private ArrayAdapter<String> arrayAdapter;
     private int i;
 
+    private DatabaseReference mDatabase;
+
     @BindView(R.id.frame) SwipeFlingAdapterView flingContainer;
 
     @Override
@@ -40,32 +48,35 @@ public class SwipingActivity extends Activity {
         currentUser = currUserIntent.getParcelableExtra("current_user");
 
         // getting list of books from database
-        List<String> swipableBooksIDs = currentUser.getSwipableBookIds();
-        alBooks = getBookObjs(swipableBooksIDs);
+//        List<String> swipableBooksIDs = currentUser.getSwipableBookIds();
+//        alBooks = getBookObjs(swipableBooksIDs);
+        alBooks = new ArrayList<>();
+        startUpdatingBookList();
+
         al = getBookTitles(alBooks);
 
         // FAKE FAKE FAKE FAKE FAKE FAKE FAKE
-        alBooks = new ArrayList<>();
-        al = new ArrayList<>();
+//        al = new ArrayList<>();
 
-        List<String> tags = new ArrayList<>();
-        alBooks.add(new Book("Harry Potter and the Sorcerer's Stone", "blah blah blah description", "ownerID?!?!?!", false, tags));
-        alBooks.add(new Book("Harry Potter and the Chamber of Secrets", "blah blah blah description", "ownerID?!?!?!", false, tags));
-        alBooks.add(new Book("Harry Potter and the Prisoner of Azkaban", "blah blah blah description", "ownerID?!?!?!", false, tags));
-        alBooks.add(new Book("Harry Potter and the Goblet of Fire", "blah blah blah description", "ownerID?!?!?!", false, tags));
-        alBooks.add(new Book("Harry Potter and the Order of the Phoenix", "blah blah blah description", "ownerID?!?!?!", false, tags));
-        alBooks.add(new Book("Harry Potter and the Half Blood Prince", "blah blah blah description", "ownerID?!?!?!", false, tags));
-        alBooks.add(new Book("Harry Potter and the Deathly Hallows", "blah blah blah description", "ownerID?!?!?!", false, tags));
 
-        al.add("Harry Potter and the Sorcerer's Stone");
-        al.add("Harry Potter and the Chamber of Secrets");
-        al.add("Harry Potter and the Prisoner of Azkaban");
-        al.add("Harry Potter and the Goblet of Fire");
-        al.add("Harry Potter and the Order of the Phoenix");
-        al.add("Harry Potter and the Half Blood Prince");
-        al.add("Harry Potter and the Deathly Hallows");
+//        List<String> tags = new ArrayList<>();
+//        alBooks.add(new Book("Harry Potter and the Sorcerer's Stone", "blah blah blah description", "ownerID?!?!?!", false, tags));
+//        alBooks.add(new Book("Harry Potter and the Chamber of Secrets", "blah blah blah description", "ownerID?!?!?!", false, tags));
+//        alBooks.add(new Book("Harry Potter and the Prisoner of Azkaban", "blah blah blah description", "ownerID?!?!?!", false, tags));
+//        alBooks.add(new Book("Harry Potter and the Goblet of Fire", "blah blah blah description", "ownerID?!?!?!", false, tags));
+//        alBooks.add(new Book("Harry Potter and the Order of the Phoenix", "blah blah blah description", "ownerID?!?!?!", false, tags));
+//        alBooks.add(new Book("Harry Potter and the Half Blood Prince", "blah blah blah description", "ownerID?!?!?!", false, tags));
+//        alBooks.add(new Book("Harry Potter and the Deathly Hallows", "blah blah blah description", "ownerID?!?!?!", false, tags));
+//
+//        al.add("Harry Potter and the Sorcerer's Stone");
+//        al.add("Harry Potter and the Chamber of Secrets");
+//        al.add("Harry Potter and the Prisoner of Azkaban");
+//        al.add("Harry Potter and the Goblet of Fire");
+//        al.add("Harry Potter and the Order of the Phoenix");
+//        al.add("Harry Potter and the Half Blood Prince");
+//        al.add("Harry Potter and the Deathly Hallows");
 
-        arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.bookTitleText, al );
+        arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.bookTitleText, al);
 
 
         flingContainer.setAdapter(arrayAdapter);
@@ -131,6 +142,60 @@ public class SwipingActivity extends Activity {
     private ArrayList<Book> getBookObjs(List<String> swipableBooksIDs) {
         ArrayList<Book> alBooks = new ArrayList<>();
 
+
+
         return alBooks;
+    }
+//
+//    private void getBookObjects() {
+//        mDatabase = FirebaseDatabase.getInstance().getReference().child("books");
+//
+//        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                Book book = dataSnapshot.getValue(Book.class);
+//                alBooks.add(book);
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+//    }
+
+    public void startUpdatingBookList() {
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("books");
+        mDatabase.addChildEventListener(new ChildEventListener() {
+            // new book has been added
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                // update the list and the array adapter
+                Book book = dataSnapshot.getValue(Book.class);
+//                String newBookId = dataSnapshot.child("bookId").getValue(String.class);
+                alBooks.add(book);
+//                Log.d("testAddBook", "size: " + String.valueOf(swipableBookIds.size()));
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }
