@@ -49,7 +49,7 @@ public class SwipingActivity extends Activity {
         // getting list of books from database
         alBooks = new ArrayList<Book>();
         al = new ArrayList<String>();
-        startUpdatingBookList();
+        startUpdatingBookList(currentUser.getUserID());
 
         arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.bookTitleText, al);
 
@@ -104,7 +104,7 @@ public class SwipingActivity extends Activity {
         });
     }
 
-    public void startUpdatingBookList() {
+    public void startUpdatingBookList(final String userId) {
         mDatabase = FirebaseDatabase.getInstance().getReference().child("books");
         mDatabase.addChildEventListener(new ChildEventListener() {
             // new book has been added
@@ -112,9 +112,11 @@ public class SwipingActivity extends Activity {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 // update the list and the array adapter
                 Book book = dataSnapshot.getValue(Book.class);
-                alBooks.add(book);
-                al.add(book.getTitle());
-                arrayAdapter.notifyDataSetChanged();
+                if(book.getOwnerID() != userId) {
+                    alBooks.add(book);
+                    al.add(book.getTitle());
+                    arrayAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override
