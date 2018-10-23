@@ -22,10 +22,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".BookInfoWindow"
-            android:theme="@style/AppTheme.CustomBookWindowTheme" />
-        <activity android:name=".ChooseLoginRegistrationActivity" />
+        <!--<activity-->
+            <!--android:name=".BookInfoWindow"-->
+            <!--android:theme="@style/AppTheme.CustomBookWindowTheme" />-->
+        <!--<activity android:name=".ChooseLoginRegistrationActivity" />-->
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".ProfileActivity" />

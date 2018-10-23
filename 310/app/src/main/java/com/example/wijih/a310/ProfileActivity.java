@@ -1,11 +1,16 @@
 package com.example.wijih.a310;
 
 import android.content.Intent;
+import android.icu.util.Freezable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import com.example.wijih.a310.model.User;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,20 +24,17 @@ public class ProfileActivity extends AppCompatActivity {
     List<String> allBooks = new ArrayList<String>();
     String booksDisplay = "";
 
+    private User currentUser;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        final Intent currUserIntent = getIntent();
+        currentUser = currUserIntent.getParcelableExtra("current_user");
 
-        username = "zharju";
-        email = "zharju@usc.edu";
-        phone = "7144211666";
-        rating = "4.3";
-        allBooks.add("harry potter");
-        allBooks.add("hunger games");
-        allBooks.add("hi");
 
         /*username = user.getUsername();
         email = user.getEmail();
@@ -42,13 +44,16 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         usernameView = (TextView) findViewById(R.id.username);
-        usernameView.setText(username);
+        usernameView.setText(currentUser.getUsername());
         emailView = (TextView) findViewById(R.id.email);
-        emailView.setText(email);
+        emailView.setText(currentUser.getEmail());
         phoneView = (TextView) findViewById(R.id.phone);
-        phoneView.setText(phone);
+        phoneView.setText(currentUser.getPhone());
         ratingView = (TextView) findViewById(R.id.rating);
-        ratingView.setText(rating);
+        ratingView.setText(String.valueOf(currentUser.getTotalScore()/currentUser.getTotalReviews()));
+
+//        mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUserID()).child("uploadedBookIDs");
+
 
     }
 
@@ -58,15 +63,27 @@ public class ProfileActivity extends AppCompatActivity {
 
 
     public void editProfile (View view) {
-        startActivity(new Intent(this, EditProfileActivity.class));
+//        startActivity(new Intent(this, EditProfileActivity.class));
+
+        Intent intent = new Intent(this, EditProfileActivity.class);
+        intent.putExtra("current_user", currentUser);
+        startActivity(intent);
     }
 
     public void addBook (View view) {
-        startActivity(new Intent(this, AddBook.class));
+//        startActivity(new Intent(this, AddBookActivity.class));
+
+        Intent intent = new Intent(this, AddBookActivity.class);
+        intent.putExtra("current_user", currentUser);
+        startActivity(intent);
     }
 
     public void yourBooks (View view) {
-        startActivity(new Intent(this, BooksActivity.class));
+//        startActivity(new Intent(this, BooksActivity.class));
+
+        Intent intent = new Intent(this, BooksActivity.class);
+        intent.putExtra("current_user", currentUser);
+        startActivity(intent);
     }
 
     //Logout function done

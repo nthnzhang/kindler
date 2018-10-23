@@ -9,18 +9,27 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.example.wijih.a310.model.Book;
+import com.example.wijih.a310.model.User;
+
+import java.util.ArrayList;
+
 public class AddBookActivity extends AppCompatActivity {
 
+    private User currentUser;
     private EditText bookTitle, bookDescription, bookTags;
     private boolean checked, forSale = false;
     private Button add;
     private RadioButton radioChoice;
     private RadioGroup exchangeOrSale;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_book);
 
+        final Intent currUserIntent = getIntent();
+        currentUser = currUserIntent.getParcelableExtra("current_user");
 
         addBook();
     }
@@ -30,13 +39,13 @@ public class AddBookActivity extends AppCompatActivity {
         bookTitle = (EditText) findViewById(R.id.bookTitle);
         bookDescription = (EditText) findViewById(R.id.bookDescription);
         bookTags = (EditText) findViewById(R.id.bookTags);
-        add = (Button) findViewById(R.id.add);
+        add = (Button) findViewById(R.id.addBook);
         exchangeOrSale = (RadioGroup) findViewById(R.id.exchangeOrSale);
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (user != null && !bookTitle.getText().toString().trim().equals("") && !bookDescription.getText().toString().trim().equals("") && !bookTags.getText().toString().trim().equals("")) {
+                if (currentUser != null && !bookTitle.getText().toString().trim().equals("") && !bookDescription.getText().toString().trim().equals("") && !bookTags.getText().toString().trim().equals("")) {
 
                     //split the tags by whitespace
                     //String[] tags = bookTags.split("\\s+");
@@ -50,13 +59,19 @@ public class AddBookActivity extends AppCompatActivity {
                     else {
                         forSale = false;
                     }
-                    user.addBook(new Book(bookTitle, bookDescription, user.getUserId(), forSale, bookTags));
-                    //get user id to attach when adding book
-                    //append the new book to the users books
+                    // add book
+                    Book newBook = new Book(bookTitle.getText().toString(), bookDescription.getText().toString(),
+                            currentUser.getUserID(), forSale, new ArrayList<String>());
+                    currentUser.addBook(newBook);
+
+                    Intent intent = new Intent(AddBookActivity.this, ProfileActivity.class);
+                    intent.putExtra("current_user", currentUser);
+                    startActivity(intent);
                 }
             }
         });
 
-        startActivity(new Intent(AddBook.this, ProfileActivity.class));
+//        startActivity(new Intent(AddBookActivity.this, ProfileActivity.class));
+
     }
 }

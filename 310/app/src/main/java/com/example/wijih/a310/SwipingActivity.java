@@ -149,10 +149,10 @@ public class SwipingActivity extends Activity {
     }
 
 
-//    public void goToMatches(View view) {
-//        Intent goToMatchesIntent = new Intent(SwipingActivity.this, MatchesActivity.class);
-//        goToMatchesIntent.putExtra("current_user", currentUser);
-//        startActivity(goToMatchesIntent);
-//        return;
-//    }
+    public void goToMatches(View view) {
+        Intent goToMatchesIntent = new Intent(SwipingActivity.this, ProfileActivity.class);
+        goToMatchesIntent.putExtra("current_user", currentUser);
+        startActivity(goToMatchesIntent);
+        return;
+    }
 }

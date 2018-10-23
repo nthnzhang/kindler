@@ -129,6 +129,7 @@ public class User implements Parcelable {
     // adds book id to list of uploaded book ids
     // add book to database
     public void addBook(Book book) {
+        Log.d("adding book", "test");
         mDatabase = FirebaseDatabase.getInstance().getReference();
         // add to entire db of books
         String bookId = mDatabase.child("books").push().getKey();
@@ -136,8 +137,11 @@ public class User implements Parcelable {
         mDatabase.child("books").child(bookId).setValue(book);
 
         // add to own list of uploaded books
+        if(uploadedBookIDs == null) {
+            uploadedBookIDs = new ArrayList<>();
+        }
         uploadedBookIDs.add(bookId);
-        mDatabase.child("users").child("uploadedBooksIDs").push().setValue(bookId);
+        mDatabase.child("users").child(userID).child("uploadedBooksIDs").push().setValue(bookId);
 
 
     }
