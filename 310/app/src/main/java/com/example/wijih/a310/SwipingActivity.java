@@ -7,9 +7,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import android.widget.Button;
 import android.widget.TextView;
 =======
+>>>>>>> devNathan
+=======
+import android.widget.Button;
+import android.widget.TextView;
 >>>>>>> devNathan
 import android.widget.Toast;
 
