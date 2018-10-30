@@ -155,6 +155,9 @@ public class User implements Parcelable {
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                if(!dataSnapshot.child("ownerID").exists()) {
+                    return;
+                }
                 final String ownerId = dataSnapshot.child("ownerID").getValue(String.class);
                 Book book = dataSnapshot.getValue(Book.class);
 

@@ -67,6 +67,14 @@
           }
         },
         {
+          "client_id": "1063059750312-6ninalas0fgp6qiu7ko3ibad2b3ef0l4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wijih.a310",
+            "certificate_hash": "81c79ae40e06a8ab4b6bb473957fdf80838cc581"
+          }
+        },
+        {
           "client_id": "1063059750312-ls1ocmqkem8s1rln80s6evdk4c86q0ni.apps.googleusercontent.com",
           "client_type": 3
         }

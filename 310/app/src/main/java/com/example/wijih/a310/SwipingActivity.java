@@ -42,7 +42,7 @@ public class SwipingActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.swiping_activity);
         ButterKnife.bind(this);
-
+        i = 0;
         //button to go to matches
 //        button = (Button)findViewById(R.id.toMatches);
 //        button.setOnClickListener(new View.OnClickListener() {
