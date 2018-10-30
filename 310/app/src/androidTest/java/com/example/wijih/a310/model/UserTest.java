@@ -44,6 +44,22 @@ public class UserTest {
 
     }
 
+    @Test
+    public void testUserConstruction() throws Exception {
+        User constructionTestUser = new User("testUser", "unit@test", "testing", "123456789", new ArrayList<String>(),
+                new ArrayList<String>(), 0.0, 0.0, new HashMap<String, List<String >>());
+        try {
+            assertEquals("testUser", constructionTestUser.getUsername());
+            assertEquals("unit@test", constructionTestUser.getEmail());
+            assertEquals("testing", constructionTestUser.getPassword());
+            assertEquals("123456789", constructionTestUser.getPhone());
+            assertEquals((Double)0.0, (Double)constructionTestUser.getTotalReviews());
+            assertEquals((Double)0.0, (Double)constructionTestUser.getTotalScore());
+        } catch (Throwable t) {
+            collector.addError(t);
+        }
+    }
+
     // should be successful
     @Test
     public void addBook() throws Exception {
@@ -56,6 +72,39 @@ public class UserTest {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 boolean foundBook = false;
+                for(DataSnapshot data : dataSnapshot.getChildren()) {
+                    if(data.child("title").getValue(String.class).equals("testBook")) {
+                        foundBook = true;
+                    }
+                }
+                try {
+                    assertEquals(foundBook, true);
+                } catch (Throwable t) {
+                    collector.addError(t);
+                }
+                lock.countDown();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        lock.await();
+    }
+
+    @Test
+    public void addBookNoUploadedBooks() throws Exception {
+        Book testBook = new Book("testBook", "this is a unit test", "testOwnerId",
+                false, new ArrayList<String>());
+
+        testUser.addBook(testBook);
+        testDatabaseReference = testDatabaseReference.child("books");
+
+        testDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                boolean foundBook = true;
                 for(DataSnapshot data : dataSnapshot.getChildren()) {
                     if(data.child("title").getValue(String.class).equals("testBook")) {
                         foundBook = true;
@@ -209,6 +258,37 @@ public class UserTest {
 
                 try {
                     assertEquals(false, found);
+                } catch (Throwable t) {
+                    collector.addError(t);
+                }
+                lock.countDown();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        lock.await();
+    }
+
+    @Test
+    public void addLikeFirstTime() throws Exception {
+        testUser.addLike("-LQ0wlQcrHmzCZVzZwdp");
+
+        testDatabaseReference = FirebaseDatabase.getInstance().getReference().child("users")
+                .child(testUser.getUserID());
+
+        testDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                boolean found = false;
+                if(dataSnapshot.exists()) {
+                    found = true;
+                }
+
+                try {
+                    assertEquals(true, found);
                 } catch (Throwable t) {
                     collector.addError(t);
                 }
