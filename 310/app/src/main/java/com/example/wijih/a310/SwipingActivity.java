@@ -44,13 +44,13 @@ public class SwipingActivity extends Activity {
         ButterKnife.bind(this);
 
         //button to go to matches
-        button = (Button) findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openProfileActivity();
-            }
-        });
+//        button = (Button)findViewById(R.id.toMatches);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                openMatchesActivity();
+//            }
+//        });
 
         // getting current user form login activity
         final Intent currUserIntent = getIntent();
@@ -148,8 +148,11 @@ public class SwipingActivity extends Activity {
         });
     }
 
-    public void openProfileActivity(){
-        Intent intent = new Intent(this, ProfileActivity.class);
-        startActivity(intent);
+
+    public void goToMatches(View view) {
+        Intent goToMatchesIntent = new Intent(SwipingActivity.this, ProfileActivity.class);
+        goToMatchesIntent.putExtra("current_user", currentUser);
+        startActivity(goToMatchesIntent);
+        return;
     }
 }
