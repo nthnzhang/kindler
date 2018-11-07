@@ -50,6 +50,10 @@ public class MatchesActivity extends AppCompatActivity {
         resultsMatches.add(match2);
         resultsMatches.add(match3);
         resultsMatches.add(match4);
+        resultsMatches.add(match1);
+        resultsMatches.add(match2);
+        resultsMatches.add(match3);
+        resultsMatches.add(match4);
 
         matchesAdapter.notifyDataSetChanged();
     }
