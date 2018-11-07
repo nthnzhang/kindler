@@ -8,17 +8,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.wijih.a310.R;
+import com.example.wijih.a310.model.Match;
 
 import java.util.List;
 
 import static com.example.wijih.a310.R.layout.item_matches;
 
 public class MatchesAdapter extends RecyclerView.Adapter<MatchesViewHolder> {
-    private List<Matches> matchesList;
+    private List<Match> matchesList;
     private Context context;
 
 
-    public MatchesAdapter(List<Matches> matchesList, Context context) {
+    public MatchesAdapter(List<Match> matchesList, Context context) {
         this.matchesList = matchesList;
         this.context = context;
     }
@@ -37,7 +38,7 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MatchesViewHolder holder, int position) {
-        holder.matchID.setText(matchesList.get(position).getUserId());
+        holder.matchID.setText(matchesList.get(position).getUserId1());
     }
 
     @Override

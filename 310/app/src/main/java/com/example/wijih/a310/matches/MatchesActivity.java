@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.example.wijih.a310.R;
 import com.example.wijih.a310.SwipingActivity;
+import com.example.wijih.a310.model.Match;
 import com.example.wijih.a310.model.User;
 
 import java.util.ArrayList;
@@ -42,10 +43,10 @@ public class MatchesActivity extends AppCompatActivity {
         rView.setAdapter(matchesAdapter);
 
         // DUMMY DATA
-        Matches match1 = new Matches("testUserID1");
-        Matches match2 = new Matches("testUserID2");
-        Matches match3 = new Matches("testUserID3");
-        Matches match4 = new Matches("testUserID4");
+        Match match1 = new Match("testUserID1", currentUser.getUserID());
+        Match match2 = new Match("testUserID2", currentUser.getUserID());
+        Match match3 = new Match("testUserID3", currentUser.getUserID());
+        Match match4 = new Match("testUserID4", currentUser.getUserID());
         resultsMatches.add(match1);
         resultsMatches.add(match2);
         resultsMatches.add(match3);
@@ -59,8 +60,8 @@ public class MatchesActivity extends AppCompatActivity {
     }
 
 
-    private ArrayList<Matches> resultsMatches = new ArrayList<Matches>();
-    private List<Matches> getDataSetMatches() {
+    private ArrayList<Match> resultsMatches = new ArrayList<Match>();
+    private List<Match> getDataSetMatches() {
         return resultsMatches;
     }
 
