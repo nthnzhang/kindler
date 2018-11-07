@@ -11,21 +11,23 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".SwipingActivity"
-            android:label="@string/app_name">
-        </activity>
+            android:label="@string/app_name"></activity>
         <activity
             android:name=".BookInfoWindow"
-            android:theme="@style/AppTheme.CustomBookWindowTheme"></activity>
-        <activity android:name=".ChooseLoginRegistrationActivity" android:label="Kindler">
+            android:theme="@style/AppTheme.CustomBookWindowTheme" />
+        <activity
+            android:name=".ChooseLoginRegistrationActivity"
+            android:label="Kindler">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--<activity-->
-            <!--android:name=".BookInfoWindow"-->
-            <!--android:theme="@style/AppTheme.CustomBookWindowTheme" />-->
-        <!--<activity android:name=".ChooseLoginRegistrationActivity" />-->
+        <!-- <activity -->
+        <!-- android:name=".BookInfoWindow" -->
+        <!-- android:theme="@style/AppTheme.CustomBookWindowTheme" /> -->
+        <!-- <activity android:name=".ChooseLoginRegistrationActivity" /> -->
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".ProfileActivity" />
@@ -34,7 +36,8 @@
             android:name=".BooksActivity"
             android:label="@string/title_activity_books"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".AddBookActivity"></activity>
+        <activity android:name=".AddBookActivity" />
+        <activity android:name=".matches.MatchesActivity"></activity>
     </application>
 
 </manifest>
