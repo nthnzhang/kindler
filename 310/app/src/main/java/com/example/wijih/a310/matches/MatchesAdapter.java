@@ -42,6 +42,6 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesViewHolder> {
 
     @Override
     public int getItemCount() {
-        return 0;
+        return matchesList.size();
     }
 }
