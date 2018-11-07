@@ -5,6 +5,7 @@ import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -29,6 +30,17 @@ public class RegistrationActivityUITest {
     @Before
     public void setUp() throws Exception {
 
+    }
+
+    @Test
+    public void testRegistrationAbility() {
+        String randomEmail = RandomStringUtils.random(10, true, false);
+        onView(withId(R.id.email)).perform(typeText(randomEmail + "@email.com"));
+        onView(withId(R.id.username)).perform(typeText("thisusershouldnotexist"));
+        onView(withId(R.id.number)).perform(typeText("123456"));
+        onView(withId(R.id.password)).perform(typeText("shouldbevalid!"));
+        onView(withId(R.id.register)).perform(click());
+        onView(withId(R.id.frame)).check(matches(isDisplayed()));
     }
 
     @Test
