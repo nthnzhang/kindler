@@ -27,6 +27,7 @@ public class User implements Parcelable {
     private Double totalScore;
     private Double totalReviews;
     private Map<String, List<String>> likedBooks;
+    private List<String> seenBooks;
 
     private DatabaseReference mDatabase;
     private List<String> swipableBookIds;
@@ -46,6 +47,7 @@ public class User implements Parcelable {
         this.totalReviews = totalReviews;
         this.likedBooks = likedBooks;
         this.swipableBookIds = new ArrayList<String>();
+        this.seenBooks = new ArrayList<String>();
 
         this.userID = mDatabase.push().getKey();
 
@@ -329,6 +331,75 @@ public class User implements Parcelable {
 
             }
         });
+    }
+
+    public void addSeenBook(final String bookId) {
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(userID);
+
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(seenBooks == null) {
+                    seenBooks = new ArrayList<>();
+                }
+                if(!seenBooks.contains(bookId)) {
+                    seenBooks.add(bookId);
+                }
+                Log.d("size", String.valueOf(seenBooks.size()));
+                mDatabase.child("seenBooks").setValue(seenBooks);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    public void updateSeenBookList() {
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(userID)
+            .child("seenBooks");
+
+        mDatabase.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                String seenBookId = dataSnapshot.getValue(String.class);
+                if(seenBooks == null) {
+                    seenBooks = new ArrayList<>();
+                }
+                if(!seenBooks.contains(seenBookId)) {
+                    seenBooks.add(seenBookId);
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public boolean hasSeenBook(String bookId) {
+        if(seenBooks == null) {
+            return false;
+        }
+        return seenBooks.contains(bookId);
     }
 
     public String getUsername() {

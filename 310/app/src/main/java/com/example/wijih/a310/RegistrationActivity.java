@@ -74,7 +74,8 @@ public class RegistrationActivity extends AppCompatActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         // make sure email has not been used already
                         for(DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                            if(userSnapshot.child("email").getValue(String.class).equals(email)) {
+                            if(userSnapshot.child("email").getValue(String.class) != null &&
+                                userSnapshot.child("email").getValue(String.class).equals(email)) {
                                 // email has already been used
                                 Toast.makeText(RegistrationActivity.this, "sign up error", Toast.LENGTH_SHORT).show();
                                 return;

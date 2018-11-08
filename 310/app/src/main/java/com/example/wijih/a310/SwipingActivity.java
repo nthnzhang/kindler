@@ -43,7 +43,7 @@ public class SwipingActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.swiping_activity);
         ButterKnife.bind(this);
-        i = 0;
+//        i = 0;
         //button to go to matches
 //        button = (Button)findViewById(R.id.toMatches);
 //        button.setOnClickListener(new View.OnClickListener() {
@@ -60,6 +60,7 @@ public class SwipingActivity extends Activity {
         alBooks = new ArrayList<Book>();
         al = new ArrayList<String>();
 
+        currentUser.updateSeenBookList();
         startUpdatingBookList(currentUser.getUserID());
 
         arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.bookTitleText, al);
@@ -70,6 +71,8 @@ public class SwipingActivity extends Activity {
             public void removeFirstObjectInAdapter() {
                 // deleting object from Adapter / AdapterView
                 Log.d("LIST", "removed object!");
+                Log.d("removed", alBooks.get(i).getBookId());
+                currentUser.addSeenBook(alBooks.get(i).getBookId());
                 al.remove(0);
                 arrayAdapter.notifyDataSetChanged();
             }
@@ -112,6 +115,8 @@ public class SwipingActivity extends Activity {
         });
     }
 
+
+
     public void startUpdatingBookList(final String userId) {
         mDatabase = FirebaseDatabase.getInstance().getReference().child("books");
         mDatabase.addChildEventListener(new ChildEventListener() {
@@ -121,9 +126,11 @@ public class SwipingActivity extends Activity {
                 // update the list and the array adapter
                 Book book = dataSnapshot.getValue(Book.class);
                 if(book.getOwnerID() != userId) {
-                    alBooks.add(book);
-                    al.add(book.getTitle());
-                    arrayAdapter.notifyDataSetChanged();
+                    if(!currentUser.hasSeenBook(book.getBookId())) {
+                        alBooks.add(book);
+                        al.add(book.getTitle());
+                        arrayAdapter.notifyDataSetChanged();
+                    }
                 }
             }
 

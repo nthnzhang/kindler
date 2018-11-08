@@ -61,7 +61,8 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                            if(userSnapshot.child("email").getValue(String.class).equals(email)) {
+                            if(userSnapshot.child("email").getValue(String.class) != null &&
+                                userSnapshot.child("email").getValue(String.class).equals(email)) {
                                 if(userSnapshot.child("password").getValue(String.class).equals(password)) {
                                     currentUser = userSnapshot.getValue(User.class);
                                     // add this current user to intent
