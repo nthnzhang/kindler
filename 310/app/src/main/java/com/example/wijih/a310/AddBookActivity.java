@@ -11,8 +11,9 @@ import android.widget.RadioGroup;
 
 import com.example.wijih.a310.model.Book;
 import com.example.wijih.a310.model.User;
+import java.util.Arrays;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class AddBookActivity extends AppCompatActivity {
 
@@ -22,6 +23,7 @@ public class AddBookActivity extends AppCompatActivity {
     private Button add;
     private RadioButton radioChoice;
     private RadioGroup exchangeOrSale;
+    private String tagString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,13 +44,17 @@ public class AddBookActivity extends AppCompatActivity {
         add = (Button) findViewById(R.id.addBook);
         exchangeOrSale = (RadioGroup) findViewById(R.id.exchangeOrSale);
 
+        tagString = (String) bookTags.toString();
+
+
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (currentUser != null && !bookTitle.getText().toString().trim().equals("") && !bookDescription.getText().toString().trim().equals("") && !bookTags.getText().toString().trim().equals("")) {
 
-                    //split the tags by whitespace
-                    //String[] tags = bookTags.split("\\s+");
+                    //split the tags by commas
+
+                    List<String> tags = Arrays.asList(tagString.split(","));
 
                     int selected = exchangeOrSale.getCheckedRadioButtonId();
 
@@ -61,7 +67,7 @@ public class AddBookActivity extends AppCompatActivity {
                     }
                     // add book
                     Book newBook = new Book(bookTitle.getText().toString(), bookDescription.getText().toString(),
-                            currentUser.getUserID(), forSale, new ArrayList<String>());
+                            currentUser.getUserID(), forSale, tags);
                     currentUser.addBook(newBook);
 
                     Intent intent = new Intent(AddBookActivity.this, ProfileActivity.class);

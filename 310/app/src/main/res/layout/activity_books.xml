@@ -6,10 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".BooksActivity">
 
+
     <ListView
         android:id="@+id/verticalBooksView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        ></ListView>
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"></ListView>
+
+
+    <Button
+        android:id="@+id/editBook"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Edit Book" />
+
 
 </RelativeLayout>

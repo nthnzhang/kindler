@@ -86,11 +86,19 @@ public class ProfileActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void swipe (View view) {
+        Intent intent = new Intent(ProfileActivity.this, SwipingActivity.class);
+        intent.putExtra("current_user", currentUser);
+        startActivity(intent);
+    }
+
     //Logout function done
-    /*public void logoutUser(View view) {
-        mAuth.signOut();
+    public void logoutUser(View view) {
+        Intent intent = new Intent(ProfileActivity.this, ChooseLoginRegistrationActivity.class);
+        startActivity(intent);
+        /*mAuth.signOut();
         startActivity(new Intent(MainActivity.this, ChooseLoginRegistrationActivity.class));
         finish();
-        return;
-    }*/
+        return;*/
+    }
 }

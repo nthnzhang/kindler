@@ -42,22 +42,25 @@ public class BooksActivity extends AppCompatActivity {
         final Intent currUserIntent = getIntent();
         currentUser = currUserIntent.getParcelableExtra("current_user");
 
+        //List<String> books = new ArrayList<String>(currentUser.getBooksUploaded());
 
         verticalBooks = (ListView) findViewById(R.id.verticalBooksView);
 
-        adapter = new ArrayAdapter<String>(this, R.layout.activity_books_view, R.id.booksDisplay, books);
+        adapter = new ArrayAdapter<String>(BooksActivity.this, R.layout.activity_books_view, R.id.booksDisplay, books);
         verticalBooks.setAdapter(adapter);
+
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUserID()).child("uploadedBookIDs");
 
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                     // getting each bookId
                     Log.d("test", userSnapshot.getValue(String.class));
                     books.add(userSnapshot.getValue(String.class));
                     adapter.notifyDataSetChanged();
+
                 }
 
             }
@@ -66,10 +69,16 @@ public class BooksActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
 
             }
+
         });
 
 
-
     }
+
+    /*public void editBook(View view) {
+        Intent intent = new Intent(this, EditBookActivity.class);
+        intent.putExtra("current_user", currentUser);
+        startActivity(intent);
+    }*/
 
 }
