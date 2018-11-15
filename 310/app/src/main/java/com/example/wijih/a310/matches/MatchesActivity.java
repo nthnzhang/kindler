@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-
 import com.example.wijih.a310.R;
 import com.example.wijih.a310.SwipingActivity;
 import com.example.wijih.a310.model.Match;

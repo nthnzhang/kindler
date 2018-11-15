@@ -2,4 +2,8 @@
     <string name="app_name">Kindler</string>
     <string name="dummy_title">Title of Book</string>
     <string name="title_activity_books">BooksActivity</string>
+    <string name="name_activity_matches">MatchName</string>
+    <string name="email_activity_matches">MatchEmail</string>
+    <string name="accept_match_button">AcceptMatch</string>
+    <string name="deny_match_button">DenyMatch</string>
 </resources>

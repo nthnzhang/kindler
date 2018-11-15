@@ -38,6 +38,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".AddBookActivity" />
         <activity android:name=".matches.MatchesActivity"></activity>
+        <activity
+            android:name=".matches.MatchInfoWindow"
+            android:theme="@style/AppTheme.CustomBookWindowTheme"></activity>
     </application>
 
 </manifest>
