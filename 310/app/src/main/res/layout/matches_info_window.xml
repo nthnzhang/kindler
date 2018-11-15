@@ -28,15 +28,16 @@
             android:typeface="serif"
             app:fontFamily="serif" />
 
-        <!--<TextView-->
-        <!--android:id="@+id/matchContactInfo"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginTop="30dp"-->
-        <!--android:layout_marginBottom="10dp"-->
-        <!--android:text="@string/email_activity_matches"-->
-        <!--android:textColor="@android:color/white"-->
-        <!--android:textSize="18sp" />-->
+        <TextView
+            android:id="@+id/matchContactInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/email_activity_matches"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/acceptMatchButton"
@@ -44,7 +45,9 @@
             android:layout_height="30dp"
             android:layout_marginTop="20dp"
             android:background="@color/colorPrimary"
-            android:text="@string/accept_match_button" />
+            android:text="@string/accept_match_button"
+            android:onClick="acceptMatchClicked"
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/denyMatchButton"
@@ -52,7 +55,9 @@
             android:layout_height="30dp"
             android:layout_marginTop="10dp"
             android:background="@color/colorPrimary"
-            android:text="@string/deny_match_button" />
+            android:text="@string/deny_match_button"
+            android:onClick="denyMatchClicked"
+            android:visibility="gone"/>
 
     </LinearLayout>
 

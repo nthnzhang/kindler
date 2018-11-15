@@ -38,8 +38,9 @@ public class MatchesActivity extends AppCompatActivity {
         rView.setLayoutManager(matchesLayoutManager);
 
         // set adapter to recycler view
-        matchesAdapter = new MatchesAdapter(getDataSetMatches(), MatchesActivity.this);
+        matchesAdapter = new MatchesAdapter(getDataSetMatches(), MatchesActivity.this, currentUser);
         rView.setAdapter(matchesAdapter);
+
 
         // DUMMY DATA
         Match match1 = new Match("testUserID1", currentUser.getUserID());
@@ -63,7 +64,6 @@ public class MatchesActivity extends AppCompatActivity {
     private List<Match> getDataSetMatches() {
         return resultsMatches;
     }
-
 
     public void goToSwiping(View view) {
         Intent goToMatchesIntent = new Intent(MatchesActivity.this, SwipingActivity.class);
