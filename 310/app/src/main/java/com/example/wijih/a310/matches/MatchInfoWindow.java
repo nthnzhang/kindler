@@ -24,7 +24,7 @@ public class MatchInfoWindow extends Activity {
 
         int height = dm.heightPixels;
 
-        getWindow().setLayout((int)(0.5*height), (int)(0.6*height));
+        getWindow().setLayout((int)(0.4*height), (int)(0.4*height));
 
     }
 }
