@@ -15,6 +15,7 @@ public class Match {
     // true - accepted match
     private boolean user1Choice;
     private boolean user2Choice;
+    private boolean matchAccepted;
 
     private DatabaseReference mDatabase;
 
@@ -24,6 +25,7 @@ public class Match {
         this.userId2 = userId2;
         this.user1Choice = false;
         this.user2Choice = false;
+        this.matchAccepted = false;
     }
 
     public Match() {
@@ -41,16 +43,18 @@ public class Match {
         if(userId == userId1) {
             // user2 has accepted the match already
             if(user2Choice) {
-                // show contact info
+                matchAccepted = true;
+                mDatabase.child("matchAccepted").setValue(true);
             }
             mDatabase.child("user1Choice").setValue(true);
-
         }
         // user2 is accepting the match
         else {
             // user1 has accepted the match already
             if(user1Choice) {
                 // show contact info
+                matchAccepted = true;
+                mDatabase.child("matchAccepted").setValue(true);
             }
             mDatabase.child("user2Choice").setValue(true);
         }
@@ -109,6 +113,10 @@ public class Match {
 
     public String getUserId2() {
         return userId2;
+    }
+
+    public boolean isMatchAccepted() {
+        return matchAccepted;
     }
 
     public boolean isUser1Choice() {
