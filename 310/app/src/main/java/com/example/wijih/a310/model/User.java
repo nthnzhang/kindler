@@ -77,6 +77,14 @@ public class User implements Parcelable {
             totalReviews = in.readDouble();
         }
         swipableBookIds = in.createStringArrayList();
+
+        likedBooks = new HashMap<>();
+        int size = in.readInt();
+        for(int i = 0; i < size; i++) {
+            String key = in.readString();
+            List<String> value = in.createStringArrayList();
+            likedBooks.put(key, value);
+        }
     }
 
     @Override
@@ -99,6 +107,12 @@ public class User implements Parcelable {
             dest.writeDouble(totalReviews);
         }
         dest.writeStringList(swipableBookIds);
+
+        dest.writeInt(likedBooks.size());
+        for(Map.Entry<String, List<String>> entry : likedBooks.entrySet()) {
+            dest.writeString(entry.getKey());
+            dest.writeStringList(entry.getValue());
+        }
     }
 
     @Override
@@ -165,9 +179,11 @@ public class User implements Parcelable {
 
                 // add liked book to map
                 if(likedBooks == null) {
+                    Log.d("empty", "new list");
                     likedBooks = new HashMap<>();
                 }
                 if(likedBooks.containsKey(ownerId)) {
+                    Log.d("contains key", "test");
                     likedBooks.get(ownerId).add(book.getBookId());
                 }
                 else {
@@ -196,9 +212,9 @@ public class User implements Parcelable {
                             match.setMatchId(matchId);
                             mDatabase.child(matchId).setValue(match);
 
-                            mDatabase = FirebaseDatabase.getInstance().getReference().child("users");
-                            mDatabase.child(userID).child("matchIDs").push().setValue(matchId);
-                            mDatabase.child(ownerId).child("matchIDs").push().setValue(matchId);
+//                            mDatabase = FirebaseDatabase.getInstance().getReference().child("users");
+//                            mDatabase.child(userID).child("matchIDs").push().setValue(matchId);
+//                            mDatabase.child(ownerId).child("matchIDs").push().setValue(matchId);
                         }
                     }
 
@@ -328,6 +344,24 @@ public class User implements Parcelable {
                 Match match = dataSnapshot.getValue(Match.class);
                 // pass in your own id and given rating
                 match.rateUser(userID, rating);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void updateLikedBookList() {
+        mDatabase = FirebaseDatabase.getInstance().getReference().child(userID);
+
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.hasChild("likedBooks")) {
+                    likedBooks = dataSnapshot.child("likedBooks").getValue(Map.class);
+                }
             }
 
             @Override

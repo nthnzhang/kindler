@@ -61,8 +61,10 @@ public class SwipingActivity extends Activity {
 
         currentUser.updateSeenBookList();
         startUpdatingBookList(currentUser.getUserID());
+        currentUser.updateLikedBookList();
 
         arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.bookTitleText, al);
+
 
         flingContainer.setAdapter(arrayAdapter);
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
@@ -86,7 +88,6 @@ public class SwipingActivity extends Activity {
             public void onRightCardExit(Object dataObject) {
                 Toast.makeText(SwipingActivity.this, "Liked!", Toast.LENGTH_SHORT).show();
                  currentUser.addLike(alBooks.get(0).getBookId());
-                 Log.d("like", "first");
                 alBooks.remove(0);
                 al.remove(0);
                 arrayAdapter.notifyDataSetChanged();
@@ -97,7 +98,7 @@ public class SwipingActivity extends Activity {
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
                 arrayAdapter.notifyDataSetChanged();
                 Log.d("LIST", "notified");
-                i++;
+//                i++;
             }
 
             @Override
