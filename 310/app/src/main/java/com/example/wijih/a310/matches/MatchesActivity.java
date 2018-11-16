@@ -49,21 +49,6 @@ public class MatchesActivity extends AppCompatActivity {
         matchesAdapter = new MatchesAdapter(getDataSetMatches(), MatchesActivity.this, currentUser);
         rView.setAdapter(matchesAdapter);
 
-
-        // DUMMY DATA
-//        Match match1 = new Match("testUserID1", currentUser.getUserID());
-//        Match match2 = new Match("testUserID2", currentUser.getUserID());
-//        Match match3 = new Match("testUserID3", currentUser.getUserID());
-//        Match match4 = new Match("testUserID4", currentUser.getUserID());
-//        resultsMatches.add(match1);
-//        resultsMatches.add(match2);
-//        resultsMatches.add(match3);
-//        resultsMatches.add(match4);
-//        resultsMatches.add(match1);
-//        resultsMatches.add(match2);
-//        resultsMatches.add(match3);
-//        resultsMatches.add(match4);
-
         matchesAdapter.notifyDataSetChanged();
     }
 
@@ -73,7 +58,6 @@ public class MatchesActivity extends AppCompatActivity {
         return resultsMatches;
     }
 
-<<<<<<< HEAD
     private void startUpdatingMatchList() {
         mDatabase = FirebaseDatabase.getInstance().getReference().child("matches");
 
@@ -125,8 +109,6 @@ public class MatchesActivity extends AppCompatActivity {
         });
     }
 
-=======
->>>>>>> master
     public void goToSwiping(View view) {
         Intent goToMatchesIntent = new Intent(MatchesActivity.this, SwipingActivity.class);
         goToMatchesIntent.putExtra("current_user", currentUser);
