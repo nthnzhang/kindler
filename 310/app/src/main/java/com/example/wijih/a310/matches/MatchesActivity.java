@@ -94,6 +94,7 @@ public class MatchesActivity extends AppCompatActivity {
                 if(match.getUserId1().equals(currentUser.getUserID()) || match.getUserId2().equals(
                         currentUser.getUserID())) {
                     // remove match
+
                 }
             }
 

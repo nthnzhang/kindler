@@ -108,11 +108,14 @@ public class User implements Parcelable {
         }
         dest.writeStringList(swipableBookIds);
 
-        dest.writeInt(likedBooks.size());
-        for(Map.Entry<String, List<String>> entry : likedBooks.entrySet()) {
-            dest.writeString(entry.getKey());
-            dest.writeStringList(entry.getValue());
+        if(likedBooks != null) {
+            dest.writeInt(likedBooks.size());
+            for(Map.Entry<String, List<String>> entry : likedBooks.entrySet()) {
+                dest.writeString(entry.getKey());
+                dest.writeStringList(entry.getValue());
+            }
         }
+
     }
 
     @Override

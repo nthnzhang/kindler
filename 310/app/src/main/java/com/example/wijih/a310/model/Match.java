@@ -2,6 +2,7 @@ package com.example.wijih.a310.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -63,7 +64,7 @@ public class Match implements Parcelable {
     public void acceptMatch(String userId) {
         // user1 is accepting the match
         mDatabase = FirebaseDatabase.getInstance().getReference().child("matches").child(matchId);
-        if(userId == userId1) {
+        if(userId.equals(userId1)) {
             // user2 has accepted the match already
             if(user2Choice) {
                 matchAccepted = true;
