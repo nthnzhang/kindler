@@ -96,7 +96,7 @@ public class Match implements Parcelable {
     public void rateUser(String userId, final int rating) {
         // determine which user is submitting the rating, and which user is getting rated
         // set the database reference to the user which is getting rated
-        if(userId == userId1) {
+        if(userId.equals(userId1)) {
             mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(userId2);
         }
         else {
