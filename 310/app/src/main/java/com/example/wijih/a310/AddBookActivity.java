@@ -3,6 +3,7 @@ package com.example.wijih.a310;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,21 +41,23 @@ public class AddBookActivity extends AppCompatActivity {
     public void addBook () {
         bookTitle = (EditText) findViewById(R.id.bookTitle);
         bookDescription = (EditText) findViewById(R.id.bookDescription);
-        bookTags = (EditText) findViewById(R.id.bookTags);
         add = (Button) findViewById(R.id.addBook);
         exchangeOrSale = (RadioGroup) findViewById(R.id.exchangeOrSale);
-
-        tagString = (String) bookTags.toString();
 
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                bookTags = (EditText) findViewById(R.id.bookTags);
+                tagString = (String) bookTags.getText().toString();
+                Log.d("string test", tagString);
+
                 if (currentUser != null && !bookTitle.getText().toString().trim().equals("") && !bookDescription.getText().toString().trim().equals("") && !bookTags.getText().toString().trim().equals("")) {
 
                     //split the tags by commas
 
                     List<String> tags = Arrays.asList(tagString.split(","));
+                    Log.d("tags", tags.get(0));
 
                     int selected = exchangeOrSale.getCheckedRadioButtonId();
 
