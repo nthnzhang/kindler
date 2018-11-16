@@ -7,7 +7,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-
 import com.example.wijih.a310.R;
 import com.example.wijih.a310.SwipingActivity;
 import com.example.wijih.a310.model.Match;
@@ -47,8 +46,9 @@ public class MatchesActivity extends AppCompatActivity {
         rView.setLayoutManager(matchesLayoutManager);
 
         // set adapter to recycler view
-        matchesAdapter = new MatchesAdapter(getDataSetMatches(), MatchesActivity.this);
+        matchesAdapter = new MatchesAdapter(getDataSetMatches(), MatchesActivity.this, currentUser);
         rView.setAdapter(matchesAdapter);
+
 
         // DUMMY DATA
 //        Match match1 = new Match("testUserID1", currentUser.getUserID());
@@ -73,6 +73,7 @@ public class MatchesActivity extends AppCompatActivity {
         return resultsMatches;
     }
 
+<<<<<<< HEAD
     private void startUpdatingMatchList() {
         mDatabase = FirebaseDatabase.getInstance().getReference().child("matches");
 
@@ -124,6 +125,8 @@ public class MatchesActivity extends AppCompatActivity {
         });
     }
 
+=======
+>>>>>>> master
     public void goToSwiping(View view) {
         Intent goToMatchesIntent = new Intent(MatchesActivity.this, SwipingActivity.class);
         goToMatchesIntent.putExtra("current_user", currentUser);

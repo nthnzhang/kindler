@@ -1,12 +1,15 @@
 package com.example.wijih.a310.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class Match {
+public class Match implements Parcelable {
     private String matchId;
     private String userId1;
     private String userId2;
@@ -31,6 +34,26 @@ public class Match {
     public Match() {
         // empty constructor for firebase purposes
     }
+
+    protected Match(Parcel in) {
+        matchId = in.readString();
+        userId1 = in.readString();
+        userId2 = in.readString();
+        user1Choice = in.readByte() != 0;
+        user2Choice = in.readByte() != 0;
+    }
+
+    public static final Creator<Match> CREATOR = new Creator<Match>() {
+        @Override
+        public Match createFromParcel(Parcel in) {
+            return new Match(in);
+        }
+
+        @Override
+        public Match[] newArray(int size) {
+            return new Match[size];
+        }
+    };
 
     public void setMatchId(String id) {
         this.matchId = id;
@@ -125,5 +148,19 @@ public class Match {
 
     public boolean isUser2Choice() {
         return user2Choice;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(matchId);
+        parcel.writeString(userId1);
+        parcel.writeString(userId2);
+        parcel.writeByte((byte) (user1Choice ? 1 : 0));
+        parcel.writeByte((byte) (user2Choice ? 1 : 0));
     }
 }
