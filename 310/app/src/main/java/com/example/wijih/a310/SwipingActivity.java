@@ -43,7 +43,6 @@ public class SwipingActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.swiping_activity);
         ButterKnife.bind(this);
-//        i = 0;
         //button to go to matches
 //        button = (Button)findViewById(R.id.toMatches);
 //        button.setOnClickListener(new View.OnClickListener() {
@@ -71,21 +70,27 @@ public class SwipingActivity extends Activity {
             public void removeFirstObjectInAdapter() {
                 // deleting object from Adapter / AdapterView
                 Log.d("LIST", "removed object!");
-                Log.d("removed", alBooks.get(i).getBookId());
-                currentUser.addSeenBook(alBooks.get(i).getBookId());
-                al.remove(0);
-                arrayAdapter.notifyDataSetChanged();
+                currentUser.addSeenBook(alBooks.get(0).getBookId());
             }
 
             @Override
             public void onLeftCardExit(Object dataObject) {
                 Toast.makeText(SwipingActivity.this, "Disliked!", Toast.LENGTH_SHORT).show();
+                alBooks.remove(0);
+                al.remove(0);
+                arrayAdapter.notifyDataSetChanged();
+
             }
 
             @Override
             public void onRightCardExit(Object dataObject) {
                 Toast.makeText(SwipingActivity.this, "Liked!", Toast.LENGTH_SHORT).show();
-                 currentUser.addLike(alBooks.get(i).getBookId());
+                 currentUser.addLike(alBooks.get(0).getBookId());
+                 Log.d("like", "first");
+                alBooks.remove(0);
+                al.remove(0);
+                arrayAdapter.notifyDataSetChanged();
+
             }
 
             @Override
@@ -108,7 +113,7 @@ public class SwipingActivity extends Activity {
             @Override
             public void onItemClicked(int itemPosition, Object dataObject) {
                 Intent intent = new Intent(SwipingActivity.this, BookInfoWindow.class);
-                intent.putExtra("book_info", alBooks.get(i));
+                intent.putExtra("book_info", alBooks.get(0));
                 startActivity(intent);
                 Toast.makeText(SwipingActivity.this, "Additional book info will go here...", Toast.LENGTH_SHORT).show();
             }
@@ -119,16 +124,19 @@ public class SwipingActivity extends Activity {
 
     public void startUpdatingBookList(final String userId) {
         mDatabase = FirebaseDatabase.getInstance().getReference().child("books");
+        currentUser.updateSeenBookList();
         mDatabase.addChildEventListener(new ChildEventListener() {
             // new book has been added
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 // update the list and the array adapter
                 Book book = dataSnapshot.getValue(Book.class);
-                if(book.getOwnerID() != userId) {
+                if(!book.getOwnerID().equals(userId)) {
+                    Log.d("book owner id's", book.getOwnerID() + "  " + userId);
                     if(!currentUser.hasSeenBook(book.getBookId())) {
                         alBooks.add(book);
                         al.add(book.getTitle());
+                        Log.d("book title", book.getTitle());
                         arrayAdapter.notifyDataSetChanged();
                     }
                 }

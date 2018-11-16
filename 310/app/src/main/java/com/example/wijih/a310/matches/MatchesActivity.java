@@ -11,6 +11,8 @@ import com.example.wijih.a310.R;
 import com.example.wijih.a310.SwipingActivity;
 import com.example.wijih.a310.model.Match;
 import com.example.wijih.a310.model.User;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,8 @@ public class MatchesActivity extends AppCompatActivity {
     private RecyclerView rView;
     private RecyclerView.Adapter matchesAdapter;
     private RecyclerView.LayoutManager matchesLayoutManager;
+
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +69,10 @@ public class MatchesActivity extends AppCompatActivity {
         return resultsMatches;
     }
 
+    private void startUpdatingMatchList() {
+        mDatabase = FirebaseDatabase.getInstance().getReference().child(currentUser.getUserID()).
+                child("ma");
+    }
 
     public void goToSwiping(View view) {
         Intent goToMatchesIntent = new Intent(MatchesActivity.this, SwipingActivity.class);

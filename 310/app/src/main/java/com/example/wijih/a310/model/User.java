@@ -195,6 +195,10 @@ public class User implements Parcelable {
                             String matchId = mDatabase.push().getKey();
                             match.setMatchId(matchId);
                             mDatabase.child(matchId).setValue(match);
+
+                            mDatabase = FirebaseDatabase.getInstance().getReference().child("users");
+                            mDatabase.child(userID).child("matchIDs").push().setValue(matchId);
+                            mDatabase.child(ownerId).child("matchIDs").push().setValue(matchId);
                         }
                     }
 
