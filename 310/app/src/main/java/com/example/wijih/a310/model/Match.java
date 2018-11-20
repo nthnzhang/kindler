@@ -14,6 +14,8 @@ public class Match implements Parcelable {
     private String matchId;
     private String userId1;
     private String userId2;
+    private String user1Email;
+    private String user2Email;
 
     // false - no choice made
     // true - accepted match
@@ -24,9 +26,11 @@ public class Match implements Parcelable {
     private DatabaseReference mDatabase;
 
 
-    public Match(String userId1, String userId2) {
+    public Match(String userId1, String userId2, String user1Email, String user2Email) {
         this.userId1 = userId1;
         this.userId2 = userId2;
+        this.user1Email = user1Email;
+        this.user2Email = user2Email;
         this.user1Choice = false;
         this.user2Choice = false;
         this.matchAccepted = false;
