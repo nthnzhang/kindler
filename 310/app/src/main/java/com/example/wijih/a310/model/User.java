@@ -199,33 +199,43 @@ public class User implements Parcelable {
                 mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(userID);
                 mDatabase.child("likedBooks").setValue(likedBooks);
 
-                // check other book owner to see if there is a match
-                mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(ownerId).child("likedBooks");
+                // check to see if the book is forSale - auto create match
+                if(book.isForSale()) {
+                    Match match = new Match(userID, ownerId);
+                    mDatabase = FirebaseDatabase.getInstance().getReference().child("matches");
 
-                mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        // other book owner has liked one of currentUsers books
-                        if(dataSnapshot.child(userID).exists()) {
-                            // create Match and add to db
-                            Match match = new Match(userID, ownerId);
-                            mDatabase = FirebaseDatabase.getInstance().getReference().child("matches");
+                    String matchId = mDatabase.push().getKey();
+                    match.setMatchId(matchId);
+                    mDatabase.child(matchId).setValue(match);
+                }
+                else {
+                    mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(ownerId).child("likedBooks");
 
-                            String matchId = mDatabase.push().getKey();
-                            match.setMatchId(matchId);
-                            mDatabase.child(matchId).setValue(match);
+                    mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            // other book owner has liked one of currentUsers books
+                            if(dataSnapshot.child(userID).exists()) {
+                                // create Match and add to db
+                                Match match = new Match(userID, ownerId);
+                                mDatabase = FirebaseDatabase.getInstance().getReference().child("matches");
+
+                                String matchId = mDatabase.push().getKey();
+                                match.setMatchId(matchId);
+                                mDatabase.child(matchId).setValue(match);
 
 //                            mDatabase = FirebaseDatabase.getInstance().getReference().child("users");
 //                            mDatabase.child(userID).child("matchIDs").push().setValue(matchId);
 //                            mDatabase.child(ownerId).child("matchIDs").push().setValue(matchId);
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
 
-                    }
-                });
+                        }
+                    });
+                }
             }
 
             @Override
@@ -387,6 +397,7 @@ public class User implements Parcelable {
                     seenBooks.add(bookId);
                 }
                 Log.d("size", String.valueOf(seenBooks.size()));
+                mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(userID);
                 mDatabase.child("seenBooks").setValue(seenBooks);
             }
 
