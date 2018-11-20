@@ -29,12 +29,23 @@
             app:fontFamily="serif" />
 
         <TextView
-            android:id="@+id/matchContactInfo"
+        android:id="@+id/matchContactInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/email_activity_matches"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/matchPending"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="10dp"
-            android:text="@string/email_activity_matches"
+            android:text="@string/match_pending"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             android:visibility="gone"/>
