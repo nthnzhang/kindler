@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.icu.util.Freezable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
@@ -41,7 +42,7 @@ public class ProfileActivity extends AppCompatActivity {
         phone = user.getPhone();
         rating = user.getRating();
         allBooks = user.getBooks();*/
-
+        Log.d("phone", currentUser.getPhone());
 
         usernameView = (TextView) findViewById(R.id.username);
         usernameView.setText(currentUser.getUsername());
