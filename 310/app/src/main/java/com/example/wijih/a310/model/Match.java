@@ -178,6 +178,14 @@ public class Match implements Parcelable {
         this.user2ChoiceMade = user2ChoiceMade;
     }
 
+    public String getUser1Email() {
+        return this.user1Email;
+    }
+
+    public String getUser2Email() {
+        return this.user2Email;
+    }
+
     @Override
     public int describeContents() {
         return 0;
