@@ -62,6 +62,7 @@ public class User implements Parcelable {
 
     protected User(Parcel in) {
         username = in.readString();
+        phone = in.readString();
         userID = in.readString();
         email = in.readString();
         matchIDs = in.createStringArrayList();
@@ -90,6 +91,7 @@ public class User implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(username);
+        dest.writeString(phone);
         dest.writeString(userID);
         dest.writeString(email);
         dest.writeStringList(matchIDs);
