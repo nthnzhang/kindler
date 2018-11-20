@@ -27,6 +27,8 @@ public class ProfileActivity extends AppCompatActivity {
 
     private User currentUser;
     private DatabaseReference mDatabase;
+    private String newUsername, newEmail, newPhone;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +37,6 @@ public class ProfileActivity extends AppCompatActivity {
 
         final Intent currUserIntent = getIntent();
         currentUser = currUserIntent.getParcelableExtra("current_user");
-
 
         /*username = user.getUsername();
         email = user.getEmail();

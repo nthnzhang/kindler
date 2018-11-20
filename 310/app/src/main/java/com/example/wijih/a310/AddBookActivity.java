@@ -168,10 +168,15 @@ public class AddBookActivity extends AppCompatActivity {
                     System.out.println("img: " + encodedImg);
 
 
+
                     // add book
                     Book newBook = new Book(bookTitle.getText().toString(), bookDescription.getText().toString(),
                             currentUser.getUserID(), forSale, tags);
+                    if (encodedImg != null) {
+                        newBook.addImageString(encodedImg);
+                    }
                     currentUser.addBook(newBook);
+
 
                     Intent intent = new Intent(AddBookActivity.this, ProfileActivity.class);
                     intent.putExtra("current_user", currentUser);
