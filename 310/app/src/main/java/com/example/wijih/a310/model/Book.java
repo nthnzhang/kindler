@@ -12,6 +12,7 @@ public class Book implements Parcelable {
     private boolean forSale;
     private List<String> tags;
     private String bookId;
+    private String imageString;
 
     public Book(String title, String description, String ownerID, boolean forSale, List<String> tags) {
         this.title = title;
@@ -46,6 +47,10 @@ public class Book implements Parcelable {
         }
     };
 
+    public void addImageString(String img) {
+        this.imageString = img;
+    }
+
     public void setBookId(String id) {
         this.bookId = id;
     }
@@ -68,6 +73,13 @@ public class Book implements Parcelable {
 
     public boolean isForSale() {
         return forSale;
+    }
+
+    public String getImageString() {
+        if(imageString != null) {
+            return imageString;
+        }
+        return null;
     }
 
     public List<String> getTags() {
