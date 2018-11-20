@@ -201,12 +201,28 @@ public class User implements Parcelable {
 
                 // check to see if the book is forSale - auto create match
                 if(book.isForSale()) {
-                    Match match = new Match(userID, ownerId);
-                    mDatabase = FirebaseDatabase.getInstance().getReference().child("matches");
+                    mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(ownerId);
 
-                    String matchId = mDatabase.push().getKey();
-                    match.setMatchId(matchId);
-                    mDatabase.child(matchId).setValue(match);
+                    mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            String ownerEmail = dataSnapshot.child("email").getValue(String.class);
+
+                            Match match = new Match(userID, ownerId, email, ownerEmail);
+                            mDatabase = FirebaseDatabase.getInstance().getReference().child("matches");
+
+                            String matchId = mDatabase.push().getKey();
+                            match.setMatchId(matchId);
+                            mDatabase.child(matchId).setValue(match);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+
                 }
                 else {
                     mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(ownerId).child("likedBooks");
@@ -217,12 +233,26 @@ public class User implements Parcelable {
                             // other book owner has liked one of currentUsers books
                             if(dataSnapshot.child(userID).exists()) {
                                 // create Match and add to db
-                                Match match = new Match(userID, ownerId);
-                                mDatabase = FirebaseDatabase.getInstance().getReference().child("matches");
+                                mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(ownerId);
 
-                                String matchId = mDatabase.push().getKey();
-                                match.setMatchId(matchId);
-                                mDatabase.child(matchId).setValue(match);
+                                mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        String ownerEmail = dataSnapshot.child("email").getValue(String.class);
+
+                                        Match match = new Match(userID, ownerId, email, ownerEmail);
+                                        mDatabase = FirebaseDatabase.getInstance().getReference().child("matches");
+
+                                        String matchId = mDatabase.push().getKey();
+                                        match.setMatchId(matchId);
+                                        mDatabase.child(matchId).setValue(match);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
 
 //                            mDatabase = FirebaseDatabase.getInstance().getReference().child("users");
 //                            mDatabase.child(userID).child("matchIDs").push().setValue(matchId);
