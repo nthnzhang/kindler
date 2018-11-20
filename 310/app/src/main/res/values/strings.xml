@@ -6,4 +6,5 @@
     <string name="email_activity_matches">MatchEmail</string>
     <string name="accept_match_button">AcceptMatch</string>
     <string name="deny_match_button">DenyMatch</string>
+    <string name="match_pending">Waiting on other user\'s response...</string>
 </resources>

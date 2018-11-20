@@ -23,6 +23,11 @@ public class Match implements Parcelable {
     private boolean user2Choice;
     private boolean matchAccepted;
 
+    // false - no choice made
+    // true - choice (denied or accepted) made
+    private boolean user1ChoiceMade;
+    private boolean user2ChoiceMade;
+
     private DatabaseReference mDatabase;
 
 
@@ -34,6 +39,8 @@ public class Match implements Parcelable {
         this.user1Choice = false;
         this.user2Choice = false;
         this.matchAccepted = false;
+        this.user1ChoiceMade = false;
+        this.user2ChoiceMade = false;
     }
 
     public Match() {
@@ -153,6 +160,22 @@ public class Match implements Parcelable {
 
     public boolean isUser2Choice() {
         return user2Choice;
+    }
+
+    public boolean isUser1ChoiceMade() {
+        return user1ChoiceMade;
+    }
+
+    public void setUser1ChoiceMade(boolean user1ChoiceMade) {
+        this.user1ChoiceMade = user1ChoiceMade;
+    }
+
+    public boolean isUser2ChoiceMade() {
+        return user2ChoiceMade;
+    }
+
+    public void setUser2ChoiceMade(boolean user2ChoiceMade) {
+        this.user2ChoiceMade = user2ChoiceMade;
     }
 
     @Override
