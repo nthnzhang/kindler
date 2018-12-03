@@ -209,8 +209,17 @@ public class User implements Parcelable {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             String ownerEmail = dataSnapshot.child("email").getValue(String.class);
+                            Double ownerTotalScore = 0.0;
+                            if(dataSnapshot.child("totalScore").exists()) {
+                                ownerTotalScore = dataSnapshot.child("totalScore").getValue(Double.class);
+                            }
+                            Double ownerTotalReviews = 0.0;
+                            if(dataSnapshot.child("totalReviews").exists()) {
+                                ownerTotalReviews = dataSnapshot.child("totalReviews").getValue(Double.class);
+                            }
 
-                            Match match = new Match(userID, ownerId, email, ownerEmail);
+                            Match match = new Match(userID, ownerId, email, ownerEmail, totalScore,
+                                    ownerTotalScore, totalReviews, ownerTotalReviews);
                             mDatabase = FirebaseDatabase.getInstance().getReference().child("matches");
 
                             String matchId = mDatabase.push().getKey();
@@ -241,8 +250,17 @@ public class User implements Parcelable {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         String ownerEmail = dataSnapshot.child("email").getValue(String.class);
+                                        Double ownerTotalScore = 0.0;
+                                        if(dataSnapshot.child("totalScore").exists()) {
+                                            ownerTotalScore = dataSnapshot.child("totalScore").getValue(Double.class);
+                                        }
+                                        Double ownerTotalReviews = 0.0;
+                                        if(dataSnapshot.child("totalReviews").exists()) {
+                                            ownerTotalReviews = dataSnapshot.child("totalReviews").getValue(Double.class);
+                                        }
 
-                                        Match match = new Match(userID, ownerId, email, ownerEmail);
+                                        Match match = new Match(userID, ownerId, email, ownerEmail, totalScore,
+                                                ownerTotalScore, totalReviews, ownerTotalReviews);
                                         mDatabase = FirebaseDatabase.getInstance().getReference().child("matches");
 
                                         String matchId = mDatabase.push().getKey();
