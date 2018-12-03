@@ -1,15 +1,17 @@
 package com.example.wijih.a310.matches;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.wijih.a310.R;
-import com.example.wijih.a310.model.Book;
 import com.example.wijih.a310.model.Match;
 import com.example.wijih.a310.model.User;
 
@@ -22,6 +24,8 @@ public class MatchInfoWindow extends Activity {
     private TextView matchNameView;
     private TextView matchEmailView;
     private TextView matchPendingView;
+    private RatingBar ratingBar;
+    private Button ratingBarButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +41,12 @@ public class MatchInfoWindow extends Activity {
         String nameToDisplay;
         if(match.getUserId1() == currentUser.getUserID()) {
             nameToDisplay = match.getUserId2();
+            nameToDisplay += " " + match.getUserRating2();
             isUser1 = true;
         }
         else {
             nameToDisplay = match.getUserId1();
+            nameToDisplay += " " + match.getUserRating1();
             isUser1 = false;
         }
 
@@ -51,6 +57,8 @@ public class MatchInfoWindow extends Activity {
         matchPendingView = findViewById(R.id.matchPending);
         acceptButton = findViewById(R.id.acceptMatchButton);
         denyButton = findViewById(R.id.denyMatchButton);
+        ratingBar = findViewById(R.id.ratingBar);
+        ratingBarButton = findViewById(R.id.ratingBarSubmit);
 
 
         // checking if other user has accepted match
@@ -61,22 +69,24 @@ public class MatchInfoWindow extends Activity {
                 email = match.getUserId2(); // NEED TO CHANGE THIS TO DISPLAY ACTUAL EMAIL
             }
             else {
-                email = match.getUserId1(); // NEED TO CHANGE THIS TO DISPLAY ACTUALY EMAIL
+                email = match.getUserId1(); // NEED TO CHANGE THIS TO DISPLAY ACTUAL EMAIL
             }
 
             matchEmailView.setText(email);
             matchEmailView.setVisibility(View.VISIBLE);
+
+            displayRatingBar();
         }
         else if(isUser1 && match.isUser1ChoiceMade()) {
             // current user is user 1 and choice has been made
 
             if(match.isUser1Choice())  {
                 // current user has accepted match
-                matchPendingView.setText("Match accepted, waiting for other user's response.");
+                matchPendingView.setText("choice remembered Match accepted, waiting for other user's response.");
             }
             else {
                 // current user denied match
-                matchPendingView.setText("Match denied.");
+                matchPendingView.setText("choice remembered Match denied.");
             }
             matchPendingView.setVisibility(View.VISIBLE);
         }
@@ -85,10 +95,10 @@ public class MatchInfoWindow extends Activity {
 
             if(match.isUser2Choice())  {
                 // current user has accepted match
-                matchPendingView.setText("Match accepted, waiting for other user's response.");
+                matchPendingView.setText("choice remembered Match accepted, waiting for other user's response.");
             }
             else {
-                matchPendingView.setText("Match denied.");
+                matchPendingView.setText("choice remembered Match denied.");
             }
             matchPendingView.setVisibility(View.VISIBLE);
         }
@@ -159,5 +169,25 @@ public class MatchInfoWindow extends Activity {
 
         matchPendingView.setText("Match denied.");
         matchPendingView.setVisibility(View.VISIBLE);
+    }
+
+    private void displayRatingBar() {
+        LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
+        stars.getDrawable(2).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
+
+        ratingBar.setVisibility(View.VISIBLE);
+        ratingBarButton.setVisibility(View.VISIBLE);
+
+        ratingBarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isUser1) {
+                    match.setUser2Rating(ratingBar.getRating());
+                }
+                else {
+                    match.setUser1Rating(ratingBar.getRating());
+                }
+            }
+        });
     }
 }
