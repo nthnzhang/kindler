@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.icu.util.Freezable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
@@ -26,6 +27,8 @@ public class ProfileActivity extends AppCompatActivity {
 
     private User currentUser;
     private DatabaseReference mDatabase;
+    private String newUsername, newEmail, newPhone;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,13 +38,12 @@ public class ProfileActivity extends AppCompatActivity {
         final Intent currUserIntent = getIntent();
         currentUser = currUserIntent.getParcelableExtra("current_user");
 
-
         /*username = user.getUsername();
         email = user.getEmail();
         phone = user.getPhone();
         rating = user.getRating();
         allBooks = user.getBooks();*/
-
+        Log.d("phone", currentUser.getPhone());
 
         usernameView = (TextView) findViewById(R.id.username);
         usernameView.setText(currentUser.getUsername());

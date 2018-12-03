@@ -62,6 +62,7 @@ public class User implements Parcelable {
 
     protected User(Parcel in) {
         username = in.readString();
+        phone = in.readString();
         userID = in.readString();
         email = in.readString();
         matchIDs = in.createStringArrayList();
@@ -90,6 +91,7 @@ public class User implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(username);
+        dest.writeString(phone);
         dest.writeString(userID);
         dest.writeString(email);
         dest.writeStringList(matchIDs);
@@ -201,12 +203,37 @@ public class User implements Parcelable {
 
                 // check to see if the book is forSale - auto create match
                 if(book.isForSale()) {
-                    Match match = new Match(userID, ownerId);
-                    mDatabase = FirebaseDatabase.getInstance().getReference().child("matches");
+                    mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(ownerId);
 
-                    String matchId = mDatabase.push().getKey();
-                    match.setMatchId(matchId);
-                    mDatabase.child(matchId).setValue(match);
+                    mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            String ownerEmail = dataSnapshot.child("email").getValue(String.class);
+                            Double ownerTotalScore = 0.0;
+                            if(dataSnapshot.child("totalScore").exists()) {
+                                ownerTotalScore = dataSnapshot.child("totalScore").getValue(Double.class);
+                            }
+                            Double ownerTotalReviews = 0.0;
+                            if(dataSnapshot.child("totalReviews").exists()) {
+                                ownerTotalReviews = dataSnapshot.child("totalReviews").getValue(Double.class);
+                            }
+
+                            Match match = new Match(userID, ownerId, email, ownerEmail, totalScore,
+                                    ownerTotalScore, totalReviews, ownerTotalReviews);
+                            mDatabase = FirebaseDatabase.getInstance().getReference().child("matches");
+
+                            String matchId = mDatabase.push().getKey();
+                            match.setMatchId(matchId);
+                            mDatabase.child(matchId).setValue(match);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+
                 }
                 else {
                     mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(ownerId).child("likedBooks");
@@ -217,12 +244,35 @@ public class User implements Parcelable {
                             // other book owner has liked one of currentUsers books
                             if(dataSnapshot.child(userID).exists()) {
                                 // create Match and add to db
-                                Match match = new Match(userID, ownerId);
-                                mDatabase = FirebaseDatabase.getInstance().getReference().child("matches");
+                                mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(ownerId);
 
-                                String matchId = mDatabase.push().getKey();
-                                match.setMatchId(matchId);
-                                mDatabase.child(matchId).setValue(match);
+                                mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        String ownerEmail = dataSnapshot.child("email").getValue(String.class);
+                                        Double ownerTotalScore = 0.0;
+                                        if(dataSnapshot.child("totalScore").exists()) {
+                                            ownerTotalScore = dataSnapshot.child("totalScore").getValue(Double.class);
+                                        }
+                                        Double ownerTotalReviews = 0.0;
+                                        if(dataSnapshot.child("totalReviews").exists()) {
+                                            ownerTotalReviews = dataSnapshot.child("totalReviews").getValue(Double.class);
+                                        }
+
+                                        Match match = new Match(userID, ownerId, email, ownerEmail, totalScore,
+                                                ownerTotalScore, totalReviews, ownerTotalReviews);
+                                        mDatabase = FirebaseDatabase.getInstance().getReference().child("matches");
+
+                                        String matchId = mDatabase.push().getKey();
+                                        match.setMatchId(matchId);
+                                        mDatabase.child(matchId).setValue(match);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
 
 //                            mDatabase = FirebaseDatabase.getInstance().getReference().child("users");
 //                            mDatabase.child(userID).child("matchIDs").push().setValue(matchId);

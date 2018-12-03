@@ -32,6 +32,7 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".EditProfileActivity" />
+        <activity android:name=".EditBookActivity"/>
         <activity
             android:name=".BooksActivity"
             android:label="@string/title_activity_books"

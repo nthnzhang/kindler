@@ -14,6 +14,12 @@ public class Match implements Parcelable {
     private String matchId;
     private String userId1;
     private String userId2;
+    private String user1Email;
+    private String user2Email;
+    private Double user1TotalScore;
+    private Double user2TotalScore;
+    private Double user1TotalRatings;
+    private Double user2TotalRatings;
 
     // false - no choice made
     // true - accepted match
@@ -29,14 +35,23 @@ public class Match implements Parcelable {
     private DatabaseReference mDatabase;
 
 
-    public Match(String userId1, String userId2) {
+    public Match(String userId1, String userId2, String user1Email, String user2Email,
+                 Double user1TotalRatings, Double user2TotalRatings, Double user1TotalScore,
+                 Double user2TotalScore) {
         this.userId1 = userId1;
         this.userId2 = userId2;
+        this.user1Email = user1Email;
+        this.user2Email = user2Email;
         this.user1Choice = false;
         this.user2Choice = false;
         this.matchAccepted = false;
         this.user1ChoiceMade = false;
         this.user2ChoiceMade = false;
+
+        this.user1TotalRatings = user1TotalRatings;
+        this.user2TotalRatings = user2TotalRatings;
+        this.user1TotalScore = user1TotalScore;
+        this.user2TotalScore = user2TotalScore;
     }
 
     public Match() {
@@ -106,9 +121,13 @@ public class Match implements Parcelable {
         // determine which user is submitting the rating, and which user is getting rated
         // set the database reference to the user which is getting rated
         if(userId.equals(userId1)) {
+            user2TotalScore += Double.valueOf(rating);
+            user2TotalRatings++;
             mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(userId2);
         }
         else {
+            user1TotalScore += Double.valueOf(rating);
+            user1TotalRatings++;
             mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(userId1);
         }
         // update the rating
@@ -167,6 +186,45 @@ public class Match implements Parcelable {
     public boolean isUser2ChoiceMade() { return user2ChoiceMade; }
 
     public void setUser2ChoiceMade(boolean user2ChoiceMade) { this.user2ChoiceMade = user2ChoiceMade; }
+
+    public String getUser1Email() {
+        return this.user1Email;
+    }
+
+    public String getUser2Email() {
+        return this.user2Email;
+    }
+
+    public Double getUser1TotalScore() {
+        return user1TotalScore;
+    }
+
+    public Double getUser2TotalScore() {
+        return user2TotalScore;
+    }
+
+    public Double getUser1TotalRatings() {
+        return user1TotalRatings;
+    }
+
+    public Double getUser2TotalRatings() {
+        return user2TotalRatings;
+    }
+
+    public Double getUserRating(String userId) {
+        if(userId == userId1) {
+            if(user2TotalRatings == 0.0) {
+                return 0.0;
+            }
+            return user2TotalScore/user2TotalRatings;
+        }
+        else {
+            if(user1TotalRatings == 0.0) {
+                return 0.0;
+            }
+            return user1TotalScore/user1TotalRatings;
+        }
+    }
 
     @Override
     public int describeContents() {
