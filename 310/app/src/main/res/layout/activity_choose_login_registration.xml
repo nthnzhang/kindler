@@ -1,21 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChooseLoginRegistrationActivity"
-    android:orientation="vertical">
-    <Button
+    android:background="@drawable/gradient"
+    tools:context=".ChooseLoginRegistrationActivity" >
+
+    <ImageView
+        android:id="@+id/imageView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="login"
-        android:id="@+id/login"/>
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:adjustViewBounds="true"
+        android:cropToPadding="false"
+        android:src="@drawable/reading" />
 
-    <Button
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="register"
-        android:id="@+id/register"/>
+        android:id="@+id/linearLayout"
+        android:layout_marginTop="300dp"
+        android:orientation="vertical" >
 
-</LinearLayout>
+        <Button
+            android:id="@+id/login"
+            android:layout_width="1in"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="login"
+            android:layout_gravity="center"
+            android:background="#00ffa6" />
+
+
+        <Button
+            android:layout_width="1in"
+            android:layout_height="wrap_content"
+            android:text="register"
+            android:id="@+id/register"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:background="#00ffa6" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

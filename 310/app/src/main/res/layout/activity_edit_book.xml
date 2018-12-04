@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".EditBookActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/gradient" >
 
 
     <EditText
@@ -18,25 +19,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Description"
-        android:id="@+id/descriptionEdit"/>
+        android:id="@+id/descriptionEdit"
+        android:layout_marginTop="20dp" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Tags (Separated by commas)"
-        android:id="@+id/tagsEdit"/>
-
-    <Button
-        android:id="@+id/UploadPhoto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Upload Photo" />
+        android:id="@+id/tagsEdit"
+        android:layout_marginTop="20dp" />
 
     <RadioGroup
         android:id="@+id/editExchangeOrSale"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp">
 
         <RadioButton
             android:id="@+id/exchangeBtn"
@@ -55,16 +53,31 @@
     </RadioGroup>
 
     <Button
+        android:id="@+id/UploadPhoto"
+        android:layout_width="1.5in"
+        android:layout_height="wrap_content"
+        android:text="Upload Photo"
+        android:layout_marginTop="20dp"
+        android:background="#00ffa6"
+        android:layout_gravity="center"/>
+
+    <Button
         android:id="@+id/saveChanges"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save Changes" />
+        android:text="Save Changes"
+        android:layout_marginTop="30dp"
+        android:background="#00ffa6"
+        android:layout_gravity="center" />
 
     <Button
         android:id="@+id/deleteBook"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Delete Book" />
+        android:text="Delete Book"
+        android:layout_marginTop="20dp"
+        android:background="#00ffa6"
+        android:layout_gravity="center" />
 
     <ImageView
         android:id="@+id/imgThumbnail"

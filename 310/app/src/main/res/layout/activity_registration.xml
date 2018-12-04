@@ -1,39 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegistrationActivity"
-    android:orientation="vertical">
-    <EditText
-        android:layout_width="match_parent"
+    android:background="@drawable/gradient"
+    tools:context=".RegistrationActivity" >
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:adjustViewBounds="true"
+        app:srcCompat="@drawable/logo" />
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/linearLayout"
+    android:layout_marginTop="200dp"
+    android:orientation="vertical" >
+
+    <EditText
+        android:layout_width="1.5in"
+        android:layout_height="wrap_content"
+        android:background="#11000000"
         android:hint="email"
-        android:id="@+id/email"/>
+        android:id="@+id/email"
+        android:layout_gravity="center"/>
 
     <EditText
-        android:layout_width="match_parent"
+        android:layout_width="1.5in"
         android:layout_height="wrap_content"
+        android:background="#11000000"
+        android:layout_marginTop="20dp"
         android:hint="username"
-        android:id="@+id/username"/>
+        android:id="@+id/username"
+        android:layout_gravity="center"/>
 
     <EditText
-        android:layout_width="match_parent"
+        android:layout_width="1.5in"
         android:layout_height="wrap_content"
+        android:background="#11000000"
+        android:layout_marginTop="20dp"
         android:hint="phone number"
-        android:id="@+id/number"/>
+        android:id="@+id/number"
+        android:layout_gravity="center"/>
 
     <EditText
-        android:layout_width="match_parent"
+        android:layout_width="1.5in"
         android:layout_height="wrap_content"
+        android:background="#11000000"
+        android:layout_marginTop="20dp"
         android:hint="password"
-        android:id="@+id/password"/>
+        android:id="@+id/password"
+        android:layout_gravity="center"/>
 
     <Button
-        android:layout_width="match_parent"
+        android:layout_width="1.5in"
         android:layout_height="wrap_content"
+        android:background="#00ffa6"
+        android:layout_marginTop="20dp"
         android:text="Register"
-        android:id="@+id/register"/>
+        android:id="@+id/register"
+        android:layout_gravity="center"/>
 
-</LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
