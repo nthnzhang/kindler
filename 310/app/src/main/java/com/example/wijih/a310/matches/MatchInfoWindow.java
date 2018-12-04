@@ -6,6 +6,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RatingBar;
@@ -26,6 +27,7 @@ public class MatchInfoWindow extends Activity {
     private TextView matchPendingView;
     private RatingBar ratingBar;
     private Button ratingBarButton;
+    private TextView ratingSubmitted;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,16 +41,31 @@ public class MatchInfoWindow extends Activity {
 
         // displayed matched user's name
         String nameToDisplay;
+        double rating;
         if(match.getUserId1() == currentUser.getUserID()) {
             nameToDisplay = match.getUserId2();
-            //took this out
-            //nameToDisplay += " " + match.getUserRating2();
+
+            if(match.getUserRating(match.getUserId2()) != null) {
+                rating = match.getUserRating(match.getUserId2());
+            }
+            else {
+                rating = 0.0;
+            }
+
+            nameToDisplay += " " + rating;
             isUser1 = true;
         }
         else {
             nameToDisplay = match.getUserId1();
-            //took this out
-            //nameToDisplay += " " + match.getUserRating1();
+
+            if(match.getUserRating(match.getUserId1()) != null) {
+                rating = match.getUserRating(match.getUserId1());
+            }
+            else {
+                rating = 0.0;
+            }
+
+            nameToDisplay += " " + rating;
             isUser1 = false;
         }
 
@@ -61,6 +78,15 @@ public class MatchInfoWindow extends Activity {
         denyButton = findViewById(R.id.denyMatchButton);
         ratingBar = findViewById(R.id.ratingBar);
         ratingBarButton = findViewById(R.id.ratingBarSubmit);
+        ratingSubmitted = findViewById(R.id.ratingSubmitted);
+
+        Log.d("function", "on create");
+        Log.d("user name", currentUser.getUsername());
+        Log.d("is user 1", (isUser1 ? "true": "false"));
+        Log.d("user  1 choice", (match.isUser1Choice() ? "true": "false"));
+        Log.d("user  2 choice", (match.isUser2Choice() ? "true": "false"));
+        Log.d("user  1 choice made", (match.isUser1ChoiceMade() ? "true": "false"));
+        Log.d("user  2 choice made", (match.isUser2ChoiceMade() ? "true": "false"));
 
 
         // checking if other user has accepted match
@@ -68,10 +94,10 @@ public class MatchInfoWindow extends Activity {
             // safe to display contact information
             String email;
             if(isUser1) {
-                email = match.getUserId2(); // NEED TO CHANGE THIS TO DISPLAY ACTUAL EMAIL
+                email = match.getUser2Email();
             }
             else {
-                email = match.getUserId1(); // NEED TO CHANGE THIS TO DISPLAY ACTUAL EMAIL
+                email = match.getUser1Email();
             }
 
             matchEmailView.setText(email);
@@ -118,17 +144,28 @@ public class MatchInfoWindow extends Activity {
 
         int height = dm.heightPixels;
 
-        getWindow().setLayout((int)(0.4*height), (int)(0.4*height));
+        getWindow().setLayout((int)(0.4*height), (int)(0.6*height));
 
     }
 
     public void acceptMatchClicked(View view) {
         // indicating that the current user has made a choice
+
+        Log.d("function", "accept match clicked");
+        Log.d("user name", currentUser.getUsername());
+        Log.d("is user 1", (isUser1 ? "true": "false"));
+        Log.d("user  1 choice", (match.isUser1Choice() ? "true": "false"));
+        Log.d("user  2 choice", (match.isUser2Choice() ? "true": "false"));
+        Log.d("user  1 choice made", (match.isUser1ChoiceMade() ? "true": "false"));
+        Log.d("user  2 choice made", (match.isUser2ChoiceMade() ? "true": "false"));
+
         if(isUser1) {
             match.setUser1ChoiceMade(true);
+            match.setUser1Choice(true);
         }
         else {
             match.setUser2ChoiceMade(true);
+            match.setUser2Choice(true);
         }
 
         match.acceptMatch(currentUser.getUserID());
@@ -140,22 +177,40 @@ public class MatchInfoWindow extends Activity {
             // safe to display contact information
             String email;
             if(isUser1) {
-                email = match.getUserId2(); // NEED TO CHANGE THIS TO DISPLAY ACTUAL EMAIL
+                email = match.getUser2Email();
             }
             else {
-                email = match.getUserId1(); // NEED TO CHANGE THIS TO DISPLAY ACTUAL EMAIL
+                email = match.getUser1Email();
             }
 
             matchEmailView.setText(email);
             matchEmailView.setVisibility(View.VISIBLE);
+            displayRatingBar();
         }
         else {
             matchPendingView.setText("Match accepted, waiting for other user's response.");
             matchPendingView.setVisibility(View.VISIBLE);
         }
+
+        Log.d("function", "accept match finish");
+        Log.d("user name", currentUser.getUsername());
+        Log.d("is user 1", (isUser1 ? "true": "false"));
+        Log.d("user  1 choice", (match.isUser1Choice() ? "true": "false"));
+        Log.d("user  2 choice", (match.isUser2Choice() ? "true": "false"));
+        Log.d("user  1 choice made", (match.isUser1ChoiceMade() ? "true": "false"));
+        Log.d("user  2 choice made", (match.isUser2ChoiceMade() ? "true": "false"));
     }
 
     public void denyMatchClicked(View view) {
+
+        Log.d("function", "deny match clicked");
+        Log.d("user name", currentUser.getUsername());
+        Log.d("is user 1", (isUser1 ? "true": "false"));
+        Log.d("user  1 choice", (match.isUser1Choice() ? "true": "false"));
+        Log.d("user  2 choice", (match.isUser2Choice() ? "true": "false"));
+        Log.d("user  1 choice made", (match.isUser1ChoiceMade() ? "true": "false"));
+        Log.d("user  2 choice made", (match.isUser2ChoiceMade() ? "true": "false"));
+
         // indicating that the current user has made a choice
         if(isUser1) {
             match.setUser1ChoiceMade(true);
@@ -171,6 +226,14 @@ public class MatchInfoWindow extends Activity {
 
         matchPendingView.setText("Match denied.");
         matchPendingView.setVisibility(View.VISIBLE);
+
+        Log.d("function", "deny match finished");
+        Log.d("user name", currentUser.getUsername());
+        Log.d("is user 1", (isUser1 ? "true": "false"));
+        Log.d("user  1 choice", (match.isUser1Choice() ? "true": "false"));
+        Log.d("user  2 choice", (match.isUser2Choice() ? "true": "false"));
+        Log.d("user  1 choice made", (match.isUser1ChoiceMade() ? "true": "false"));
+        Log.d("user  2 choice made", (match.isUser2ChoiceMade() ? "true": "false"));
     }
 
     private void displayRatingBar() {
@@ -184,13 +247,16 @@ public class MatchInfoWindow extends Activity {
             @Override
             public void onClick(View v) {
                 if(isUser1) {
-                    //took this out
-                    //match.setUser2Rating(ratingBar.getRating());
+                    match.rateUser(match.getUserId1(), (int) ratingBar.getRating());
                 }
                 else {
-                    //took this out
-                    //match.setUser1Rating(ratingBar.getRating());
+                    match.rateUser(match.getUserId2(), (int) ratingBar.getRating());
                 }
+
+                ratingBar.setVisibility(View.GONE);
+                ratingBarButton.setVisibility(View.GONE);
+                ratingSubmitted.setText("Rating Submitted!");
+                ratingSubmitted.setVisibility(View.VISIBLE);
             }
         });
     }

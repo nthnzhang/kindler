@@ -7,6 +7,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
 import com.example.wijih.a310.R;
 import com.example.wijih.a310.SwipingActivity;
 import com.example.wijih.a310.model.Match;
@@ -65,9 +68,11 @@ public class MatchesActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Match match = dataSnapshot.getValue(Match.class);
-
+                if(match.getUserId1() == null || match.getUserId2() == null) {
+                    return;
+                }
                 // match is one of current user's matches
-                if (match.getUserId1() != null && match.getUserId2() != null) {
+                if(match.getUserId1() != null && currentUser != null && match.getUserId2() != null) {
                     if (match.getUserId1().equals(currentUser.getUserID()) || match.getUserId2().equals(
                             currentUser.getUserID())) {
                         Log.d("match", match.getMatchId());
@@ -85,9 +90,13 @@ public class MatchesActivity extends AppCompatActivity {
                             currentUser.getUserID())) {
                         if(match.isMatchAccepted()) {
                             // show contact information
-
                         }
                     }
+//                    else {
+//
+//                        matchPendingView.setText("Match denied.");
+//                        matchPendingView.setVisibility(View.VISIBLE);
+//                    }
                 }
 
             }
@@ -95,6 +104,7 @@ public class MatchesActivity extends AppCompatActivity {
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 Match match = dataSnapshot.getValue(Match.class);
+
 
                 if (match.getUserId1() != null && match.getUserId2() != null) {
                     if(match.getUserId1().equals(currentUser.getUserID()) || match.getUserId2().equals(
