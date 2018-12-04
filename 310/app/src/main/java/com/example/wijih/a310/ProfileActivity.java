@@ -46,7 +46,12 @@ public class ProfileActivity extends AppCompatActivity {
         phoneView = (TextView) findViewById(R.id.phone);
         phoneView.setText(currentUser.getPhone());
         ratingView = (TextView) findViewById(R.id.rating);
-        ratingView.setText(String.valueOf(currentUser.getTotalScore()/currentUser.getTotalReviews()));
+        if ((currentUser.getTotalScore() == 0) && (currentUser.getTotalReviews() == 0)) {
+            ratingView.setText("No rating");
+        }
+        else {
+            ratingView.setText(String.valueOf(currentUser.getTotalScore() / currentUser.getTotalReviews()));
+        }
 
     }
 

@@ -8,18 +8,34 @@
     tools:showIn="@layout/activity_matches"
     android:background="@drawable/gradient">
 
+
+
+
     <Button
         android:id="@+id/listItemBtn"
         android:layout_width="60sp"
         android:layout_height="60sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
         android:onClick="editBook"
         android:text="Edit"
         android:background="#00ffa6" />
+
+    <ImageView
+        android:id="@+id/bookImg"
+        android:layout_width="60sp"
+        android:layout_height="60sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"/>
+
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Book Titles"
         android:layout_gravity="center"
         android:id="@+id/bookTitle"/>
+
+
 
 </LinearLayout>
