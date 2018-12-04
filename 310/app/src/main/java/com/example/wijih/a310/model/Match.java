@@ -45,8 +45,8 @@ public class Match implements Parcelable {
         this.user1Choice = false;
         this.user2Choice = false;
         this.matchAccepted = false;
-        this.user1ChoiceMade = false;
-        this.user2ChoiceMade = false;
+        this.user1ChoiceMade = user1Choice;
+        this.user2ChoiceMade = user2Choice;
 
         this.user1TotalRatings = user1TotalRatings;
         this.user2TotalRatings = user2TotalRatings;
@@ -66,6 +66,10 @@ public class Match implements Parcelable {
         user2Choice = in.readByte() != 0;
         user1ChoiceMade = in.readByte() != 0;
         user2ChoiceMade = in.readByte() != 0;
+        user1TotalRatings = in.readDouble();
+        user2TotalRatings = in.readDouble();
+        user1TotalScore = in.readDouble();
+        user2TotalScore = in.readDouble();
     }
 
     public static final Creator<Match> CREATOR = new Creator<Match>() {
@@ -84,6 +88,14 @@ public class Match implements Parcelable {
         this.matchId = id;
     }
 
+    public void setUser1Choice(boolean user1Choice) {
+        this.user1Choice = user1Choice;
+    }
+
+    public void setUser2Choice(boolean user2Choice) {
+        this.user2Choice = user2Choice;
+    }
+
     // input: user id of the user that is accepting the match
     public void acceptMatch(String userId) {
         // user1 is accepting the match
@@ -94,6 +106,7 @@ public class Match implements Parcelable {
                 matchAccepted = true;
                 mDatabase.child("matchAccepted").setValue(true);
             }
+            user1Choice = true;
             mDatabase.child("user1Choice").setValue(true);
         }
         // user2 is accepting the match
@@ -104,6 +117,7 @@ public class Match implements Parcelable {
                 matchAccepted = true;
                 mDatabase.child("matchAccepted").setValue(true);
             }
+            user2Choice = true;
             mDatabase.child("user2Choice").setValue(true);
         }
     }
@@ -240,5 +254,9 @@ public class Match implements Parcelable {
         parcel.writeByte((byte) (user2Choice ? 1 : 0));
         parcel.writeByte((byte) (user1ChoiceMade ? 1 : 0));
         parcel.writeByte((byte) (user2ChoiceMade ? 1 : 0));
+        parcel.writeDouble(user1TotalRatings);
+        parcel.writeDouble(user2TotalRatings);
+        parcel.writeDouble(user1TotalScore);
+        parcel.writeDouble(user2TotalScore);
     }
 }
