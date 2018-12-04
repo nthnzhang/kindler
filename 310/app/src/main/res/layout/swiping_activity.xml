@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SwipingActivity">
+    tools:context=".SwipingActivity"
+    android:background="@drawable/gradient">
 
     <com.lorentzos.flingswipe.SwipeFlingAdapterView
         android:id="@+id/frame"
@@ -32,7 +33,8 @@
             android:layout_marginEnd="2dp"
             android:layout_marginRight="2dp"
             android:onClick="goToMatches"
-            android:text="Matches" />
+            android:text="Matches"
+            android:background="#00ffa6"/>
 
         <Button
             android:id="@+id/toProfile"
@@ -44,7 +46,8 @@
             android:layout_marginStart="0dp"
             android:layout_marginLeft="0dp"
             android:onClick="goToProfile"
-            android:text="Profile" />
+            android:text="Profile"
+            android:background="#00ffa6"/>
     </RelativeLayout>
 
 
