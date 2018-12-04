@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ProfileActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/gradient">
 
 
     <RelativeLayout
@@ -16,14 +17,15 @@
 
         <Button
             android:id="@+id/swipe"
-            android:layout_width="101dp"
+            android:layout_width="125dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="0dp"
-            android:layout_marginEnd="2dp"
+            android:layout_marginEnd="20dp"
             android:text="Swipe"
-            android:onClick="swipe"/>
+            android:onClick="swipe"
+            android:background="#00ffa6"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -53,7 +55,8 @@
             android:layout_marginLeft="20dp"
             android:layout_marginBottom="2dp"
             android:onClick="editProfile"
-            android:text="Edit Profile" />
+            android:text="Edit Profile"
+            android:background="#00ffa6" />
 
         <Button
             android:id="@+id/addBookBtn"
@@ -66,7 +69,8 @@
             android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp"
             android:onClick="addBook"
-            android:text="Add Book" />
+            android:text="Add Book"
+            android:background="#00ffa6" />
 
 
     </RelativeLayout>
@@ -83,7 +87,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:orientation="horizontal"
-            android:paddingLeft="25dp">
+            android:paddingLeft="25dp"
+            android:background="#11000000" >
 
             <ImageView
                 android:layout_width="36dp"
@@ -105,7 +110,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:orientation="horizontal"
-            android:paddingLeft="25dp">
+            android:paddingLeft="25dp"
+            android:background="#11000000" >
 
             <ImageView
                 android:layout_width="36dp"
@@ -127,7 +133,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:orientation="horizontal"
-            android:paddingLeft="25dp">
+            android:paddingLeft="25dp"
+            android:background="#11000000">
 
             <ImageView
                 android:layout_width="36dp"
@@ -146,20 +153,22 @@
 
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="1.5in"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
             android:onClick="yourBooks"
-            android:text="Your Books"/>
+            android:text="Your Books"
+            android:background="#00ffa6"/>
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="1.5in"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:text="Logout"
-            android:onClick="logoutUser"/>
+            android:onClick="logoutUser"
+            android:background="#00ffa6"/>
 
 
     </LinearLayout>

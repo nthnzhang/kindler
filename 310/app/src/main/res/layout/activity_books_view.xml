@@ -5,26 +5,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:padding="20sp"
-    tools:showIn="@layout/activity_matches">
+    tools:showIn="@layout/activity_matches"
+    android:background="@drawable/gradient">
     <Button
         android:id="@+id/listItemBtn"
         android:layout_width="60sp"
         android:layout_height="60sp"
         android:onClick="editBook"
-        android:text="Edit" />
+        android:text="Edit"
+        android:background="#00ffa6" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Match's ID"
+        android:text="Book Titles"
         android:layout_gravity="center"
         android:id="@+id/bookTitle"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="description"
-        android:layout_gravity="center"
-        android:id="@+id/bookDescription"/>
-
-
 
 </LinearLayout>
