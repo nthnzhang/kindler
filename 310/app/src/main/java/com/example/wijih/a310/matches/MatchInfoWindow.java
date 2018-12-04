@@ -197,8 +197,8 @@ public class MatchInfoWindow extends Activity {
 
         Intent returnIntent = new Intent();
         returnIntent.putExtra("userChoice", true);
-        returnIntent.putExtra("userChoiceMade", true);
         returnIntent.putExtra("currentUsername", currentUser.getUsername());
+        returnIntent.putExtra("matchID", match.getMatchId());
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
     }
@@ -239,8 +239,8 @@ public class MatchInfoWindow extends Activity {
 
         Intent returnIntent = new Intent();
         returnIntent.putExtra("userChoice", false);
-        returnIntent.putExtra("userChoiceMade", true);
         returnIntent.putExtra("currentUsername", currentUser.getUsername());
+        returnIntent.putExtra("matchID", match.getMatchId());
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
     }
