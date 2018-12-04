@@ -49,6 +49,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
                 if (currentUser != null && !newEmail.getText().toString().trim().equals("")) {
 //                    mAuth.child("kindler-edfdb").child(currentUser.getId()).child("username").setValue(newEmail.getText().toString().trim());
+                    currentUser.setEmail(newEmail.getText().toString().trim());
                     mDatabase.child("email").setValue(newEmail.getText().toString().trim());
                 }
 
@@ -56,6 +57,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 //get the way to update username
                 if (currentUser != null && !newUsername.getText().toString().trim().equals("")) {
 //                    mAuth.child("kindler-edfdb").child(currentUser.getId()).child("username").setValue(newUsername.getText().toString().trim());
+                    currentUser.setUsername(newUsername.getText().toString().trim());
                     mDatabase.child("username").setValue(newUsername.getText().toString().trim());
                 }
 
@@ -63,6 +65,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 //get the way to update Phone number
                 if (currentUser != null && !newPhone.getText().toString().trim().equals("")) {
 //                    mAuth.child("kindler-edfdb").child(currentUser.getId()).child("username").setValue(newPhone.getText().toString().trim());
+                    currentUser.setPhone(newPhone.getText().toString().trim());
                     mDatabase.child("phone").setValue(newPhone.getText().toString().trim());
                 }
 //                startActivity(new Intent(EditProfileActivity.this, ProfileActivity.class));
