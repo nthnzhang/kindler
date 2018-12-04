@@ -89,6 +89,8 @@ public class MatchesActivity extends AppCompatActivity {
                         resultsMatches.get(i).setUser2ChoiceMade(match.isUser2ChoiceMade());
                         resultsMatches.get(i).setUser1Choice(match.isUser1ChoiceMade());
                         resultsMatches.get(i).setUser2Choice(match.isUser2ChoiceMade());
+                        resultsMatches.get(i).setUser1HasRated(match.isUser1HasRated());
+                        resultsMatches.get(i).setUser2HasRated(match.isUser2HasRated());
                     }
                 }
 
