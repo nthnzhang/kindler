@@ -45,9 +45,8 @@ public class Match implements Parcelable {
         this.user1Choice = false;
         this.user2Choice = false;
         this.matchAccepted = false;
-        this.user1ChoiceMade = user1Choice;
-        this.user2ChoiceMade = user2Choice;
-
+        this.user1ChoiceMade = false;
+        this.user2ChoiceMade = false;
         this.user1TotalRatings = user1TotalRatings;
         this.user2TotalRatings = user2TotalRatings;
         this.user1TotalScore = user1TotalScore;
@@ -62,8 +61,11 @@ public class Match implements Parcelable {
         matchId = in.readString();
         userId1 = in.readString();
         userId2 = in.readString();
+        user1Email = in.readString();
+        user2Email = in.readString();
         user1Choice = in.readByte() != 0;
         user2Choice = in.readByte() != 0;
+        matchAccepted = in.readByte() != 0;
         user1ChoiceMade = in.readByte() != 0;
         user2ChoiceMade = in.readByte() != 0;
         user1TotalRatings = in.readDouble();
@@ -108,6 +110,8 @@ public class Match implements Parcelable {
             }
             user1Choice = true;
             mDatabase.child("user1Choice").setValue(true);
+            user1ChoiceMade = true;
+            mDatabase.child("user1ChoiceMade").setValue(true);
         }
         // user2 is accepting the match
         else {
@@ -119,6 +123,9 @@ public class Match implements Parcelable {
             }
             user2Choice = true;
             mDatabase.child("user2Choice").setValue(true);
+            user2ChoiceMade = true;
+            mDatabase.child("user2ChoiceMade").setValue(true);
+
         }
     }
 
@@ -167,6 +174,9 @@ public class Match implements Parcelable {
 
             }
         });
+
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("matches").child(matchId);
+        mDatabase.child("userRated").setValue(true);
     }
 
     public String getMatchId() {
@@ -193,11 +203,11 @@ public class Match implements Parcelable {
         return user2Choice;
     }
 
-    public boolean isUser1ChoiceMade() { return user1ChoiceMade; }
+    public boolean isUser1ChoiceMade() { return user1ChoiceMade || user1Choice; }
 
     public void setUser1ChoiceMade(boolean user1ChoiceMade) { this.user1ChoiceMade = user1ChoiceMade; }
 
-    public boolean isUser2ChoiceMade() { return user2ChoiceMade; }
+    public boolean isUser2ChoiceMade() { return user2ChoiceMade || user2Choice; }
 
     public void setUser2ChoiceMade(boolean user2ChoiceMade) { this.user2ChoiceMade = user2ChoiceMade; }
 
@@ -226,7 +236,7 @@ public class Match implements Parcelable {
     }
 
     public Double getUserRating(String userId) {
-        if(userId == userId1) {
+        if(userId.equals(userId1)) {
             if(user2TotalRatings == 0.0) {
                 return 0.0;
             }
@@ -250,8 +260,11 @@ public class Match implements Parcelable {
         parcel.writeString(matchId);
         parcel.writeString(userId1);
         parcel.writeString(userId2);
+        parcel.writeString(user1Email);
+        parcel.writeString(user2Email);
         parcel.writeByte((byte) (user1Choice ? 1 : 0));
         parcel.writeByte((byte) (user2Choice ? 1 : 0));
+        parcel.writeByte((byte) (matchAccepted ? 1: 0));
         parcel.writeByte((byte) (user1ChoiceMade ? 1 : 0));
         parcel.writeByte((byte) (user2ChoiceMade ? 1 : 0));
         parcel.writeDouble(user1TotalRatings);
