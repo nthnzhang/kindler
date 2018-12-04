@@ -32,6 +32,9 @@ public class Match implements Parcelable {
     private boolean user1ChoiceMade;
     private boolean user2ChoiceMade;
 
+    private boolean user1HasRated;
+    private boolean user2HasRated;
+
     private DatabaseReference mDatabase;
 
 
@@ -51,6 +54,8 @@ public class Match implements Parcelable {
         this.user2TotalRatings = user2TotalRatings;
         this.user1TotalScore = user1TotalScore;
         this.user2TotalScore = user2TotalScore;
+        this.user1HasRated = false;
+        this.user2HasRated = false;
     }
 
     public Match() {
@@ -72,6 +77,8 @@ public class Match implements Parcelable {
         user2TotalRatings = in.readDouble();
         user1TotalScore = in.readDouble();
         user2TotalScore = in.readDouble();
+        user1HasRated = in.readByte() != 0;
+        user2HasRated = in.readByte() != 0;
     }
 
     public static final Creator<Match> CREATOR = new Creator<Match>() {
@@ -144,11 +151,19 @@ public class Match implements Parcelable {
         if(userId.equals(userId1)) {
             user2TotalScore += Double.valueOf(rating);
             user2TotalRatings++;
+            user1HasRated = true;
+            mDatabase = FirebaseDatabase.getInstance().getReference().child("matches").child(matchId);
+            mDatabase.child("user1HasRated").setValue(true);
+
             mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(userId2);
         }
         else {
             user1TotalScore += Double.valueOf(rating);
             user1TotalRatings++;
+            user2HasRated = true;
+            mDatabase = FirebaseDatabase.getInstance().getReference().child("matches").child(matchId);
+            mDatabase.child("user2HasRated").setValue(true);
+
             mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(userId1);
         }
         // update the rating
@@ -250,6 +265,15 @@ public class Match implements Parcelable {
         }
     }
 
+    public boolean isUser1HasRated() {
+        return user1HasRated;
+    }
+
+    public boolean isUser2HasRated() {
+        return user2HasRated;
+    }
+
+
     @Override
     public int describeContents() {
         return 0;
@@ -271,5 +295,7 @@ public class Match implements Parcelable {
         parcel.writeDouble(user2TotalRatings);
         parcel.writeDouble(user1TotalScore);
         parcel.writeDouble(user2TotalScore);
+        parcel.writeByte((byte) (user1HasRated ? 1 : 0));
+        parcel.writeByte((byte) (user2HasRated ? 1 : 0));
     }
 }
