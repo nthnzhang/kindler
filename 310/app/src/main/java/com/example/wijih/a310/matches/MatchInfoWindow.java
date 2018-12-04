@@ -42,7 +42,7 @@ public class MatchInfoWindow extends Activity {
         // displayed matched user's name
         String nameToDisplay;
         double rating;
-        if(match.getUserId1() == currentUser.getUserID()) {
+        if(match.getUserId1().equals(currentUser.getUserID())) {
             nameToDisplay = match.getUserId2();
 
             if(match.getUserRating(match.getUserId2()) != null) {
@@ -110,11 +110,11 @@ public class MatchInfoWindow extends Activity {
 
             if(match.isUser1Choice())  {
                 // current user has accepted match
-                matchPendingView.setText("choice remembered Match accepted, waiting for other user's response.");
+                matchPendingView.setText("Match accepted, waiting for other user's response.");
             }
             else {
                 // current user denied match
-                matchPendingView.setText("choice remembered Match denied.");
+                matchPendingView.setText("Match denied.");
             }
             matchPendingView.setVisibility(View.VISIBLE);
         }
@@ -123,10 +123,10 @@ public class MatchInfoWindow extends Activity {
 
             if(match.isUser2Choice())  {
                 // current user has accepted match
-                matchPendingView.setText("choice remembered Match accepted, waiting for other user's response.");
+                matchPendingView.setText("Match accepted, waiting for other user's response.");
             }
             else {
-                matchPendingView.setText("choice remembered Match denied.");
+                matchPendingView.setText("Match denied.");
             }
             matchPendingView.setVisibility(View.VISIBLE);
         }
@@ -159,15 +159,6 @@ public class MatchInfoWindow extends Activity {
         Log.d("user  1 choice made", (match.isUser1ChoiceMade() ? "true": "false"));
         Log.d("user  2 choice made", (match.isUser2ChoiceMade() ? "true": "false"));
 
-        if(isUser1) {
-            match.setUser1ChoiceMade(true);
-            match.setUser1Choice(true);
-        }
-        else {
-            match.setUser2ChoiceMade(true);
-            match.setUser2Choice(true);
-        }
-
         match.acceptMatch(currentUser.getUserID());
 
         acceptButton.setVisibility(View.GONE);
@@ -184,6 +175,9 @@ public class MatchInfoWindow extends Activity {
             }
 
             matchEmailView.setText(email);
+
+            Log.d("email", email);
+
             matchEmailView.setVisibility(View.VISIBLE);
             displayRatingBar();
         }
