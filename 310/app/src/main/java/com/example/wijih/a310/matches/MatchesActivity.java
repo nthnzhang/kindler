@@ -85,40 +85,12 @@ public class MatchesActivity extends AppCompatActivity {
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 Match match = dataSnapshot.getValue(Match.class);
-
-                if(match.getUserId1().equals(currentUser.getUserID()) || match.getUserId2().equals(
-                        currentUser.getUserID())) {
-
-//                    Button acceptButton = findViewById(R.id.acceptMatchButton);
-//                    Button denyButton = findViewById(R.id.denyMatchButton);
-//                    TextView matchEmailView = findViewById(R.id.matchContactInfo);
-//                    TextView matchPendingView = findViewById(R.id.matchPending);
-//
-//                    acceptButton.setVisibility(View.GONE);
-//                    denyButton.setVisibility(View.GONE);
-
-                    if(match.isMatchAccepted()) {
-                        // show contact information
-
-//                        if(match.isUser1Choice() && match.isUser2Choice()) {
-                            // safe to display contact information
-//                            String email;
-//                            if(match.getUserId1().equals(currentUser.getUserID())) {
-//                                email = match.getUserId2(); // NEED TO CHANGE THIS TO DISPLAY ACTUAL EMAIL
-//                            }
-//                            else {
-//                                email = match.getUserId1(); // NEED TO CHANGE THIS TO DISPLAY ACTUAL EMAIL
-//                            }
-//
-//
-//                            matchEmailView.setText(email);
-//                            matchEmailView.setVisibility(View.VISIBLE);
-//                        }
-//                        else {
-//
-//                            matchPendingView.setText("Match accepted, waiting for other user's response.");
-//                            matchPendingView.setVisibility(View.VISIBLE);
-//                        }
+                if (match.getUserId1() != null && match.getUserId2() != null) {
+                    if(match.getUserId1().equals(currentUser.getUserID()) || match.getUserId2().equals(
+                            currentUser.getUserID())) {
+                        if(match.isMatchAccepted()) {
+                            // show contact information
+                        }
                     }
 //                    else {
 //
@@ -126,6 +98,7 @@ public class MatchesActivity extends AppCompatActivity {
 //                        matchPendingView.setVisibility(View.VISIBLE);
 //                    }
                 }
+
             }
 
             @Override
@@ -133,12 +106,15 @@ public class MatchesActivity extends AppCompatActivity {
                 Match match = dataSnapshot.getValue(Match.class);
 
 
-                if(match.getUserId1().equals(currentUser.getUserID()) || match.getUserId2().equals(
-                        currentUser.getUserID())) {
-                    // remove match
-                    resultsMatches.remove(match);
-                    matchesAdapter.notifyDataSetChanged();
+                if (match.getUserId1() != null && match.getUserId2() != null) {
+                    if(match.getUserId1().equals(currentUser.getUserID()) || match.getUserId2().equals(
+                            currentUser.getUserID())) {
+                        // remove match
+                        resultsMatches.remove(match);
+                        matchesAdapter.notifyDataSetChanged();
+                    }
                 }
+
             }
 
             @Override

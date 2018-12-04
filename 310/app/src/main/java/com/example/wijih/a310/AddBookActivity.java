@@ -42,6 +42,7 @@ public class AddBookActivity extends AppCompatActivity {
     public static final int IMAGE_GALLERY_REQUEST = 20;
     private Bitmap bm;
     private ImageView imgThumbnail;
+    private String encodedImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,25 +77,6 @@ public class AddBookActivity extends AppCompatActivity {
 
         addBook();
     }
-
-
-    /*public void btnGalleryClicked (View view) {
-        //use implicit intent to get to image gallery
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK);
-
-        //this is where to find the data
-        File pictureDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        String pictureDirectoryPath = pictureDirectory.getPath();
-
-        //URI
-        Uri data = Uri.parse(pictureDirectoryPath);
-
-        //set data and type
-        galleryIntent.setDataAndType(data, "image/*");
-
-        startActivityForResult(galleryIntent, IMAGE_GALLERY_REQUEST);
-    }*/
-
 
 
 
@@ -164,8 +146,10 @@ public class AddBookActivity extends AppCompatActivity {
 
 
                     //encode the picture
-                    String encodedImg = encodeAndSaveImg(bm);
-                    System.out.println("img: " + encodedImg);
+                    if (bm != null) {
+                        encodedImg = encodeAndSaveImg(bm);
+                        System.out.println("img: " + encodedImg);
+                    }
 
 
 
@@ -185,7 +169,6 @@ public class AddBookActivity extends AppCompatActivity {
             }
         });
 
-//        startActivity(new Intent(AddBookActivity.this, ProfileActivity.class));
 
     }
 

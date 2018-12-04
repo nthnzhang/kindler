@@ -552,5 +552,9 @@ public class User implements Parcelable {
         this.phone = phone;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public List<String> getSwipableBookIds() {return swipableBookIds;}
 }

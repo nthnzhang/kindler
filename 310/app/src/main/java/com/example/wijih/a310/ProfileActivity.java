@@ -37,12 +37,6 @@ public class ProfileActivity extends AppCompatActivity {
 
         final Intent currUserIntent = getIntent();
         currentUser = currUserIntent.getParcelableExtra("current_user");
-
-        /*username = user.getUsername();
-        email = user.getEmail();
-        phone = user.getPhone();
-        rating = user.getRating();
-        allBooks = user.getBooks();*/
         Log.d("phone", currentUser.getPhone());
 
         usernameView = (TextView) findViewById(R.id.username);
@@ -54,9 +48,6 @@ public class ProfileActivity extends AppCompatActivity {
         ratingView = (TextView) findViewById(R.id.rating);
         ratingView.setText(String.valueOf(currentUser.getTotalScore()/currentUser.getTotalReviews()));
 
-//        mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUserID()).child("uploadedBookIDs");
-
-
     }
 
 
@@ -65,24 +56,18 @@ public class ProfileActivity extends AppCompatActivity {
 
 
     public void editProfile (View view) {
-//        startActivity(new Intent(this, EditProfileActivity.class));
-
         Intent intent = new Intent(this, EditProfileActivity.class);
         intent.putExtra("current_user", currentUser);
         startActivity(intent);
     }
 
     public void addBook (View view) {
-//        startActivity(new Intent(this, AddBookActivity.class));
-
         Intent intent = new Intent(this, AddBookActivity.class);
         intent.putExtra("current_user", currentUser);
         startActivity(intent);
     }
 
     public void yourBooks (View view) {
-//        startActivity(new Intent(this, BooksActivity.class));
-
         Intent intent = new Intent(this, BooksActivity.class);
         intent.putExtra("current_user", currentUser);
         startActivity(intent);
@@ -98,9 +83,5 @@ public class ProfileActivity extends AppCompatActivity {
     public void logoutUser(View view) {
         Intent intent = new Intent(ProfileActivity.this, ChooseLoginRegistrationActivity.class);
         startActivity(intent);
-        /*mAuth.signOut();
-        startActivity(new Intent(MainActivity.this, ChooseLoginRegistrationActivity.class));
-        finish();
-        return;*/
     }
 }

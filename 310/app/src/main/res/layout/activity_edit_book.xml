@@ -60,6 +60,12 @@
         android:layout_height="wrap_content"
         android:text="Save Changes" />
 
+    <Button
+        android:id="@+id/deleteBook"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete Book" />
+
     <ImageView
         android:id="@+id/imgThumbnail"
         android:layout_width="match_parent"
