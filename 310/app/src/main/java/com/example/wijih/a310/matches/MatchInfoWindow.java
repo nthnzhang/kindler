@@ -92,7 +92,15 @@ public class MatchInfoWindow extends Activity {
         Log.d("username 1", match.getUsername2());
 
         // checking if other user has accepted match
-        if(match.isUser1Choice() && match.isUser2Choice()) {
+        if(isUser1 && match.isUser1HasRated()) {
+            ratingSubmitted.setText("Rating Submitted!");
+            ratingSubmitted.setVisibility(View.VISIBLE);
+        }
+        else if(!isUser1 && match.isUser2HasRated()) {
+            ratingSubmitted.setText("Rating Submitted!");
+            ratingSubmitted.setVisibility(View.VISIBLE);
+        }
+        else if(match.isUser1Choice() && match.isUser2Choice()) {
             // safe to display contact information
             String email;
             if(isUser1) {
@@ -123,11 +131,10 @@ public class MatchInfoWindow extends Activity {
         else if(!isUser1 && match.isUser2ChoiceMade()) {
             // current user is user 2 and choice has been made
 
-            if(match.isUser2Choice())  {
+            if (match.isUser2Choice()) {
                 // current user has accepted match
                 matchPendingView.setText("Match accepted, waiting for other user's response.");
-            }
-            else {
+            } else {
                 matchPendingView.setText("Match denied.");
             }
             matchPendingView.setVisibility(View.VISIBLE);
