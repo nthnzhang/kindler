@@ -44,7 +44,7 @@ public class MatchInfoWindow extends Activity {
         String nameToDisplay;
         double rating;
         if(match.getUserId1().equals(currentUser.getUserID())) {
-            nameToDisplay = match.getUserId2();
+            nameToDisplay = match.getOthersName(currentUser.getUserID());
 
             if(match.getUserRating(match.getUserId2()) != null) {
                 rating = match.getUserRating(match.getUserId2());
@@ -53,11 +53,11 @@ public class MatchInfoWindow extends Activity {
                 rating = 0.0;
             }
 
-            nameToDisplay += " " + rating;
+            nameToDisplay += " | " + rating;
             isUser1 = true;
         }
         else {
-            nameToDisplay = match.getUserId1();
+            nameToDisplay = match.getOthersName(currentUser.getUserID());
 
             if(match.getUserRating(match.getUserId1()) != null) {
                 rating = match.getUserRating(match.getUserId1());
@@ -66,7 +66,7 @@ public class MatchInfoWindow extends Activity {
                 rating = 0.0;
             }
 
-            nameToDisplay += " " + rating;
+            nameToDisplay += " | " + rating;
             isUser1 = false;
         }
 
@@ -88,7 +88,8 @@ public class MatchInfoWindow extends Activity {
         Log.d("user  2 choice", (match.isUser2Choice() ? "true": "false"));
         Log.d("user  1 choice made", (match.isUser1ChoiceMade() ? "true": "false"));
         Log.d("user  2 choice made", (match.isUser2ChoiceMade() ? "true": "false"));
-
+        Log.d("username 1", match.getUsername1());
+        Log.d("username 1", match.getUsername2());
 
         // checking if other user has accepted match
         if(match.isUser1Choice() && match.isUser2Choice()) {
@@ -145,7 +146,7 @@ public class MatchInfoWindow extends Activity {
 
         int height = dm.heightPixels;
 
-        getWindow().setLayout((int)(0.4*height), (int)(0.6*height));
+        getWindow().setLayout((int)(0.4*height), (int)(0.5*height));
 
     }
 

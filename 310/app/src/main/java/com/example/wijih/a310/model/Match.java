@@ -14,6 +14,8 @@ public class Match implements Parcelable {
     private String matchId;
     private String userId1;
     private String userId2;
+    private String username1;
+    private String username2;
     private String user1Email;
     private String user2Email;
     private Double user1TotalScore;
@@ -35,11 +37,13 @@ public class Match implements Parcelable {
     private DatabaseReference mDatabase;
 
 
-    public Match(String userId1, String userId2, String user1Email, String user2Email,
+    public Match(String userId1, String userId2, String username1, String username2,  String user1Email, String user2Email,
                  Double user1TotalRatings, Double user2TotalRatings, Double user1TotalScore,
                  Double user2TotalScore) {
         this.userId1 = userId1;
         this.userId2 = userId2;
+        this.username1 = username1;
+        this.username2 = username2;
         this.user1Email = user1Email;
         this.user2Email = user2Email;
         this.user1Choice = false;
@@ -51,6 +55,9 @@ public class Match implements Parcelable {
         this.user2TotalRatings = user2TotalRatings;
         this.user1TotalScore = user1TotalScore;
         this.user2TotalScore = user2TotalScore;
+
+        Log.d("initial username1", username1);
+        Log.d("initial username2", username2);
     }
 
     public Match() {
@@ -61,6 +68,8 @@ public class Match implements Parcelable {
         matchId = in.readString();
         userId1 = in.readString();
         userId2 = in.readString();
+        username1=  in.readString();
+        username2 = in.readString();
         user1Email = in.readString();
         user2Email = in.readString();
         user1Choice = in.readByte() != 0;
@@ -250,6 +259,35 @@ public class Match implements Parcelable {
         }
     }
 
+    public String getOthersName(String userId) {
+        Log.d("curr userId", userId);
+        Log.d("username1", username1);
+        Log.d("username2", username2);
+
+        if(userId.equals(userId1)) {
+            return username2;
+        }
+        else {
+            return username1;
+        }
+    }
+
+    public String getUsername1() {
+        return username1;
+    }
+
+    public void setUsername1(String username1) {
+        this.username1 = username1;
+    }
+
+    public String getUsername2() {
+        return username2;
+    }
+
+    public void setUsername2(String username2) {
+        this.username2 = username2;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -260,6 +298,8 @@ public class Match implements Parcelable {
         parcel.writeString(matchId);
         parcel.writeString(userId1);
         parcel.writeString(userId2);
+        parcel.writeString(username1);
+        parcel.writeString(username2);
         parcel.writeString(user1Email);
         parcel.writeString(user2Email);
         parcel.writeByte((byte) (user1Choice ? 1 : 0));

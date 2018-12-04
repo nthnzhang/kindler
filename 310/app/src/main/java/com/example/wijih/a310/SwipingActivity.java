@@ -87,7 +87,7 @@ public class SwipingActivity extends Activity {
             @Override
             public void onRightCardExit(Object dataObject) {
                 Toast.makeText(SwipingActivity.this, "Liked!", Toast.LENGTH_SHORT).show();
-                 currentUser.addLike(alBooks.get(0).getBookId());
+                currentUser.addLike(alBooks.get(0).getBookId());
                 alBooks.remove(0);
                 al.remove(0);
                 arrayAdapter.notifyDataSetChanged();

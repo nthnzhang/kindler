@@ -52,8 +52,12 @@ public class  MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.Matches
 
     @Override
     public void onBindViewHolder(@NonNull MatchesViewHolder holder, int position) {
-        //took this out
-        //holder.matchID.setText(matchesList.get(position).getUserId1() + " " + matchesList.get(position).getUserRating1());
+        if(matchesList.get(position).getUserId1().equals(currentUser.getUserID())) {
+            holder.matchID.setText("\t" + matchesList.get(position).getOthersName(currentUser.getUserID()) + " | " + matchesList.get(position).getUserRating(matchesList.get(position).getUserId2()));
+        }
+        else {
+            holder.matchID.setText("\t" + matchesList.get(position).getOthersName(currentUser.getUserID()) + " | " + matchesList.get(position).getUserRating(matchesList.get(position).getUserId1()));
+        }
     }
 
     @Override
