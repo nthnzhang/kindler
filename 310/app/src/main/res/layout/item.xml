@@ -12,7 +12,7 @@
         android:id="@+id/bookTitleText"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/holo_blue_dark"
+        android:background="@color/colorPrimary"
         android:gravity="center"
         android:padding="30dp"
         android:textColor="@android:color/white"

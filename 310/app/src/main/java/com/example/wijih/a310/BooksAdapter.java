@@ -2,19 +2,24 @@ package com.example.wijih.a310;
 
         import android.content.Context;
         import android.content.Intent;
+        import android.graphics.Bitmap;
+        import android.graphics.BitmapFactory;
         import android.support.annotation.NonNull;
         import android.support.v4.content.ContextCompat;
         import android.support.v7.widget.RecyclerView;
+        import android.util.Base64;
         import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
         import android.widget.Button;
+        import android.widget.ImageView;
         import android.widget.TextView;
         import android.widget.Toast;
 
         import com.example.wijih.a310.model.Book;
         import com.example.wijih.a310.model.User;
 
+        import java.io.IOException;
         import java.util.List;
 
 
@@ -45,6 +50,14 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.MatchesViewH
     public void onBindViewHolder(@NonNull MatchesViewHolder holder, int position) {
 
         final int pos = position;
+        if (booksList.get(position).getImageString() != null) {
+            try {
+                Bitmap map = decodeFromFirebase(booksList.get(position).getImageString());
+                holder.bookImg.setImageBitmap(map);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         holder.bookTitle.setText(booksList.get(position).getTitle());
         holder.bookBtn.setOnClickListener(new View.OnClickListener() {
@@ -64,16 +77,22 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.MatchesViewH
         return booksList.size();
     }
 
+    public static Bitmap decodeFromFirebase(String image) throws IOException {
+        byte[] decodedByteArray = android.util.Base64.decode(image, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(decodedByteArray, 0, decodedByteArray.length);
+    }
+
     class MatchesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView bookTitle, bookDescription;
         public Button bookBtn;
+        public ImageView bookImg;
 
         public MatchesViewHolder(View itemView, Context context) {
             super(itemView);
             itemView.setOnClickListener(this);
 
             bookTitle = itemView.findViewById(R.id.bookTitle);
-            bookDescription = itemView.findViewById(R.id.bookDescription);
+            bookImg = itemView.findViewById(R.id.bookImg);
             bookBtn = itemView.findViewById(R.id.listItemBtn);
         }
 

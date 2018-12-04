@@ -45,7 +45,7 @@ public class EditBookActivity extends AppCompatActivity {
 
 
     private DatabaseReference mDatabase;
-    private DatabaseReference dDatabase;
+    //private DatabaseReference dDatabase;
     private String bookId;
 
     @Override
@@ -59,7 +59,7 @@ public class EditBookActivity extends AppCompatActivity {
         currentUser = intent.getParcelableExtra("current_user");
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("books").child(bookId);
-        dDatabase = FirebaseDatabase.getInstance().getReference().child("users").child("uploadedBookIDs").child(bookId);
+        //dDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUserID()).child("uploadedBookIDs");
 
         imgThumbnail = (ImageView) findViewById(R.id.imgThumbnail);
 
@@ -90,7 +90,7 @@ public class EditBookActivity extends AppCompatActivity {
         deleteImage.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                dDatabase.removeValue();
+
                 mDatabase.removeValue();
 
                 Intent intent = new Intent(EditBookActivity.this, ProfileActivity.class);
@@ -119,20 +119,14 @@ public class EditBookActivity extends AppCompatActivity {
 
                 //declare stream to read img data from SD
                 InputStream inputStream;
-
                 try {
                     inputStream = getContentResolver().openInputStream(imgUri);
-
                     bm = BitmapFactory.decodeStream(inputStream);
-
                     imgThumbnail.setImageBitmap(bm);
-
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                     Toast.makeText(this, "Unable to open image", Toast.LENGTH_SHORT).show();
                 }
-
-
             }
         }
     }
@@ -162,7 +156,6 @@ public class EditBookActivity extends AppCompatActivity {
                     int selected = newExchangeOrSale.getCheckedRadioButtonId();
                     radioChoice = (RadioButton) findViewById(selected);
                     if (radioChoice.getText().equals("Sale")) {
-                        System.out.println("In here");
                         forSale = true;
                     }
                     else {
@@ -170,23 +163,16 @@ public class EditBookActivity extends AppCompatActivity {
                     }
                     mDatabase.child("forSale").setValue(forSale);
 
-
-
-
-
                     //edit title
                     if (!newTitle.getText().toString().trim().equals("")) {
-                        //mAuth.child("kindler-edfdb").child(bookId).child("title").setValue(newTitle.getText().toString().trim());
                         mDatabase.child("title").setValue(newTitle.getText().toString().trim());
                     }
 
 
                     //edit description
                     if (!newDescription.getText().toString().trim().equals("")) {
-                        //mAuth.child("kindler-edfdb").child(bookId).child("username").setValue(newDescription.getText().toString().trim());
                         mDatabase.child("description").setValue(newDescription.getText().toString().trim());
                     }
-
 
                     //edit tags
                     if (!newTags.getText().toString().trim().equals("")) {
@@ -203,7 +189,6 @@ public class EditBookActivity extends AppCompatActivity {
                     //edit photo
                     if (bm != null) {
                         encodedImg = encodeAndSaveImg(bm);
-                        System.out.println("img: " + encodedImg);
                     }
                     if (encodedImg != null) {
                         mDatabase.child("imageString").setValue(encodedImg);

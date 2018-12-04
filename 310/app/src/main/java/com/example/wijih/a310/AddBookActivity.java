@@ -148,7 +148,6 @@ public class AddBookActivity extends AppCompatActivity {
                     //encode the picture
                     if (bm != null) {
                         encodedImg = encodeAndSaveImg(bm);
-                        System.out.println("img: " + encodedImg);
                     }
 
 
