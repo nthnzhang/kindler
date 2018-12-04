@@ -101,13 +101,17 @@ public class MatchesActivity extends AppCompatActivity {
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 Match match = dataSnapshot.getValue(Match.class);
 
-
                 if (match.getUserId1() != null && match.getUserId2() != null) {
                     if(match.getUserId1().equals(currentUser.getUserID()) || match.getUserId2().equals(
                             currentUser.getUserID())) {
                         // remove match
-                        resultsMatches.remove(match);
-                        matchesAdapter.notifyDataSetChanged();
+                        for (int i = 0; i < resultsMatches.size(); i++) {
+                            if (resultsMatches.get(i).getMatchId().equals(match.getMatchId())) {
+                                resultsMatches.remove(i);
+                                matchesAdapter.notifyDataSetChanged();
+                                return;
+                            }
+                        }
                     }
                 }
 
