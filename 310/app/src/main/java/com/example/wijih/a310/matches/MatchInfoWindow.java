@@ -1,6 +1,7 @@
 package com.example.wijih.a310.matches;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
@@ -193,6 +194,13 @@ public class MatchInfoWindow extends Activity {
         Log.d("user  2 choice", (match.isUser2Choice() ? "true": "false"));
         Log.d("user  1 choice made", (match.isUser1ChoiceMade() ? "true": "false"));
         Log.d("user  2 choice made", (match.isUser2ChoiceMade() ? "true": "false"));
+
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("userChoice", true);
+        returnIntent.putExtra("userChoiceMade", true);
+        returnIntent.putExtra("currentUsername", currentUser.getUsername());
+        setResult(Activity.RESULT_OK, returnIntent);
+        finish();
     }
 
     public void denyMatchClicked(View view) {
@@ -228,6 +236,13 @@ public class MatchInfoWindow extends Activity {
         Log.d("user  2 choice", (match.isUser2Choice() ? "true": "false"));
         Log.d("user  1 choice made", (match.isUser1ChoiceMade() ? "true": "false"));
         Log.d("user  2 choice made", (match.isUser2ChoiceMade() ? "true": "false"));
+
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("userChoice", false);
+        returnIntent.putExtra("userChoiceMade", true);
+        returnIntent.putExtra("currentUsername", currentUser.getUsername());
+        setResult(Activity.RESULT_OK, returnIntent);
+        finish();
     }
 
     private void displayRatingBar() {

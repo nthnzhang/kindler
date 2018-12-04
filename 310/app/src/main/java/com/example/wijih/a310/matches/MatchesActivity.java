@@ -1,5 +1,6 @@
 package com.example.wijih.a310.matches;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -55,7 +56,6 @@ public class MatchesActivity extends AppCompatActivity {
         matchesAdapter.notifyDataSetChanged();
     }
 
-
     private ArrayList<Match> resultsMatches = new ArrayList<Match>();
     private List<Match> getDataSetMatches() {
         return resultsMatches;
@@ -87,42 +87,9 @@ public class MatchesActivity extends AppCompatActivity {
                 if(match.getUserId1().equals(currentUser.getUserID()) || match.getUserId2().equals(
                         currentUser.getUserID())) {
 
-//                    Button acceptButton = findViewById(R.id.acceptMatchButton);
-//                    Button denyButton = findViewById(R.id.denyMatchButton);
-//                    TextView matchEmailView = findViewById(R.id.matchContactInfo);
-//                    TextView matchPendingView = findViewById(R.id.matchPending);
-//
-//                    acceptButton.setVisibility(View.GONE);
-//                    denyButton.setVisibility(View.GONE);
-
                     if(match.isMatchAccepted()) {
-                        // show contact information
 
-//                        if(match.isUser1Choice() && match.isUser2Choice()) {
-                            // safe to display contact information
-//                            String email;
-//                            if(match.getUserId1().equals(currentUser.getUserID())) {
-//                                email = match.getUserId2(); // NEED TO CHANGE THIS TO DISPLAY ACTUAL EMAIL
-//                            }
-//                            else {
-//                                email = match.getUserId1(); // NEED TO CHANGE THIS TO DISPLAY ACTUAL EMAIL
-//                            }
-//
-//
-//                            matchEmailView.setText(email);
-//                            matchEmailView.setVisibility(View.VISIBLE);
-//                        }
-//                        else {
-//
-//                            matchPendingView.setText("Match accepted, waiting for other user's response.");
-//                            matchPendingView.setVisibility(View.VISIBLE);
-//                        }
                     }
-//                    else {
-//
-//                        matchPendingView.setText("Match denied.");
-//                        matchPendingView.setVisibility(View.VISIBLE);
-//                    }
                 }
             }
 
@@ -149,6 +116,20 @@ public class MatchesActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK) {
+                String currentUserName = data.getStringExtra("currentUsername");
+                String userChoice = data.getStringExtra("userChoice");
+                String userChoiceMade = data.getStringExtra("userChoiceMade");
+
+
+
+            }
+        }
     }
 
     public void goToSwiping(View view) {
