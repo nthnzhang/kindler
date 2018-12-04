@@ -3,4 +3,5 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#005c52</color>
     <color name="colorAccent">#d42f88db</color>
+    <color name="tinder_red">#9bff5864</color>
 </resources>
