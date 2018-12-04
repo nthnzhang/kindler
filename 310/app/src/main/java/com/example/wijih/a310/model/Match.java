@@ -309,6 +309,14 @@ public class Match implements Parcelable {
         return user2HasRated;
     }
 
+    public void setUser1HasRated(boolean user1HasRated) {
+        this.user1HasRated = user1HasRated;
+    }
+
+    public void setUser2HasRated(boolean user2HasRated) {
+        this.user2HasRated = user2HasRated;
+    }
+
     @Override
     public int describeContents() {
         return 0;

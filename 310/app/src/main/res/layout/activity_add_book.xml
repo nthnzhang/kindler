@@ -1,70 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddBookActivity"
-    android:orientation="vertical">
+    android:background="@drawable/gradient"
+    tools:context=".AddBook" >
 
-
-    <EditText
-        android:id="@+id/bookTitle"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Title" />
+        android:layout_height="match_parent"
+        android:id="@+id/linearLayout"
+        android:orientation="vertical" >
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Description"
-        android:id="@+id/bookDescription"/>
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Tags (Separated with commas)"
-        android:id="@+id/bookTags"/>
-
-    <Button
-        android:id="@+id/UploadPhoto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Upload Photo" />
-
-    <RadioGroup
-        android:id="@+id/exchangeOrSale"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <RadioButton
-            android:id="@+id/exchangeBtn"
-            android:checked="true"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/bookTitle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Exchange" />
+            android:hint="Title" />
 
-        <RadioButton
-            android:id="@+id/saleBtn"
-            android:layout_width="wrap_content"
+        <EditText
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Sale" />
-    </RadioGroup>
+            android:layout_marginTop="20dp"
+            android:hint="Description"
+            android:id="@+id/bookDescription"/>
 
-    <Button
-        android:id="@+id/addBook"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Add Book" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="Tags (Separated with commas)"
+            android:id="@+id/bookTags"/>
 
-    <ImageView
-        android:id="@+id/imgThumbnail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher_round" />
+        <RadioGroup
+            android:id="@+id/exchangeOrSale"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp">
+
+            <RadioButton
+                android:id="@+id/exchangeBtn"
+                android:checked="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Exchange" />
+
+            <RadioButton
+                android:id="@+id/saleBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Sale" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/UploadPhoto"
+            android:layout_width="1.5in"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Upload Photo"
+            android:background="#00ffa6"
+            android:layout_gravity="center" />
+
+        <Button
+            android:id="@+id/addBook"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="Add Book"
+            android:background="#00ffa6"
+            android:layout_gravity="center"/>
+
+        <ImageView
+            android:id="@+id/imgThumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher_round" />
 
 
-</LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

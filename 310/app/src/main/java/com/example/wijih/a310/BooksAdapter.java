@@ -47,7 +47,6 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.MatchesViewH
         final int pos = position;
 
         holder.bookTitle.setText(booksList.get(position).getTitle());
-        holder.bookDescription.setText("Hi");
         holder.bookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
