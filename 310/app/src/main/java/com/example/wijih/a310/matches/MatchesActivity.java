@@ -1,6 +1,5 @@
 package com.example.wijih.a310.matches;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,8 +7,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.example.wijih.a310.R;
 import com.example.wijih.a310.SwipingActivity;
@@ -86,12 +83,12 @@ public class MatchesActivity extends AppCompatActivity {
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 Match match = dataSnapshot.getValue(Match.class);
 
-                if (match.getUserId1() != null && match.getUserId2() != null) {
-                    if(match.getUserId1().equals(currentUser.getUserID()) || match.getUserId2().equals(
-                            currentUser.getUserID())) {
-                        if(match.isMatchAccepted()) {
-                            // show contact information
-                        }
+                for(int i=0; i<resultsMatches.size(); i++) {
+                    if(resultsMatches.get(i).getMatchId().equals(match.getMatchId())) {
+                        resultsMatches.get(i).setUser1ChoiceMade(match.isUser1ChoiceMade());
+                        resultsMatches.get(i).setUser2ChoiceMade(match.isUser2ChoiceMade());
+                        resultsMatches.get(i).setUser1Choice(match.isUser1ChoiceMade());
+                        resultsMatches.get(i).setUser2Choice(match.isUser2ChoiceMade());
                     }
                 }
 
@@ -131,16 +128,6 @@ public class MatchesActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1) {
-            if(resultCode == Activity.RESULT_OK) {
-                String currentUserName = data.getStringExtra("currentUsername");
-                String userChoice = data.getStringExtra("userChoice");
-                String userChoiceMade = data.getStringExtra("userChoiceMade");
-
-
-
-            }
-        }
     }
 
     public void goToSwiping(View view) {

@@ -218,7 +218,9 @@ public class User implements Parcelable {
                                 ownerTotalReviews = dataSnapshot.child("totalReviews").getValue(Double.class);
                             }
 
-                            Match match = new Match(userID, ownerId, email, ownerEmail, totalScore,
+                            String ownerName = dataSnapshot.child("username").getValue(String.class);
+
+                            Match match = new Match(userID, ownerId, username, ownerName, email, ownerEmail, totalScore,
                                     ownerTotalScore, totalReviews, ownerTotalReviews);
                             mDatabase = FirebaseDatabase.getInstance().getReference().child("matches");
 
@@ -259,7 +261,9 @@ public class User implements Parcelable {
                                             ownerTotalReviews = dataSnapshot.child("totalReviews").getValue(Double.class);
                                         }
 
-                                        Match match = new Match(userID, ownerId, email, ownerEmail, totalScore,
+                                        String ownerName = dataSnapshot.child("username").getValue(String.class);
+
+                                        Match match = new Match(userID, ownerId, username, ownerName, email, ownerEmail, totalScore,
                                                 ownerTotalScore, totalReviews, ownerTotalReviews);
                                         mDatabase = FirebaseDatabase.getInstance().getReference().child("matches");
 
