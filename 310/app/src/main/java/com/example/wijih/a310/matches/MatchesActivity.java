@@ -1,6 +1,5 @@
 package com.example.wijih.a310.matches;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,8 +7,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.example.wijih.a310.R;
 import com.example.wijih.a310.SwipingActivity;
@@ -127,30 +124,6 @@ public class MatchesActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == 1) {
-//            if(resultCode == Activity.RESULT_OK) {
-//                String currentUserName = data.getStringExtra("currentUsername");
-//                String userChoice = data.getStringExtra("userChoice");
-//                String matchID = data.getStringExtra("matchID");
-//
-//                for(int i=0; i<resultsMatches.size(); i++) {
-//                    if(resultsMatches.get(i).getMatchId().equals(matchID)) {
-//                        boolean userChoiceBool = (userChoice.equals("true")) ? true: false;
-//
-//                        if(resultsMatches.get(i).getUserId1().equals(currentUserName)) {
-//                            // current user is user 1
-//                            resultsMatches.get(i).setUser1Choice(userChoiceBool);
-//                            resultsMatches.get(i).setUser1ChoiceMade(true);
-//                        }
-//                        else {
-//                            resultsMatches.get(i).setUser2Choice(userChoiceBool);
-//                            resultsMatches.get(i).setUser2ChoiceMade(true);
-//                        }
-//                    }
-//                }
-//            }
-//        }
     }
 
     public void goToSwiping(View view) {
