@@ -65,7 +65,9 @@ public class MatchesActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Match match = dataSnapshot.getValue(Match.class);
-
+                if(match.getUserId1() == null || match.getUserId2() == null) {
+                    return;
+                }
                 // match is one of current user's matches
                 if(match.getUserId1().equals(currentUser.getUserID()) || match.getUserId2().equals(
                         currentUser.getUserID())) {
