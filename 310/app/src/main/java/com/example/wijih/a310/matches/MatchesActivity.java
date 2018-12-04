@@ -1,5 +1,6 @@
 package com.example.wijih.a310.matches;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -55,7 +56,6 @@ public class MatchesActivity extends AppCompatActivity {
         matchesAdapter.notifyDataSetChanged();
     }
 
-
     private ArrayList<Match> resultsMatches = new ArrayList<Match>();
     private List<Match> getDataSetMatches() {
         return resultsMatches;
@@ -85,6 +85,7 @@ public class MatchesActivity extends AppCompatActivity {
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 Match match = dataSnapshot.getValue(Match.class);
+
                 if (match.getUserId1() != null && match.getUserId2() != null) {
                     if(match.getUserId1().equals(currentUser.getUserID()) || match.getUserId2().equals(
                             currentUser.getUserID())) {
@@ -92,11 +93,6 @@ public class MatchesActivity extends AppCompatActivity {
                             // show contact information
                         }
                     }
-//                    else {
-//
-//                        matchPendingView.setText("Match denied.");
-//                        matchPendingView.setVisibility(View.VISIBLE);
-//                    }
                 }
 
             }
@@ -105,13 +101,17 @@ public class MatchesActivity extends AppCompatActivity {
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 Match match = dataSnapshot.getValue(Match.class);
 
-
                 if (match.getUserId1() != null && match.getUserId2() != null) {
                     if(match.getUserId1().equals(currentUser.getUserID()) || match.getUserId2().equals(
                             currentUser.getUserID())) {
                         // remove match
-                        resultsMatches.remove(match);
-                        matchesAdapter.notifyDataSetChanged();
+                        for (int i = 0; i < resultsMatches.size(); i++) {
+                            if (resultsMatches.get(i).getMatchId().equals(match.getMatchId())) {
+                                resultsMatches.remove(i);
+                                matchesAdapter.notifyDataSetChanged();
+                                return;
+                            }
+                        }
                     }
                 }
 
@@ -127,6 +127,20 @@ public class MatchesActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK) {
+                String currentUserName = data.getStringExtra("currentUsername");
+                String userChoice = data.getStringExtra("userChoice");
+                String userChoiceMade = data.getStringExtra("userChoiceMade");
+
+
+
+            }
+        }
     }
 
     public void goToSwiping(View view) {

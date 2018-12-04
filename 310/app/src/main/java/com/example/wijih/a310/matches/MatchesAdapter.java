@@ -1,5 +1,6 @@
 package com.example.wijih.a310.matches;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -42,7 +43,7 @@ public class  MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.Matches
                 Match match = matchesList.get(rView.getAdapterPosition());
                 intent.putExtra("match_obj", match);
                 intent.putExtra("current_user", currentUser);
-                context.startActivity(intent);
+                ((Activity) context).startActivityForResult(intent, 1);
             }
         });
 
