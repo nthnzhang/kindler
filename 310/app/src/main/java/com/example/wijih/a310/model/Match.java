@@ -47,7 +47,6 @@ public class Match implements Parcelable {
         this.matchAccepted = false;
         this.user1ChoiceMade = false;
         this.user2ChoiceMade = false;
-
         this.user1TotalRatings = user1TotalRatings;
         this.user2TotalRatings = user2TotalRatings;
         this.user1TotalScore = user1TotalScore;
@@ -175,6 +174,9 @@ public class Match implements Parcelable {
 
             }
         });
+
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("matches").child(matchId);
+        mDatabase.child("userRated").setValue(true);
     }
 
     public String getMatchId() {
