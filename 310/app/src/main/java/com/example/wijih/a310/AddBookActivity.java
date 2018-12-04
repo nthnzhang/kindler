@@ -79,25 +79,6 @@ public class AddBookActivity extends AppCompatActivity {
     }
 
 
-    /*public void btnGalleryClicked (View view) {
-        //use implicit intent to get to image gallery
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK);
-
-        //this is where to find the data
-        File pictureDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        String pictureDirectoryPath = pictureDirectory.getPath();
-
-        //URI
-        Uri data = Uri.parse(pictureDirectoryPath);
-
-        //set data and type
-        galleryIntent.setDataAndType(data, "image/*");
-
-        startActivityForResult(galleryIntent, IMAGE_GALLERY_REQUEST);
-    }*/
-
-
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -188,7 +169,6 @@ public class AddBookActivity extends AppCompatActivity {
             }
         });
 
-//        startActivity(new Intent(AddBookActivity.this, ProfileActivity.class));
 
     }
 

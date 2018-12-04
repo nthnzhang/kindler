@@ -12,9 +12,7 @@ package com.example.wijih.a310;
         import android.widget.TextView;
         import android.widget.Toast;
 
-        import com.example.wijih.a310.R;
         import com.example.wijih.a310.model.Book;
-        import com.example.wijih.a310.model.Match;
         import com.example.wijih.a310.model.User;
 
         import java.util.List;
@@ -40,17 +38,6 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.MatchesViewH
         layoutView.setLayoutParams(lp);
         final MatchesViewHolder rView = new MatchesViewHolder(layoutView, context);
 
-        /*layoutView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, MatchInfoWindow.class);
-                Match match = matchesList.get(rView.getAdapterPosition());
-                intent.putExtra("match_obj", match);
-                intent.putExtra("current_user", currentUser);
-                context.startActivity(intent);
-            }
-        });*/
-
         return rView;
     }
 
@@ -64,7 +51,6 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.MatchesViewH
         holder.bookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //startActivity(new Intent(this, EditBookActivity.class));
                 Intent intent = new Intent(view.getContext(), EditBookActivity.class);
                 intent.putExtra("current_user", currentUser);
                 intent.putExtra("bookId", booksList.get(pos).getBookId());

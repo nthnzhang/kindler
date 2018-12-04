@@ -50,7 +50,6 @@ public class EditProfileActivity extends AppCompatActivity {
                 mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUserID());
 
                 if (currentUser != null && !newEmail.getText().toString().trim().equals("")) {
-//                    mAuth.child("kindler-edfdb").child(currentUser.getId()).child("username").setValue(newEmail.getText().toString().trim());
                     currentUser.setEmail(newEmail.getText().toString().trim());
                     mDatabase.child("email").setValue(newEmail.getText().toString().trim());
                 }
@@ -58,7 +57,6 @@ public class EditProfileActivity extends AppCompatActivity {
 
                 //get the way to update username
                 if (currentUser != null && !newUsername.getText().toString().trim().equals("")) {
-//                    mAuth.child("kindler-edfdb").child(currentUser.getId()).child("username").setValue(newUsername.getText().toString().trim());
                     currentUser.setUsername(newUsername.getText().toString().trim());
                     mDatabase.child("username").setValue(newUsername.getText().toString().trim());
                 }
@@ -66,19 +64,16 @@ public class EditProfileActivity extends AppCompatActivity {
 
                 //get the way to update Phone number
                 if (currentUser != null && !newPhone.getText().toString().trim().equals("")) {
-//                    mAuth.child("kindler-edfdb").child(currentUser.getId()).child("username").setValue(newPhone.getText().toString().trim());
                     currentUser.setPhone(newPhone.getText().toString().trim());
                     mDatabase.child("phone").setValue(newPhone.getText().toString().trim());
                 }
 
                 //get the way to update password
                 if (currentUser != null && !newPassword.getText().toString().trim().equals("")) {
-//                    mAuth.child("kindler-edfdb").child(currentUser.getId()).child("username").setValue(newPhone.getText().toString().trim());
                     currentUser.setPassword(newPhone.getText().toString().trim());
                     mDatabase.child("password").setValue(newPassword.getText().toString().trim());
                 }
 
-//                startActivity(new Intent(EditProfileActivity.this, ProfileActivity.class));
 
                 Intent intent = new Intent(EditProfileActivity.this, ProfileActivity.class);
                 intent.putExtra("current_user", currentUser);
