@@ -64,6 +64,8 @@ public class Match implements Parcelable {
         userId2 = in.readString();
         user1Choice = in.readByte() != 0;
         user2Choice = in.readByte() != 0;
+        user1ChoiceMade = in.readByte() != 0;
+        user2ChoiceMade = in.readByte() != 0;
     }
 
     public static final Creator<Match> CREATOR = new Creator<Match>() {
@@ -177,21 +179,13 @@ public class Match implements Parcelable {
         return user2Choice;
     }
 
-    public boolean isUser1ChoiceMade() {
-        return user1ChoiceMade;
-    }
+    public boolean isUser1ChoiceMade() { return user1ChoiceMade; }
 
-    public void setUser1ChoiceMade(boolean user1ChoiceMade) {
-        this.user1ChoiceMade = user1ChoiceMade;
-    }
+    public void setUser1ChoiceMade(boolean user1ChoiceMade) { this.user1ChoiceMade = user1ChoiceMade; }
 
-    public boolean isUser2ChoiceMade() {
-        return user2ChoiceMade;
-    }
+    public boolean isUser2ChoiceMade() { return user2ChoiceMade; }
 
-    public void setUser2ChoiceMade(boolean user2ChoiceMade) {
-        this.user2ChoiceMade = user2ChoiceMade;
-    }
+    public void setUser2ChoiceMade(boolean user2ChoiceMade) { this.user2ChoiceMade = user2ChoiceMade; }
 
     public String getUser1Email() {
         return this.user1Email;
@@ -244,5 +238,7 @@ public class Match implements Parcelable {
         parcel.writeString(userId2);
         parcel.writeByte((byte) (user1Choice ? 1 : 0));
         parcel.writeByte((byte) (user2Choice ? 1 : 0));
+        parcel.writeByte((byte) (user1ChoiceMade ? 1 : 0));
+        parcel.writeByte((byte) (user2ChoiceMade ? 1 : 0));
     }
 }

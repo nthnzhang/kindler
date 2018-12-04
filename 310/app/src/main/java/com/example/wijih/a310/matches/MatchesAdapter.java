@@ -15,7 +15,7 @@ import com.example.wijih.a310.model.User;
 
 import java.util.List;
 
-public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchesViewHolder> {
+public class  MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchesViewHolder> {
     private List<Match> matchesList;
     private Context context;
     private User currentUser;
@@ -51,7 +51,7 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchesV
 
     @Override
     public void onBindViewHolder(@NonNull MatchesViewHolder holder, int position) {
-        holder.matchID.setText(matchesList.get(position).getUserId1());
+        holder.matchID.setText(matchesList.get(position).getUserId1() + " " + matchesList.get(position).getUserRating1());
     }
 
     @Override
