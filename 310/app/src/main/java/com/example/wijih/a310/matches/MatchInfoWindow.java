@@ -203,12 +203,6 @@ public class MatchInfoWindow extends Activity {
         Log.d("user  1 choice made", (match.isUser1ChoiceMade() ? "true": "false"));
         Log.d("user  2 choice made", (match.isUser2ChoiceMade() ? "true": "false"));
 
-        Intent returnIntent = new Intent();
-        returnIntent.putExtra("userChoice", true);
-        returnIntent.putExtra("currentUsername", currentUser.getUsername());
-        returnIntent.putExtra("matchID", match.getMatchId());
-        setResult(Activity.RESULT_OK, returnIntent);
-        finish();
     }
 
     public void denyMatchClicked(View view) {
@@ -245,12 +239,6 @@ public class MatchInfoWindow extends Activity {
         Log.d("user  1 choice made", (match.isUser1ChoiceMade() ? "true": "false"));
         Log.d("user  2 choice made", (match.isUser2ChoiceMade() ? "true": "false"));
 
-        Intent returnIntent = new Intent();
-        returnIntent.putExtra("userChoice", false);
-        returnIntent.putExtra("currentUsername", currentUser.getUsername());
-        returnIntent.putExtra("matchID", match.getMatchId());
-        setResult(Activity.RESULT_OK, returnIntent);
-        finish();
     }
 
     private void displayRatingBar() {
