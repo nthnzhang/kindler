@@ -19,8 +19,9 @@ import com.google.firebase.database.FirebaseDatabase;
 public class EditProfileActivity extends AppCompatActivity {
 
     private Button saveChanges;
-    private EditText newUsername, newEmail, newPhone;
+    private EditText newUsername, newEmail, newPhone, newPassword;
     private User currentUser;
+
 
     private DatabaseReference mDatabase;
 
@@ -42,6 +43,7 @@ public class EditProfileActivity extends AppCompatActivity {
         newUsername = (EditText) findViewById(R.id.usernameEdit);
         newEmail = (EditText) findViewById(R.id.emailEdit);
         newPhone = (EditText) findViewById(R.id.phoneEdit);
+        newPassword = (EditText) findViewById(R.id.passwordEdit);
         saveChanges.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,6 +70,14 @@ public class EditProfileActivity extends AppCompatActivity {
                     currentUser.setPhone(newPhone.getText().toString().trim());
                     mDatabase.child("phone").setValue(newPhone.getText().toString().trim());
                 }
+
+                //get the way to update password
+                if (currentUser != null && !newPassword.getText().toString().trim().equals("")) {
+//                    mAuth.child("kindler-edfdb").child(currentUser.getId()).child("username").setValue(newPhone.getText().toString().trim());
+                    currentUser.setPassword(newPhone.getText().toString().trim());
+                    mDatabase.child("password").setValue(newPassword.getText().toString().trim());
+                }
+
 //                startActivity(new Intent(EditProfileActivity.this, ProfileActivity.class));
 
                 Intent intent = new Intent(EditProfileActivity.this, ProfileActivity.class);

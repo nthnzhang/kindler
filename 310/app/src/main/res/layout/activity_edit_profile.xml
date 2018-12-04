@@ -23,6 +23,12 @@
         android:hint="phone number"
         android:id="@+id/phoneEdit"/>
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="password"
+        android:id="@+id/passwordEdit"/>
+
     <Button
         android:id="@+id/saveChanges"
         android:layout_width="match_parent"

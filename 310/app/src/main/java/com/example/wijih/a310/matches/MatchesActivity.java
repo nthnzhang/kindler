@@ -32,7 +32,9 @@ public class MatchesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_matches);
+        System.out.println("FUCKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK111111");
         startUpdatingMatchList();
+        System.out.println("FUCKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK222222");
         // getting current user from swiping activity
         final Intent currUserIntent = getIntent();
         currentUser = currUserIntent.getParcelableExtra("current_user");
@@ -67,37 +69,46 @@ public class MatchesActivity extends AppCompatActivity {
                 Match match = dataSnapshot.getValue(Match.class);
 
                 // match is one of current user's matches
-                if(match.getUserId1().equals(currentUser.getUserID()) || match.getUserId2().equals(
-                        currentUser.getUserID())) {
-                    Log.d("match", match.getMatchId());
-                    resultsMatches.add(match);
-                    matchesAdapter.notifyDataSetChanged();
+                if (match.getUserId1() != null && match.getUserId2() != null) {
+                    if (match.getUserId1().equals(currentUser.getUserID()) || match.getUserId2().equals(
+                            currentUser.getUserID())) {
+                        Log.d("match", match.getMatchId());
+                        System.out.println("FUCKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK555555");
+                        resultsMatches.add(match);
+                        matchesAdapter.notifyDataSetChanged();
+                    }
                 }
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 Match match = dataSnapshot.getValue(Match.class);
+                if (match.getUserId1() != null && match.getUserId2() != null) {
+                    if(match.getUserId1().equals(currentUser.getUserID()) || match.getUserId2().equals(
+                            currentUser.getUserID())) {
+                        if(match.isMatchAccepted()) {
+                            // show contact information
 
-                if(match.getUserId1().equals(currentUser.getUserID()) || match.getUserId2().equals(
-                        currentUser.getUserID())) {
-                    if(match.isMatchAccepted()) {
-                        // show contact information
-                        
+                        }
                     }
                 }
+
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 Match match = dataSnapshot.getValue(Match.class);
 
-                if(match.getUserId1().equals(currentUser.getUserID()) || match.getUserId2().equals(
-                        currentUser.getUserID())) {
-                    // remove match
-                    resultsMatches.remove(match);
-                    matchesAdapter.notifyDataSetChanged();
+                if (match.getUserId1() != null && match.getUserId2() != null) {
+                    if(match.getUserId1().equals(currentUser.getUserID()) || match.getUserId2().equals(
+                            currentUser.getUserID())) {
+                        // remove match
+                        System.out.println("FUCKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK666666");
+                        resultsMatches.remove(match);
+                        matchesAdapter.notifyDataSetChanged();
+                    }
                 }
+
             }
 
             @Override

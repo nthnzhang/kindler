@@ -42,6 +42,7 @@ public class AddBookActivity extends AppCompatActivity {
     public static final int IMAGE_GALLERY_REQUEST = 20;
     private Bitmap bm;
     private ImageView imgThumbnail;
+    private String encodedImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,8 +165,10 @@ public class AddBookActivity extends AppCompatActivity {
 
 
                     //encode the picture
-                    String encodedImg = encodeAndSaveImg(bm);
-                    System.out.println("img: " + encodedImg);
+                    if (bm != null) {
+                        encodedImg = encodeAndSaveImg(bm);
+                        System.out.println("img: " + encodedImg);
+                    }
 
 
 

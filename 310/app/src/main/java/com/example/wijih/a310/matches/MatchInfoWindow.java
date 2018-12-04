@@ -41,12 +41,14 @@ public class MatchInfoWindow extends Activity {
         String nameToDisplay;
         if(match.getUserId1() == currentUser.getUserID()) {
             nameToDisplay = match.getUserId2();
-            nameToDisplay += " " + match.getUserRating2();
+            //took this out
+            //nameToDisplay += " " + match.getUserRating2();
             isUser1 = true;
         }
         else {
             nameToDisplay = match.getUserId1();
-            nameToDisplay += " " + match.getUserRating1();
+            //took this out
+            //nameToDisplay += " " + match.getUserRating1();
             isUser1 = false;
         }
 
@@ -182,10 +184,12 @@ public class MatchInfoWindow extends Activity {
             @Override
             public void onClick(View v) {
                 if(isUser1) {
-                    match.setUser2Rating(ratingBar.getRating());
+                    //took this out
+                    //match.setUser2Rating(ratingBar.getRating());
                 }
                 else {
-                    match.setUser1Rating(ratingBar.getRating());
+                    //took this out
+                    //match.setUser1Rating(ratingBar.getRating());
                 }
             }
         });
