@@ -45,6 +45,7 @@ public class EditBookActivity extends AppCompatActivity {
 
 
     private DatabaseReference mDatabase;
+    private DatabaseReference dDatabase;
     private String bookId;
 
     @Override
@@ -58,6 +59,7 @@ public class EditBookActivity extends AppCompatActivity {
         currentUser = intent.getParcelableExtra("current_user");
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("books").child(bookId);
+        dDatabase = FirebaseDatabase.getInstance().getReference().child("users").child("uploadedBookIDs").child(bookId);
 
         imgThumbnail = (ImageView) findViewById(R.id.imgThumbnail);
 
@@ -88,6 +90,7 @@ public class EditBookActivity extends AppCompatActivity {
         deleteImage.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+                dDatabase.removeValue();
                 mDatabase.removeValue();
 
                 Intent intent = new Intent(EditBookActivity.this, ProfileActivity.class);

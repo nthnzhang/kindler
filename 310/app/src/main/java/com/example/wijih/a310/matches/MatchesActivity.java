@@ -32,9 +32,7 @@ public class MatchesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_matches);
-        System.out.println("FUCKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK111111");
         startUpdatingMatchList();
-        System.out.println("FUCKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK222222");
         // getting current user from swiping activity
         final Intent currUserIntent = getIntent();
         currentUser = currUserIntent.getParcelableExtra("current_user");
@@ -73,7 +71,6 @@ public class MatchesActivity extends AppCompatActivity {
                     if (match.getUserId1().equals(currentUser.getUserID()) || match.getUserId2().equals(
                             currentUser.getUserID())) {
                         Log.d("match", match.getMatchId());
-                        System.out.println("FUCKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK555555");
                         resultsMatches.add(match);
                         matchesAdapter.notifyDataSetChanged();
                     }
@@ -103,7 +100,6 @@ public class MatchesActivity extends AppCompatActivity {
                     if(match.getUserId1().equals(currentUser.getUserID()) || match.getUserId2().equals(
                             currentUser.getUserID())) {
                         // remove match
-                        System.out.println("FUCKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK666666");
                         resultsMatches.remove(match);
                         matchesAdapter.notifyDataSetChanged();
                     }
